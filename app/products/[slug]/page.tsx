@@ -2,12 +2,13 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { siteContent, Product } from '@/content/site';
 import GlassCard from '@/components/GlassCard';
 import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
-import { CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, Sparkles, Layers, Terminal } from 'lucide-react';
+import { CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, Sparkles, Layers, Terminal, ExternalLink } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -103,6 +104,53 @@ export default async function ProductDetailPage({ params }: Props) {
             {product.description}
           </p>
         </div>
+
+        {/* Product Live Showcase Frame */}
+        {product.previewImage && (
+          <div className="mb-16 overflow-hidden rounded-2xl border border-white/[0.1] bg-black/70 shadow-2xl backdrop-blur-xl">
+            {/* Browser Window Header */}
+            <div className="flex items-center justify-between border-b border-white/[0.08] bg-white/[0.03] px-5 py-3">
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-rose-500/80" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+              </div>
+              <div className="flex items-center gap-2 rounded-lg bg-black/70 border border-white/[0.06] px-4 py-1 text-xs font-mono text-slate-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>
+                  {product.websiteUrl ? product.websiteUrl.replace('https://', '').replace(/\/$/, '') : `${product.slug}.orenty.in`}
+                </span>
+              </div>
+              {product.websiteUrl ? (
+                <a
+                  href={product.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-violet-300 hover:text-white uppercase tracking-wider transition-colors"
+                >
+                  <span>Open Live Application</span>
+                  <ExternalLink size={12} />
+                </a>
+              ) : (
+                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
+                  PREVIEW MOCKUP
+                </span>
+              )}
+            </div>
+
+            {/* Viewport Frame */}
+            <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+              <Image
+                src={product.previewImage}
+                alt={`${product.name} High Resolution Preview`}
+                fill
+                priority
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 1000px"
+              />
+            </div>
+          </div>
+        )}
 
         {/* Product Architectural Deep Dive */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">

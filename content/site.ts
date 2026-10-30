@@ -11,6 +11,8 @@ export interface Product {
   ctaLabel: string;
   ctaUrl: string;
   category: string;
+  previewImage?: string;
+  websiteUrl?: string;
 }
 
 export interface Service {
@@ -186,6 +188,8 @@ export const siteContent: SiteContent = {
       ctaLabel: 'Apply to Early Access',
       ctaUrl: '/apply?track=syncedin',
       category: 'AI Networking',
+      previewImage: '/products/syncedin-preview.webp',
+      websiteUrl: 'https://rightin.vercel.app/',
     },
     {
       slug: 'fanbase',
@@ -203,6 +207,8 @@ export const siteContent: SiteContent = {
       ctaLabel: 'Apply for Creator Beta',
       ctaUrl: '/apply?track=fanbase',
       category: 'Creator Economy',
+      previewImage: '/products/fanbase-preview.webp',
+      websiteUrl: 'https://fanbase-pink.vercel.app/',
     },
     {
       slug: 'job-pilot',
@@ -220,6 +226,8 @@ export const siteContent: SiteContent = {
       ctaLabel: 'Apply for Pilot Beta',
       ctaUrl: '/apply?track=job-pilot',
       category: 'Career Intelligence',
+      previewImage: '/products/job-pilot-preview.webp',
+      websiteUrl: 'https://jobpilot-jade-five.vercel.app/',
     },
     {
       slug: 'pujari-ai',
@@ -237,6 +245,8 @@ export const siteContent: SiteContent = {
       ctaLabel: 'Apply for Vedic Access',
       ctaUrl: '/apply?track=pujari-ai',
       category: 'Spiritual Tech',
+      previewImage: '/products/pujari-ai-preview.webp',
+      websiteUrl: 'https://pujari.ai/',
     },
   ],
   services: [

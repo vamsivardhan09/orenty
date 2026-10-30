@@ -1,12 +1,13 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { siteContent } from '@/content/site';
 import GlassCard from '@/components/GlassCard';
 import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
-import { CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Proprietary Products',
@@ -43,8 +44,22 @@ export default function ProductsPage() {
             <GlassCard
               key={prod.slug}
               accentColor={prod.accentColor}
-              className="p-8 md:p-10 flex flex-col justify-between"
+              className="p-8 md:p-10 flex flex-col justify-between overflow-hidden relative group"
             >
+              {/* Background Ambient Screenshot Watermark */}
+              {prod.previewImage && (
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-15 transition-opacity duration-700 group-hover:opacity-25">
+                  <Image
+                    src={prod.previewImage}
+                    alt={`${prod.name} Preview`}
+                    fill
+                    className="object-cover object-top filter grayscale contrast-125 transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#060814] via-[#060814]/85 to-[#060814]/70" />
+                </div>
+              )}
+
               <HudBox
                 label={`PRODUCT // ${prod.category.toUpperCase()}`}
                 tag={`STATUS: ${prod.status.toUpperCase()}`}
@@ -77,6 +92,53 @@ export default function ProductsPage() {
                   <p className="text-sm text-slate-300 font-body leading-relaxed mb-6">
                     {prod.description}
                   </p>
+
+                  {/* Embedded Browser Preview Frame */}
+                  {prod.previewImage && (
+                    <div className="mb-6 overflow-hidden rounded-xl border border-white/[0.08] bg-black/60 shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/20">
+                      {/* Browser Frame Top Bar */}
+                      <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.03] px-3.5 py-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-rose-500/60" />
+                          <span className="h-2 w-2 rounded-full bg-amber-500/60" />
+                          <span className="h-2 w-2 rounded-full bg-emerald-500/60" />
+                        </div>
+                        <div className="flex items-center gap-1.5 rounded-md bg-black/60 px-2.5 py-0.5 text-[10px] font-mono text-slate-400">
+                          <span className="text-[8px] text-emerald-400">●</span>
+                          <span className="truncate max-w-[130px] sm:max-w-[180px]">
+                            {prod.websiteUrl ? prod.websiteUrl.replace('https://', '').replace(/\/$/, '') : `${prod.slug}.orenty.in`}
+                          </span>
+                        </div>
+                        {prod.websiteUrl ? (
+                          <a
+                            href={prod.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-[10px] font-mono text-violet-300 hover:text-white uppercase tracking-wider transition-colors"
+                          >
+                            <span>LIVE DEMO</span>
+                            <ExternalLink size={10} />
+                          </a>
+                        ) : (
+                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+                            PREVIEW
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Image Preview with subtle bottom gradient fade */}
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+                        <Image
+                          src={prod.previewImage}
+                          alt={`${prod.name} Interface`}
+                          fill
+                          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060814]/90 via-transparent to-transparent" />
+                      </div>
+                    </div>
+                  )}
 
                   {/* Features List */}
                   <div className="space-y-3 pt-5 border-t border-white/[0.06]">

@@ -2,12 +2,17 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { siteContent, Product } from '@/content/site';
+import { siteContent } from '@/content/site';
 import GlassCard from '@/components/GlassCard';
-import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
-import { CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, Sparkles, Layers, Terminal } from 'lucide-react';
+import {
+  SyncedInMediaWindow,
+  FanbaseMediaWindow,
+  JobPilotMediaWindow,
+  PujariMediaWindow,
+} from '@/components/MediaWindows';
+import { CheckCircle2, ArrowLeft, ArrowRight, Award } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -45,6 +50,13 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
+  const mediaMap: Record<string, React.ReactNode> = {
+    syncedin: <SyncedInMediaWindow />,
+    fanbase: <FanbaseMediaWindow />,
+    'job-pilot': <JobPilotMediaWindow />,
+    'pujari-ai': <PujariMediaWindow />,
+  };
+
   // Find linked lab challenge if applicable
   const linkedChallenge = siteContent.lab.challenges.find(
     (c) =>
@@ -54,7 +66,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="relative flex flex-col bg-background min-h-screen overflow-hidden">
-      {/* Dynamic Ambient Accent Glow matching this product's accentColor */}
+      {/* Dynamic Ambient Accent Glow driven strictly by product.accentColor */}
       <div
         className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 h-[550px] w-[850px] rounded-full blur-[160px] opacity-25"
         style={{ backgroundColor: product.accentColor }}
@@ -88,7 +100,7 @@ export default async function ProductDetailPage({ params }: Props) {
             </span>
           </div>
 
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-[1.05]">
             <TextReveal as="span">{product.name}</TextReveal>
           </h1>
 
@@ -99,98 +111,94 @@ export default async function ProductDetailPage({ params }: Props) {
             {product.tagline}
           </p>
 
-          <p className="mt-6 text-lg text-slate-300 font-body leading-relaxed max-w-3xl">
+          <p className="mt-5 text-base sm:text-lg text-slate-300 font-body leading-relaxed max-w-3xl">
             {product.description}
           </p>
         </div>
 
-        {/* Product Architectural Deep Dive */}
+        {/* Interactive Media Window for this Product */}
+        <div className="mb-12 max-w-2xl">
+          {mediaMap[product.slug]}
+        </div>
+
+        {/* Product Architectural Deep Dive: Single-frame GlassCards */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
           {/* Main Features */}
           <div className="lg:col-span-7">
-            <GlassCard accentColor={product.accentColor} className="p-8 h-full">
-              <HudBox
-                label="TECHNICAL SPECIFICATIONS"
-                tag="CORE ARCHITECTURE"
-                accentColor={product.accentColor}
-              >
-                <div className="mt-4 space-y-6">
-                  <h3 className="font-display text-xl font-bold text-white">
-                    Key Features & Innovations
-                  </h3>
-                  <div className="space-y-4">
-                    {product.features.map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-3 rounded-lg bg-navy-900/60 p-4 border border-white/[0.04]">
-                        <CheckCircle2
-                          size={18}
-                          className="shrink-0 mt-0.5"
-                          style={{ color: product.accentColor }}
-                        />
-                        <div>
-                          <span className="font-mono text-xs uppercase tracking-wider text-slate-400 block mb-1">
-                            CAPABILITY 0{idx + 1}
-                          </span>
-                          <p className="text-sm text-slate-200 font-body leading-relaxed">
-                            {feat}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+            <GlassCard
+              accentColor={product.accentColor}
+              eyebrow="TECHNICAL SPECIFICATIONS"
+              badge="CORE ARCHITECTURE"
+              title="Key Features & Innovations"
+              className="h-full"
+            >
+              <div className="space-y-4 pt-3">
+                {product.features.map((feat, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 rounded-lg bg-navy-900/60 p-4 border border-white/[0.04]"
+                  >
+                    <CheckCircle2
+                      size={18}
+                      className="shrink-0 mt-0.5"
+                      style={{ color: product.accentColor }}
+                    />
+                    <div>
+                      <span className="font-mono text-xs uppercase tracking-wider text-slate-400 block mb-1">
+                        CAPABILITY 0{idx + 1}
+                      </span>
+                      <p className="text-sm text-slate-200 font-body leading-relaxed">
+                        {feat}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </HudBox>
+                ))}
+              </div>
             </GlassCard>
           </div>
 
           {/* Sidebar CTA & Lab Connection */}
           <div className="lg:col-span-5 flex flex-col gap-8">
-            {/* Early Access Action Card */}
-            <GlassCard accentColor={product.accentColor} className="p-8">
-              <HudBox label="ACCESS PORTAL" tag="WAITLIST" accentColor={product.accentColor}>
-                <div className="mt-4">
-                  <h3 className="font-display text-xl font-bold text-white mb-2">
-                    Request Early Access
-                  </h3>
-                  <p className="text-xs text-slate-400 font-body leading-relaxed mb-6">
-                    {product.name} is currently in active development. Secure your position in the private beta testing cohort.
-                  </p>
-
-                  <MagneticButton
-                    href={product.ctaUrl}
-                    variant="primary"
-                    className="w-full !py-3.5 !text-xs"
-                  >
-                    {product.ctaLabel}
-                    <ArrowRight size={14} />
-                  </MagneticButton>
-                </div>
-              </HudBox>
+            {/* Early Access Action Card: Single Frame */}
+            <GlassCard
+              accentColor={product.accentColor}
+              eyebrow="ACCESS PORTAL"
+              badge="WAITLIST"
+              title="Request Early Access"
+              description={`${product.name} is currently in active development. Secure your position in the private beta testing cohort.`}
+            >
+              <div className="mt-4">
+                <MagneticButton
+                  href={product.ctaUrl}
+                  variant="primary"
+                  className="w-full !py-3.5 !text-xs justify-center"
+                >
+                  {product.ctaLabel}
+                  <ArrowRight size={14} />
+                </MagneticButton>
+              </div>
             </GlassCard>
 
             {/* Co-Ownership Lab Challenge Card if available */}
             {linkedChallenge && (
-              <GlassCard accentColor="#ec4899" className="p-8">
-                <HudBox label="STARTUP LAB CHALLENGE" tag="CO-OWNERSHIP" accentColor="#ec4899">
-                  <div className="mt-4">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-pink-400 font-bold block mb-1">
-                      CHALLENGE {linkedChallenge.code}
+              <GlassCard
+                accentColor="#ec4899"
+                eyebrow={`STARTUP LAB // ${linkedChallenge.code}`}
+                badge="CO-OWNERSHIP"
+                title={linkedChallenge.title}
+                description={linkedChallenge.brief}
+                footerLabel="Solve This Challenge"
+                footerHref={`/apply?challenge=${linkedChallenge.code}`}
+              >
+                <div className="mt-2 flex items-center gap-2 rounded-lg bg-navy-900/80 p-3 border border-white/[0.06] text-xs text-slate-300">
+                  <Award size={16} className="text-pink-400 shrink-0" />
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-slate-400 block">
+                      REWARD POOL
                     </span>
-                    <h4 className="font-display text-base font-bold text-white mb-2">
-                      {linkedChallenge.title}
-                    </h4>
-                    <p className="text-xs text-slate-400 font-body leading-relaxed mb-4 line-clamp-3">
-                      {linkedChallenge.brief}
-                    </p>
-
-                    <Link
-                      href={`/apply?challenge=${linkedChallenge.code}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-pink-300 hover:text-white transition-colors"
-                    >
-                      <span>Apply to Solve This Challenge</span>
-                      <ArrowRight size={12} />
-                    </Link>
+                    <span className="font-semibold text-white">{linkedChallenge.rewardPool}</span>
                   </div>
-                </HudBox>
+                </div>
               </GlassCard>
             )}
           </div>

@@ -3,19 +3,19 @@ import Link from 'next/link';
 import { siteContent } from '@/content/site';
 import Hero from '@/components/Hero';
 import GlassCard from '@/components/GlassCard';
-import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
 import DriftingLabTiles from '@/components/DriftingLabTiles';
 import {
-  ArrowRight,
-  Code2,
-  Box,
-  FlaskConical,
-  Sparkles,
-  CheckCircle2,
-  ShieldAlert,
-} from 'lucide-react';
+  SoftwareMediaWindow,
+  ProductsMediaWindow,
+  LabMediaWindow,
+  SyncedInMediaWindow,
+  FanbaseMediaWindow,
+  JobPilotMediaWindow,
+  PujariMediaWindow,
+} from '@/components/MediaWindows';
+import { ArrowRight, ShieldAlert } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -24,14 +24,17 @@ export default function HomePage() {
       <Hero />
 
       {/* 2. WHAT WE ARE // 3 DIVISIONS */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-28 w-full border-t border-white/[0.04]">
-        {/* Section Header */}
-        <div className="max-w-2xl mb-16">
+      <section
+        id="software"
+        className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(80px,11vh,130px)] w-full border-t border-white/[0.04] scroll-mt-24"
+      >
+        {/* Section Header: Left-aligned, standardized eyebrow, max 2 lines */}
+        <div className="max-w-2xl mb-12 md:mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-violet-400 mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
             <span>DIVISIONS // 01 - 03</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white uppercase tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase tracking-tight leading-[1.1]">
             <TextReveal as="span">What we are.</TextReveal>
           </h2>
           <p className="mt-4 text-base text-slate-400 font-body leading-relaxed">
@@ -39,76 +42,62 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 3 Division Cards Grid */}
+        {/* 3 Division Cards Grid: Single Frame GlassCard, 16:10 Media Windows, Strict Grid Row Alignment */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {siteContent.divisions.map((div) => {
-            const Icon =
-              div.id === 'software'
-                ? Code2
-                : div.id === 'products'
-                ? Box
-                : FlaskConical;
+          {/* Division 1: Software Solutions */}
+          <GlassCard
+            eyebrow="DIVISION // 01"
+            badge="CLIENT SOLUTIONS"
+            accentColor="#6366f1"
+            media={<SoftwareMediaWindow />}
+            title="Software Solutions"
+            tagline="Bespoke Engineering & AI Automation"
+            description="End-to-end software development, intelligent workflow automation, and scalable cloud architectures built for forward-thinking businesses."
+            footerLabel="Explore Software"
+            footerHref="/software"
+          />
 
-            return (
-              <GlassCard
-                key={div.id}
-                accentColor={div.accent}
-                className="flex flex-col justify-between p-8 group"
-              >
-                <HudBox
-                  label={`DIVISION // ${div.number}`}
-                  tag={div.badge}
-                  accentColor={div.accent}
-                >
-                  <div className="mt-4">
-                    <div
-                      className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 mb-6"
-                      style={{ color: div.accent }}
-                    >
-                      <Icon size={24} />
-                    </div>
+          {/* Division 2: Proprietary Products */}
+          <GlassCard
+            eyebrow="DIVISION // 02"
+            badge="4 ACTIVE BUILDS"
+            accentColor="#8b5cf6"
+            media={<ProductsMediaWindow />}
+            title="Proprietary Products"
+            tagline="Focused Solutions Built In-House"
+            description="A portfolio of purpose-built platforms spanning professional networking, creator economies, career acceleration, and cultural AI."
+            footerLabel="Explore Products"
+            footerHref="/products"
+          />
 
-                    <h3 className="font-display text-2xl font-bold text-white mb-2">
-                      {div.title}
-                    </h3>
-                    <p
-                      className="font-mono text-xs uppercase tracking-wider mb-4 font-semibold"
-                      style={{ color: div.accent }}
-                    >
-                      {div.tagline}
-                    </p>
-                    <p className="text-sm text-slate-400 leading-relaxed font-body">
-                      {div.description}
-                    </p>
-                  </div>
-
-                  <div className="mt-8 pt-5 border-t border-white/[0.06] flex items-center justify-between">
-                    <Link
-                      href={div.href}
-                      className="inline-flex items-center gap-2 font-display text-xs uppercase tracking-widest font-semibold text-slate-200 hover:text-white transition-colors"
-                      data-cursor-expand="true"
-                    >
-                      <span>Explore {div.id.toUpperCase()}</span>
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </HudBox>
-              </GlassCard>
-            );
-          })}
+          {/* Division 3: Startup Lab */}
+          <GlassCard
+            eyebrow="DIVISION // 03"
+            badge="CHALLENGES OPEN"
+            accentColor="#ec4899"
+            media={<LabMediaWindow />}
+            title="Startup Lab"
+            tagline="Idea to Challenge to Co-Ownership"
+            description="Solve breakthrough startup challenges. Top contributors form dedicated founding teams and earn real product ownership."
+            footerLabel="Explore Startup Lab"
+            footerHref="/lab"
+          />
         </div>
       </section>
 
       {/* 3. PROPRIETARY PRODUCTS // 4 CARDS */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-28 w-full border-t border-white/[0.04]">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <section
+        id="products"
+        className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(80px,11vh,130px)] w-full border-t border-white/[0.04] scroll-mt-24"
+      >
+        {/* Section Header: Standardized size across sections, left-aligned */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-14 gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-violet-400 mb-3">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               <span>IN-HOUSE PRODUCTS // PIPELINE</span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white uppercase tracking-tight">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase tracking-tight leading-[1.1]">
               <TextReveal as="span">Proprietary builds.</TextReveal>
             </h2>
             <p className="mt-4 text-base text-slate-400 font-body leading-relaxed">
@@ -125,79 +114,101 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* 4 Products Grid */}
+        {/* 4 Products Grid: Single-frame GlassCards with Distinct Custom Motif Media Windows */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {siteContent.products.map((prod) => (
-            <GlassCard
-              key={prod.slug}
-              accentColor={prod.accentColor}
-              className="p-8 flex flex-col justify-between"
-            >
-              <HudBox
-                label={prod.category.toUpperCase()}
-                tag={`STATUS: ${prod.status.toUpperCase()}`}
-                accentColor={prod.accentColor}
-              >
-                <div className="mt-3">
-                  <h3 className="font-display text-3xl font-extrabold text-white">
-                    {prod.name}
-                  </h3>
-                  <p
-                    className="mt-1 font-mono text-xs uppercase tracking-wider font-semibold"
-                    style={{ color: prod.accentColor }}
-                  >
-                    {prod.tagline}
-                  </p>
-                  <p className="mt-4 text-sm text-slate-400 font-body leading-relaxed">
-                    {prod.description}
-                  </p>
+          {/* Product 1: SyncedIn */}
+          <GlassCard
+            eyebrow="AI NETWORKING"
+            badge="Building"
+            badgeStatus="building"
+            accentColor="#8b5cf6"
+            media={<SyncedInMediaWindow />}
+            title="SyncedIn"
+            tagline="An AI-powered network that connects people to the right people."
+            description="Cutting through noise with high-signal semantic matching. SyncedIn analyzes goals, expertise, and collaboration velocity to connect you with high-leverage collaborators and peers."
+            features={['Semantic matchmaking', 'Intelligent intros', 'Spam-free messaging']}
+            footerLabel="Learn more"
+            footerHref="/products/syncedin"
+            ctaButton={{
+              label: 'Apply',
+              href: '/apply?track=syncedin',
+            }}
+          />
 
-                  {/* Feature Bullets */}
-                  <ul className="mt-6 space-y-2.5">
-                    {prod.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                        <CheckCircle2
-                          size={15}
-                          className="shrink-0 mt-0.5"
-                          style={{ color: prod.accentColor }}
-                        />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          {/* Product 2: Fanbase */}
+          <GlassCard
+            eyebrow="CREATOR ECONOMY"
+            badge="Building"
+            badgeStatus="building"
+            accentColor="#ec4899"
+            media={<FanbaseMediaWindow />}
+            title="Fanbase"
+            tagline="A home for creators and their communities."
+            description="The sovereign platform for modern creators. Unify subscriber relationships, direct digital drops, and interactive live rooms without algorithm interference."
+            features={['Direct creator channels', 'Member tiers & drops', 'Sovereign relationships']}
+            footerLabel="Learn more"
+            footerHref="/products/fanbase"
+            ctaButton={{
+              label: 'Apply',
+              href: '/apply?track=fanbase',
+            }}
+          />
 
-                {/* Footer Link & Action */}
-                <div className="mt-8 pt-5 border-t border-white/[0.06] flex items-center justify-between">
-                  <Link
-                    href={`/products/${prod.slug}`}
-                    className="text-xs font-mono uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
-                  >
-                    View Details
-                  </Link>
+          {/* Product 3: Job Pilot */}
+          <GlassCard
+            eyebrow="CAREER INTELLIGENCE"
+            badge="Building"
+            badgeStatus="building"
+            accentColor="#06b6d4"
+            media={<JobPilotMediaWindow />}
+            title="Job Pilot"
+            tagline="AI that tailors your resume and prepares you for interviews."
+            description="Personal career copilot that aligns your experience to any job requisition in seconds, generates role-specific interview simulators, and monitors application momentum."
+            features={['ATS resume alignment', 'Interview simulator', 'Pipeline intelligence']}
+            footerLabel="Learn more"
+            footerHref="/products/job-pilot"
+            ctaButton={{
+              label: 'Apply',
+              href: '/apply?track=job-pilot',
+            }}
+          />
 
-                  <MagneticButton href={prod.ctaUrl} variant="primary" className="!px-4 !py-2 !text-[10px]">
-                    {prod.ctaLabel}
-                  </MagneticButton>
-                </div>
-              </HudBox>
-            </GlassCard>
-          ))}
+          {/* Product 4: Pujari.ai */}
+          <GlassCard
+            eyebrow="SPIRITUAL TECH"
+            badge="Building"
+            badgeStatus="building"
+            accentColor="#f59e0b"
+            media={<PujariMediaWindow />}
+            title="Pujari.ai"
+            tagline="Your AI guide for puja, panchangam and mantras."
+            description="Preserving ancient ritual wisdom through respectful modern intelligence. Real-time astrological panchangam calculations, step-by-step puja guidance, and phonetic mantra accompaniment."
+            features={['Vedic panchangam', 'Procedural puja guides', 'Authentic mantra audio']}
+            footerLabel="Learn more"
+            footerHref="/products/pujari-ai"
+            ctaButton={{
+              label: 'Apply',
+              href: '/apply?track=pujari-ai',
+            }}
+          />
         </div>
       </section>
 
       {/* 4. STARTUP LAB TEASER // DRIFTING TILES & MODEL */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-28 w-full border-t border-white/[0.04] overflow-hidden">
+      <section
+        id="lab"
+        className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(80px,11vh,130px)] w-full border-t border-white/[0.04] scroll-mt-24 overflow-hidden"
+      >
         {/* Background glow */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full bg-pink-600/10 blur-[150px]" />
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[700px] rounded-full bg-pink-600/10 blur-[150px]" />
 
-        {/* Header */}
-        <div className="max-w-3xl mb-16">
+        {/* Section Header: Standardized size across sections, left-aligned */}
+        <div className="max-w-3xl mb-12 md:mb-14">
           <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-pink-400 mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-pink-400" />
             <span>ORENTY STARTUP LAB // INCUBATION</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-white uppercase tracking-tight">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white uppercase tracking-tight leading-[1.1]">
             <TextReveal as="span">Solve the challenge. Earn ownership.</TextReveal>
           </h2>
           <p className="mt-4 text-base text-slate-400 font-body leading-relaxed">
@@ -205,14 +216,14 @@ export default function HomePage() {
           </p>
 
           {/* Honest Ownership Callout */}
-          <div className="mt-6 inline-flex items-center gap-3 rounded-lg border border-pink-500/30 bg-pink-950/20 px-4 py-2 text-xs text-pink-200">
+          <div className="mt-5 inline-flex items-center gap-3 rounded-lg border border-pink-500/30 bg-pink-950/20 px-4 py-2 text-xs text-pink-200">
             <ShieldAlert size={16} className="text-pink-400 shrink-0" />
             <span>{siteContent.lab.ownershipNote}</span>
           </div>
         </div>
 
         {/* 5-Step Process Horizontal Bar */}
-        <div className="mb-16 grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="mb-12 grid grid-cols-2 md:grid-cols-5 gap-4">
           {siteContent.lab.steps.map((st) => (
             <div
               key={st.step}
@@ -222,7 +233,7 @@ export default function HomePage() {
                 STEP // {st.step}
               </span>
               <h4 className="font-display text-sm font-bold text-white mb-1">{st.title}</h4>
-              <p className="text-[11px] text-slate-400 leading-relaxed">{st.detail}</p>
+              <p className="text-[11px] text-slate-400 leading-relaxed font-body">{st.detail}</p>
             </div>
           ))}
         </div>
@@ -231,7 +242,7 @@ export default function HomePage() {
         <DriftingLabTiles />
 
         {/* View All Lab Challenges link */}
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
           <Link
             href="/lab"
             className="inline-flex items-center gap-2 font-display text-xs uppercase tracking-widest font-semibold text-slate-300 hover:text-white transition-colors"
@@ -243,27 +254,25 @@ export default function HomePage() {
       </section>
 
       {/* 5. FINAL HIGH-IMPACT APPLY CTA */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-28 w-full border-t border-white/[0.04]">
-        <GlassCard accentColor="#8b5cf6" className="relative p-12 md:p-20 text-center overflow-hidden">
-          <HudBox label="ORENTY // SYSTEM CTA" tag="APPLICATIONS OPEN" accentColor="#8b5cf6">
-            <div className="max-w-2xl mx-auto flex flex-col items-center">
-              <span className="font-mono text-xs uppercase tracking-widest text-violet-400 font-semibold mb-4">
-                ENGINEER THE FUTURE WITH US
-              </span>
-              <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-white uppercase tracking-tight leading-none mb-6">
-                Ready to build what&apos;s next?
-              </h2>
-              <p className="text-base text-slate-300 mb-10 leading-relaxed font-body">
-                Whether you want to partner for bespoke software engineering, join early product access, or solve a Startup Lab challenge for co-ownership — the door is open.
-              </p>
+      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(80px,11vh,130px)] w-full border-t border-white/[0.04]">
+        <GlassCard accentColor="#8b5cf6" className="relative p-10 md:p-16 text-center overflow-hidden">
+          <div className="max-w-2xl mx-auto flex flex-col items-center">
+            <span className="font-mono text-xs uppercase tracking-widest text-violet-400 font-semibold mb-3">
+              ENGINEER THE FUTURE WITH US
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl font-extrabold text-white uppercase tracking-tight leading-[1.05] mb-5">
+              Ready to build what&apos;s next?
+            </h2>
+            <p className="text-base text-slate-300 mb-8 leading-relaxed font-body">
+              Whether you want to partner for bespoke software engineering, join early product access, or solve a Startup Lab challenge for co-ownership — the door is open.
+            </p>
 
-              {/* Single Call To Action: Apply */}
-              <MagneticButton href="/apply" variant="primary" className="!px-8 !py-4 !text-sm">
-                Apply Now
-                <ArrowRight size={16} />
-              </MagneticButton>
-            </div>
-          </HudBox>
+            {/* Single Call To Action across site: Apply */}
+            <MagneticButton href="/apply" variant="primary" className="!px-8 !py-4 !text-sm">
+              Apply Now
+              <ArrowRight size={16} />
+            </MagneticButton>
+          </div>
         </GlassCard>
       </section>
     </div>

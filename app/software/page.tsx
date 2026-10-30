@@ -2,7 +2,6 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { siteContent } from '@/content/site';
 import GlassCard from '@/components/GlassCard';
-import HudBox from '@/components/HudBox';
 import TextReveal from '@/components/TextReveal';
 import SoftwareContactForm from '@/components/SoftwareContactForm';
 import { Code2, Globe, Cpu, TrendingUp, CheckCircle2, ArrowRight } from 'lucide-react';
@@ -27,61 +26,55 @@ export default function SoftwarePage() {
       <div className="pointer-events-none absolute top-24 left-1/2 -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-indigo-600/15 blur-[150px]" />
 
       {/* Header Section */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 pt-20 pb-16 w-full text-center md:text-left">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 pt-20 pb-12 w-full text-center md:text-left scroll-mt-24">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-indigo-400 mb-4">
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-indigo-400 mb-3">
             <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
             <span>DIVISION // 01 // CLIENT ENGINEERING</span>
           </div>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-extrabold text-white uppercase tracking-tight leading-none">
-            <TextReveal as="span">Orenty Software Solutions.</TextReveal>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-tight leading-[1.05]">
+            <TextReveal as="span">Software Solutions.</TextReveal>
           </h1>
-          <p className="mt-6 text-lg text-slate-300 font-body leading-relaxed">
+          <p className="mt-5 text-base sm:text-lg text-slate-300 font-body leading-relaxed">
             We partner with innovative enterprises to engineer resilient software architectures, cinematic web flagships, and autonomous AI pipelines designed to compound business advantages.
           </p>
         </div>
       </section>
 
-      {/* Capabilities / Services Grid */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 w-full">
-        <div className="mb-12">
-          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold">
+      {/* Capabilities / Services Grid: Single-frame GlassCards */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(60px,8vh,100px)] w-full scroll-mt-24">
+        <div className="mb-10">
+          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold block mb-2">
             CORE CAPABILITIES
           </span>
-          <h2 className="font-display text-3xl font-extrabold text-white uppercase mt-2">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight">
             Engineering services built for scale.
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {siteContent.services.map((svc) => {
+          {siteContent.services.map((svc, idx) => {
             const Icon = iconMap[svc.iconName] || Code2;
 
             return (
-              <GlassCard key={svc.id} accentColor="#6366f1" className="p-8">
-                <HudBox label={svc.id.toUpperCase()} tag="ENTERPRISE READY" accentColor="#6366f1">
-                  <div className="mt-3">
-                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-950/40 text-indigo-400 mb-6">
-                      <Icon size={24} />
+              <GlassCard
+                key={svc.id}
+                accentColor="#6366f1"
+                eyebrow={`CAPABILITY // 0${idx + 1}`}
+                badge="ENTERPRISE READY"
+                title={svc.title}
+                description={svc.shortDescription}
+                footerLabel="Initiate consultation"
+                footerHref="#contact-scope"
+              >
+                <div className="space-y-3 pt-4 border-t border-white/[0.06] mb-6">
+                  {svc.bullets.map((b, bIdx) => (
+                    <div key={bIdx} className="flex items-start gap-2.5 text-xs text-slate-300 font-body">
+                      <CheckCircle2 size={15} className="text-indigo-400 shrink-0 mt-0.5" />
+                      <span>{b}</span>
                     </div>
-
-                    <h3 className="font-display text-2xl font-bold text-white mb-2">
-                      {svc.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 font-body mb-6 leading-relaxed">
-                      {svc.shortDescription}
-                    </p>
-
-                    <div className="space-y-3 pt-4 border-t border-white/[0.06]">
-                      {svc.bullets.map((b, idx) => (
-                        <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-400">
-                          <CheckCircle2 size={15} className="text-indigo-400 shrink-0 mt-0.5" />
-                          <span>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </HudBox>
+                  ))}
+                </div>
               </GlassCard>
             );
           })}
@@ -89,12 +82,12 @@ export default function SoftwarePage() {
       </section>
 
       {/* Process: Discover > Design > Build > Grow */}
-      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-20 w-full border-t border-white/[0.04]">
-        <div className="max-w-2xl mb-14">
-          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold">
+      <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-[clamp(60px,8vh,100px)] w-full border-t border-white/[0.04] scroll-mt-24">
+        <div className="max-w-2xl mb-12">
+          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold block mb-2">
             EXECUTION METHODOLOGY
           </span>
-          <h2 className="font-display text-3xl font-extrabold text-white uppercase mt-2">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight">
             The engineering process.
           </h2>
           <p className="mt-3 text-sm text-slate-400 leading-relaxed font-body">
@@ -124,12 +117,15 @@ export default function SoftwarePage() {
       </section>
 
       {/* Client Contact Form */}
-      <section className="relative z-10 mx-auto max-w-4xl px-6 lg:px-12 py-20 w-full border-t border-white/[0.04]">
-        <div className="text-center mb-12">
-          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold">
+      <section
+        id="contact-scope"
+        className="relative z-10 mx-auto max-w-4xl px-6 lg:px-12 py-[clamp(60px,8vh,100px)] w-full border-t border-white/[0.04] scroll-mt-24"
+      >
+        <div className="text-center mb-10">
+          <span className="font-mono text-xs uppercase tracking-widest text-indigo-400 font-semibold block mb-2">
             ENGAGEMENT
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase mt-2">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight">
             Initiate a Project Scope
           </h2>
           <p className="mt-3 text-sm text-slate-400 max-w-lg mx-auto font-body leading-relaxed">

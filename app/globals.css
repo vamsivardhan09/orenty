@@ -152,6 +152,32 @@ html.lenis body {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
+/* Accessibility: Visible high-contrast focus rings for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #c4b5fd !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
+}
+
+/* Skip link for screen readers */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 10001;
+  background: #7c3aed;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border-radius: 0.375rem;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
 /* Accessibility: Reduced motion overrides */
 @media (prefers-reduced-motion: reduce) {
   *,

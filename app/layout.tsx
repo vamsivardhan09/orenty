@@ -103,11 +103,16 @@ export default function RootLayout({
       className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
     >
       <body className="bg-background font-body text-foreground selection:bg-violet-600/40 selection:text-white">
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
         <LoadingScreen />
         <CustomCursor />
         <SmoothScroll>
           <Navbar />
-          <main className="min-h-screen pt-20">{children}</main>
+          <main id="main-content" className="min-h-screen pt-20">
+            {children}
+          </main>
           <Footer />
         </SmoothScroll>
       </body>

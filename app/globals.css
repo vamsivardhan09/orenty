@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #04060d;
+  --foreground: #f8fafc;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom minimal dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #04060d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Lenis smooth scrolling rules */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Glass Card & Surface Styles */
+.glass-panel {
+  background: rgba(10, 13, 28, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  position: relative;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139, 92, 246, 0.12) 0%, transparent 60%),
+              rgba(9, 12, 25, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 20px 50px rgba(124, 58, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* HUD Micro Corner Brackets */
+.hud-bracket-container {
+  position: relative;
+}
+
+.hud-bracket {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.hud-bracket-tl {
+  top: -1px;
+  left: -1px;
+  border-top: 1.5px solid rgba(167, 139, 250, 0.6);
+  border-left: 1.5px solid rgba(167, 139, 250, 0.6);
+}
+
+.hud-bracket-tr {
+  top: -1px;
+  right: -1px;
+  border-top: 1.5px solid rgba(167, 139, 250, 0.6);
+  border-right: 1.5px solid rgba(167, 139, 250, 0.6);
+}
+
+.hud-bracket-bl {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 1.5px solid rgba(167, 139, 250, 0.6);
+  border-left: 1.5px solid rgba(167, 139, 250, 0.6);
+}
+
+.hud-bracket-br {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1.5px solid rgba(167, 139, 250, 0.6);
+  border-right: 1.5px solid rgba(167, 139, 250, 0.6);
+}
+
+/* Glowing text and lines */
+.text-glow {
+  text-shadow: 0 0 24px rgba(167, 139, 250, 0.45);
+}
+
+.text-glow-accent {
+  text-shadow: 0 0 32px rgba(139, 92, 246, 0.65), 0 0 8px rgba(167, 139, 250, 0.9);
+}
+
+/* Cinematic subtle background grid */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Accessibility: Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

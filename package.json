@@ -1,0 +1,10 @@
+{
+  "name": "orenty-website",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "imagetracerjs": "^1.2.6",
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.5"
+  }
+}

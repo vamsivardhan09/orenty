@@ -8,6 +8,7 @@ interface TextRevealProps {
   children: string;
   as?: 'h1' | 'h2' | 'h3' | 'p' | 'div' | 'span';
   className?: string;
+  wordClassName?: string;
   delay?: number;
   stagger?: number;
 }
@@ -16,6 +17,7 @@ export default function TextReveal({
   children,
   as: Component = 'div',
   className = '',
+  wordClassName = '',
   delay = 0,
   stagger = 0.05,
 }: TextRevealProps) {
@@ -63,7 +65,7 @@ export default function TextReveal({
     <Component ref={containerRef} className={`inline-block ${className}`}>
       {words.map((word, index) => (
         <span key={index} className="inline-block overflow-hidden pb-1 align-top">
-          <span className="reveal-word inline-block will-change-transform">
+          <span className={`reveal-word inline-block will-change-transform ${wordClassName}`}>
             {word}&nbsp;
           </span>
         </span>

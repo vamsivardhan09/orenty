@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { siteContent } from '@/content/site';
 import Hero from '@/components/Hero';
+import SceneBackground from '@/components/SceneBackground';
 import GlassCard from '@/components/GlassCard';
 import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
@@ -19,10 +20,16 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+
+
+
 export default function HomePage() {
   return (
     <div className="relative flex flex-col bg-background">
-      {/* 1. HERO WebGL 3D Light-Beam Section */}
+      {/* 3D Living Light-Beam & Universe Canvas (Fixed Background across sections) */}
+      <SceneBackground />
+
+      {/* 1. HERO Section */}
       <Hero />
 
       {/* 2. WHAT WE ARE // 3 DIVISIONS */}

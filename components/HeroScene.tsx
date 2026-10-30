@@ -5,12 +5,20 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { SVGLoader } from 'three-stdlib';
 
-// Custom Volumetric Light Beam Vertex Shader
+export interface ScrollState {
+  progress: number;
+  velocity: number;
+  y: number;
+}
+
+// Custom Volumetric Light Beam Vertex Shader with dynamic scroll bend
 const beamVertexShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
   uniform float uTime;
   uniform vec2 uCursor;
+  uniform float uScroll;
+  uniform float uScrollVelocity;
 
   void main() {
     vUv = uv;
@@ -18,19 +26,25 @@ const beamVertexShader = `
 
     // Gentle ease toward cursor
     float sway = sin(pos.y * 2.0 + uTime * 1.2) * 0.08;
-    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.4) * 0.35;
-    pos.z += uCursor.y * (1.0 - abs(pos.y) * 0.4) * 0.2;
+    
+    // Dynamic scroll bend: as the user scrolls, the beam leans and develops an organic curvature
+    float scrollBend = sin(pos.y * 1.4 + uScroll * 2.2) * (min(uScroll, 2.5) * 0.28);
+    
+    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.4) * 0.35 + scrollBend;
+    pos.z += uCursor.y * (1.0 - abs(pos.y) * 0.4) * 0.2 + abs(uScrollVelocity) * 0.04;
 
     vPosition = pos;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
 `;
 
-// Custom Volumetric Light Beam Fragment Shader
+// Custom Volumetric Light Beam Fragment Shader with velocity shimmer
 const beamFragmentShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
   uniform float uTime;
+  uniform float uScroll;
+  uniform float uScrollVelocity;
   uniform vec3 uColorCore;
   uniform vec3 uColorGlow;
 
@@ -47,8 +61,8 @@ const beamFragmentShader = `
     // Vertical gradient (fade at top and bottom to blend with deep space)
     float verticalFade = smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.75, vUv.y);
 
-    // Harmonic shimmer wave
-    float shimmer = 1.0 + sin(vUv.y * 16.0 - uTime * 3.0) * 0.08;
+    // Harmonic shimmer wave responsive to scroll
+    float shimmer = 1.0 + sin(vUv.y * 16.0 - uTime * 3.0 + uScroll * 3.5) * 0.09;
 
     float alpha = (core * 0.9 + shroud) * verticalFade * shimmer;
 
@@ -59,8 +73,16 @@ const beamFragmentShader = `
   }
 `;
 
-// Starfield Points Component
-function Starfield({ count = 3000, mouse }: { count?: number; mouse: React.MutableRefObject<{ x: number; y: number }> }) {
+// Starfield Points Component responsive to scroll
+function Starfield({
+  count = 2500,
+  mouse,
+  scrollRef,
+}: {
+  count?: number;
+  mouse: React.MutableRefObject<{ x: number; y: number }>;
+  scrollRef?: React.MutableRefObject<ScrollState>;
+}) {
   const pointsRef = useRef<THREE.Points>(null);
 
   const [positions, colors, scales] = useMemo(() => {
@@ -101,13 +123,20 @@ function Starfield({ count = 3000, mouse }: { count?: number; mouse: React.Mutab
     const posAttr = geom.attributes.position;
     const positionsArr = posAttr.array as Float32Array;
 
+    const s = scrollRef?.current?.progress || 0;
+    const v = scrollRef?.current?.velocity || 0;
+
     // Slow drifting and gentle cursor reaction
     const targetX = mouse.current.x * 0.25;
     const targetY = mouse.current.y * 0.25;
 
-    pointsRef.current.rotation.y += delta * 0.03;
+    // Starfield streams upward as user scrolls downward into deep space
+    const targetPosY = s * 2.6;
+    pointsRef.current.position.y += (targetPosY - pointsRef.current.position.y) * 0.05;
     pointsRef.current.position.x += (targetX - pointsRef.current.position.x) * 0.05;
-    pointsRef.current.position.y += (-targetY - pointsRef.current.position.y) * 0.05;
+
+    // Rotation accelerates with scroll velocity for dynamic travel sensation
+    pointsRef.current.rotation.y += delta * 0.03 + Math.abs(v) * 0.005;
 
     // Twinkle and subtle drift
     for (let i = 0; i < count; i += 5) {
@@ -119,14 +148,8 @@ function Starfield({ count = 3000, mouse }: { count?: number; mouse: React.Mutab
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          args={[colors, 3]}
-        />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
         size={0.035}
@@ -140,8 +163,14 @@ function Starfield({ count = 3000, mouse }: { count?: number; mouse: React.Mutab
   );
 }
 
-// Volumetric Central Light Beam
-function VolumetricBeam({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) {
+// Volumetric Central Light Beam that bends and sweeps with scroll
+function VolumetricBeam({
+  mouse,
+  scrollRef,
+}: {
+  mouse: React.MutableRefObject<{ x: number; y: number }>;
+  scrollRef?: React.MutableRefObject<ScrollState>;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
@@ -149,6 +178,8 @@ function VolumetricBeam({ mouse }: { mouse: React.MutableRefObject<{ x: number; 
     () => ({
       uTime: { value: 0 },
       uCursor: { value: new THREE.Vector2(0, 0) },
+      uScroll: { value: 0 },
+      uScrollVelocity: { value: 0 },
       uColorCore: { value: new THREE.Color('#ffffff') },
       uColorGlow: { value: new THREE.Color('#7c3aed') }, // Violet/Indigo glow
     }),
@@ -156,13 +187,31 @@ function VolumetricBeam({ mouse }: { mouse: React.MutableRefObject<{ x: number; 
   );
 
   useFrame((state) => {
-    if (!materialRef.current) return;
+    if (!materialRef.current || !meshRef.current) return;
     materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+
+    const s = scrollRef?.current?.progress || 0;
+    const v = scrollRef?.current?.velocity || 0;
+
+    // Update uniforms for dynamic shader bending
+    materialRef.current.uniforms.uScroll.value = s;
+    materialRef.current.uniforms.uScrollVelocity.value = v;
 
     // Ease toward cursor
     const cur = materialRef.current.uniforms.uCursor.value;
     cur.x += (mouse.current.x - cur.x) * 0.04;
     cur.y += (mouse.current.y - cur.y) * 0.04;
+
+    // Physical beam movement and tilt:
+    // As user scrolls down, beam leans slightly to the left (-X) and tilts diagonally (-Z),
+    // illuminating the back of the division and product cards!
+    const targetX = -Math.min(s * 0.85, 2.0);
+    const targetY = -s * 1.35;
+    const targetRotZ = -Math.min(s * 0.15, 0.32);
+
+    meshRef.current.position.x += (targetX - meshRef.current.position.x) * 0.06;
+    meshRef.current.position.y += (targetY - meshRef.current.position.y) * 0.06;
+    meshRef.current.rotation.z += (targetRotZ - meshRef.current.rotation.z) * 0.06;
   });
 
   return (
@@ -182,8 +231,14 @@ function VolumetricBeam({ mouse }: { mouse: React.MutableRefObject<{ x: number; 
   );
 }
 
-// Extruded 3D Floating Logo Mark
-function ExtrudedLogoMark({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) {
+// Extruded 3D Floating Logo Mark that glides with scroll
+function ExtrudedLogoMark({
+  mouse,
+  scrollRef,
+}: {
+  mouse: React.MutableRefObject<{ x: number; y: number }>;
+  scrollRef?: React.MutableRefObject<ScrollState>;
+}) {
   const groupRef = useRef<THREE.Group>(null);
   const [geometry, setGeometry] = useState<THREE.ExtrudeGeometry | null>(null);
 
@@ -215,7 +270,7 @@ function ExtrudedLogoMark({ mouse }: { mouse: React.MutableRefObject<{ x: number
         }
       }
     } catch (e) {
-      console.warn("SVG Extrusion fallback:", e);
+      console.warn('SVG Extrusion fallback:', e);
     }
 
     return () => {
@@ -226,6 +281,7 @@ function ExtrudedLogoMark({ mouse }: { mouse: React.MutableRefObject<{ x: number
   useFrame((state) => {
     if (!groupRef.current) return;
     const time = state.clock.elapsedTime;
+    const s = scrollRef?.current?.progress || 0;
 
     // Floating idle bobbing motion
     const idleY = Math.sin(time * 1.5) * 0.08;
@@ -233,18 +289,24 @@ function ExtrudedLogoMark({ mouse }: { mouse: React.MutableRefObject<{ x: number
 
     // Cursor tracking tilt
     const targetRotX = mouse.current.y * 0.45;
-    const targetRotY = mouse.current.x * 0.55;
+    const targetRotY = mouse.current.x * 0.55 + s * 0.35;
 
-    // Position floating near the beam to the side so headline text remains 100% crisp & unobstructed
+    // Position floating near the beam to the side
     const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768;
     const baseX = isSmallScreen ? 0 : 2.1;
     const baseY = isSmallScreen ? 1.7 : 0.2;
 
-    groupRef.current.position.x = baseX;
-    groupRef.current.position.y = baseY + idleY;
+    const targetX = baseX + (isSmallScreen ? 0 : s * 0.35);
+    const targetY = baseY + idleY - s * 2.1;
+    const targetZ = 0.2 - s * 0.4;
+
+    groupRef.current.position.x += (targetX - groupRef.current.position.x) * 0.06;
+    groupRef.current.position.y += (targetY - groupRef.current.position.y) * 0.06;
+    groupRef.current.position.z += (targetZ - groupRef.current.position.z) * 0.06;
+
     groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.08;
     groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.08;
-    groupRef.current.rotation.z = idleRotZ;
+    groupRef.current.rotation.z = idleRotZ - s * 0.12;
   });
 
   if (!geometry) return null;
@@ -267,20 +329,23 @@ function ExtrudedLogoMark({ mouse }: { mouse: React.MutableRefObject<{ x: number
         />
       </mesh>
 
-      {/* Radiant inner accent core light with gentle balanced intensity */}
+      {/* Radiant inner accent core light */}
       <pointLight color="#a78bfa" intensity={1.2} distance={3.0} decay={2} />
     </group>
   );
 }
 
-// Scene Root with Camera and Lights
-export default function HeroScene() {
+// Scene Root with Camera and Lights, reacting to mouse & scroll
+export default function HeroScene({
+  scrollRef,
+}: {
+  scrollRef?: React.MutableRefObject<ScrollState>;
+}) {
   const mouse = useRef({ x: 0, y: 0 });
   const { camera } = useThree();
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
-      // Normalize mouse -1 to +1
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
@@ -290,9 +355,19 @@ export default function HeroScene() {
   }, []);
 
   useFrame(() => {
-    // Subtle camera parallax shift
-    camera.position.x += (mouse.current.x * 0.2 - camera.position.x) * 0.04;
-    camera.position.y += (mouse.current.y * 0.15 - camera.position.y) * 0.04;
+    const s = scrollRef?.current?.progress || 0;
+
+    // Camera 3D Dolly and Parallax Shift:
+    // Follows mouse position + dollies smoothly as user scrolls
+    const targetCamX = mouse.current.x * 0.2;
+    const targetCamY = mouse.current.y * 0.15 - s * 1.05;
+    const targetCamZ = 5.0 + Math.min(s * 1.1, 2.2);
+    const targetRotX = mouse.current.y * 0.05 - Math.min(s * 0.09, 0.18);
+
+    camera.position.x += (targetCamX - camera.position.x) * 0.04;
+    camera.position.y += (targetCamY - camera.position.y) * 0.04;
+    camera.position.z += (targetCamZ - camera.position.z) * 0.04;
+    camera.rotation.x += (targetRotX - camera.rotation.x) * 0.04;
   });
 
   return (
@@ -304,9 +379,9 @@ export default function HeroScene() {
       <pointLight position={[3, 2, -2]} intensity={1.2} color="#06b6d4" />
 
       {/* 3D Volumetric Scene Elements */}
-      <VolumetricBeam mouse={mouse} />
-      <Starfield count={2500} mouse={mouse} />
-      <ExtrudedLogoMark mouse={mouse} />
+      <VolumetricBeam mouse={mouse} scrollRef={scrollRef} />
+      <Starfield count={2500} mouse={mouse} scrollRef={scrollRef} />
+      <ExtrudedLogoMark mouse={mouse} scrollRef={scrollRef} />
     </>
   );
 }

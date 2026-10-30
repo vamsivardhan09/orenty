@@ -51,6 +51,13 @@ export interface LabChallenge {
   status: 'Open' | 'Under Review';
 }
 
+export interface RotatingVerb {
+  verb: string;
+  tagline: string;
+  divisionId: string;
+  accent: string;
+}
+
 export interface SiteContent {
   meta: {
     title: string;
@@ -66,6 +73,7 @@ export interface SiteContent {
     badge: string;
     headline: string;
     headlineAccent: string;
+    rotatingVerbs: RotatingVerb[];
     subheadline: string;
     ctaPrimary: {
       label: string;
@@ -123,8 +131,34 @@ export const siteContent: SiteContent = {
   ],
   hero: {
     badge: 'ORENTY // NEXT-GEN ENGINEERING & VENTURE LAB',
-    headline: 'Build what\'s',
-    headlineAccent: 'next.',
+    headline: "WHAT'S",
+    headlineAccent: 'NEXT.',
+    rotatingVerbs: [
+      {
+        verb: 'BUILD',
+        tagline: 'Proprietary In-House Products',
+        divisionId: 'products',
+        accent: '#c4b5fd',
+      },
+      {
+        verb: 'ENGINEER',
+        tagline: 'Client Software & High-Impact Engineering',
+        divisionId: 'software',
+        accent: '#818cf8',
+      },
+      {
+        verb: 'AUTOMATE',
+        tagline: 'Intelligent AI Workflows & Systems',
+        divisionId: 'software',
+        accent: '#38bdf8',
+      },
+      {
+        verb: 'SCALE',
+        tagline: 'Startup Lab Challenges & Co-Founding',
+        divisionId: 'lab',
+        accent: '#f472b6',
+      },
+    ],
     subheadline:
       'We engineer intelligent software for ambitious businesses, build category-defining proprietary products, and back top problem solvers with product ownership.',
     ctaPrimary: {

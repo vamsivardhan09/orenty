@@ -134,123 +134,65 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* 4 Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* ONE row of 4 compact cards (4 columns desktop, 2 tablet, swipeable scroll-snap on mobile) */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-5 pb-4 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:pb-0 scrollbar-none">
           {siteContent.products.map((prod) => (
             <GlassCard
               key={prod.slug}
               accentColor={prod.accentColor}
-              className="p-8 flex flex-col justify-between overflow-hidden relative group"
+              maxTilt={3}
+              className="p-5 flex flex-col justify-between rounded-2xl min-w-[280px] sm:min-w-0 snap-center shrink-0 border border-white/[0.08] bg-navy-950/70"
             >
-              {/* Background Ambient Screenshot Watermark */}
-              {prod.previewImage && (
-                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-15 transition-opacity duration-700 group-hover:opacity-25">
-                  <Image
-                    src={prod.previewImage}
-                    alt={`${prod.name} Preview`}
-                    fill
-                    className="object-cover object-top filter grayscale contrast-125 transition-transform duration-700 ease-out group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#060814] via-[#060814]/85 to-[#060814]/70" />
-                </div>
-              )}
-
-              <HudBox
-                label={prod.category.toUpperCase()}
-                tag={`STATUS: ${prod.status.toUpperCase()}`}
-                accentColor={prod.accentColor}
-              >
-                <div className="mt-3">
-                  <h3 className="font-display text-3xl font-extrabold text-white">
-                    {prod.name}
-                  </h3>
-                  <p
-                    className="mt-1 font-mono text-xs uppercase tracking-wider font-semibold"
-                    style={{ color: prod.accentColor }}
-                  >
-                    {prod.tagline}
-                  </p>
-                  <p className="mt-4 text-sm text-slate-400 font-body leading-relaxed">
-                    {prod.description}
-                  </p>
-
-                  {/* Embedded Browser Preview Frame */}
-                  {prod.previewImage && (
-                    <div className="mt-6 overflow-hidden rounded-xl border border-white/[0.08] bg-black/60 shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:border-white/20">
-                      {/* Browser Frame Top Bar */}
-                      <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.03] px-3.5 py-2">
-                        <div className="flex items-center gap-1.5">
-                          <span className="h-2 w-2 rounded-full bg-rose-500/60" />
-                          <span className="h-2 w-2 rounded-full bg-amber-500/60" />
-                          <span className="h-2 w-2 rounded-full bg-emerald-500/60" />
-                        </div>
-                        <div className="flex items-center gap-1.5 rounded-md bg-black/60 px-2.5 py-0.5 text-[10px] font-mono text-slate-400">
-                          <span className="text-[8px] text-emerald-400">●</span>
-                          <span className="truncate max-w-[130px] sm:max-w-[180px]">
-                            {prod.websiteUrl ? prod.websiteUrl.replace('https://', '').replace(/\/$/, '') : `${prod.slug}.orenty.in`}
-                          </span>
-                        </div>
-                        {prod.websiteUrl ? (
-                          <a
-                            href={prod.websiteUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-[10px] font-mono text-violet-300 hover:text-white uppercase tracking-wider transition-colors"
-                          >
-                            <span>LIVE</span>
-                            <ExternalLink size={10} />
-                          </a>
-                        ) : (
-                          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-                            PREVIEW
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Image Preview with subtle bottom gradient fade */}
-                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
-                        <Image
-                          src={prod.previewImage}
-                          alt={`${prod.name} Interface`}
-                          fill
-                          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#060814]/90 via-transparent to-transparent" />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Feature Bullets */}
-                  <ul className="mt-6 space-y-2.5">
-                    {prod.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                        <CheckCircle2
-                          size={15}
-                          className="shrink-0 mt-0.5"
-                          style={{ color: prod.accentColor }}
-                        />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div>
+                {/* Top: Product Name & Status Badge */}
+                <div className="flex items-center justify-between mb-3.5">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="h-2 w-2 rounded-full shrink-0"
+                      style={{ backgroundColor: prod.accentColor }}
+                    />
+                    <h3 className="font-display text-lg font-bold text-white tracking-tight">
+                      {prod.name}
+                    </h3>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/10 bg-white/5 text-slate-300">
+                    {prod.status}
+                  </span>
                 </div>
 
-                {/* Footer Link & Action */}
-                <div className="mt-8 pt-5 border-t border-white/[0.06] flex items-center justify-between">
-                  <Link
-                    href={`/products/${prod.slug}`}
-                    className="text-xs font-mono uppercase tracking-widest text-slate-400 hover:text-white transition-colors"
-                  >
-                    View Details
-                  </Link>
+                {/* Small Cropped Preview Image (no browser frame, no URL, no LIVE label, no numbers or claims) */}
+                {prod.previewImage && (
+                  <div className="relative h-28 sm:h-32 w-full overflow-hidden rounded-lg border border-white/[0.08] bg-slate-900 mb-3.5">
+                    <Image
+                      src={prod.previewImage}
+                      alt={`${prod.name} Preview`}
+                      fill
+                      unoptimized
+                      loading="eager"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/60 via-transparent to-transparent" />
+                  </div>
+                )}
 
-                  <MagneticButton href={prod.ctaUrl} variant="primary" className="!px-4 !py-2 !text-[10px]">
-                    {prod.ctaLabel}
-                  </MagneticButton>
-                </div>
-              </HudBox>
+                {/* One sentence tagline (sentence case, body font) */}
+                <p className="font-body text-xs text-slate-300/90 leading-relaxed line-clamp-2">
+                  {prod.tagline}
+                </p>
+              </div>
+
+              {/* Learn more linking to /products/[slug] */}
+              <div className="mt-5 pt-3.5 border-t border-white/[0.06] flex items-center justify-between">
+                <Link
+                  href={`/products/${prod.slug}`}
+                  className="inline-flex items-center gap-1.5 font-display text-xs uppercase tracking-widest font-semibold text-violet-300 hover:text-white transition-colors"
+                  data-cursor-expand="true"
+                >
+                  <span>Learn more</span>
+                  <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
             </GlassCard>
           ))}
         </div>
@@ -328,7 +270,7 @@ export default function HomePage() {
               </p>
 
               {/* Single Call To Action: Apply */}
-              <MagneticButton href="/apply" variant="primary" className="!px-8 !py-4 !text-sm">
+              <MagneticButton href="/careers#apply" variant="primary" className="!px-8 !py-4 !text-sm">
                 Apply Now
                 <ArrowRight size={16} />
               </MagneticButton>

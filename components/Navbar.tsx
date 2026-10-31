@@ -26,7 +26,7 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  const navLinks = siteContent.navigation.filter((item) => item.label !== 'Apply');
+  const navLinks = siteContent.navigation;
 
   return (
     <header
@@ -54,7 +54,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links: Software, Products, Careers */}
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((item) => {
             const isActive = pathname.startsWith(item.href);
@@ -75,10 +75,10 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right Desktop CTA: Single CTA across site is "Apply" */}
+        {/* Right Desktop CTA: Button "Apply now" -> /careers#apply */}
         <div className="hidden items-center gap-4 md:flex">
-          <MagneticButton href="/apply" variant="primary">
-            Apply
+          <MagneticButton href="/careers#apply" variant="primary">
+            Apply now
           </MagneticButton>
         </div>
 
@@ -113,11 +113,11 @@ export default function Navbar() {
             })}
             <div className="pt-4 border-t border-white/10">
               <Link
-                href="/apply"
+                href="/careers#apply"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex w-full items-center justify-center rounded-full bg-violet-600 px-6 py-3 font-display text-xs uppercase tracking-widest font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
               >
-                Apply
+                Apply now
               </Link>
             </div>
           </nav>

@@ -126,13 +126,12 @@ export const siteContent: SiteContent = {
   navigation: [
     { label: 'Software', href: '/software' },
     { label: 'Products', href: '/products' },
-    { label: 'Lab', href: '/lab' },
-    { label: 'Apply', href: '/apply' },
+    { label: 'Careers', href: '/careers' },
   ],
   hero: {
     badge: 'ORENTY // NEXT-GEN ENGINEERING & VENTURE LAB',
-    headline: "WHAT'S",
-    headlineAccent: 'NEXT.',
+    headline: "Build what's",
+    headlineAccent: 'next.',
     rotatingVerbs: [
       {
         verb: 'BUILD',
@@ -162,8 +161,8 @@ export const siteContent: SiteContent = {
     subheadline:
       'We engineer intelligent software for ambitious businesses, build category-defining proprietary products, and back top problem solvers with product ownership.',
     ctaPrimary: {
-      label: 'Apply',
-      href: '/apply',
+      label: 'Apply now',
+      href: '/careers#apply',
     },
     ctaSecondary: {
       label: 'Explore Products',
@@ -442,7 +441,7 @@ export const siteContent: SiteContent = {
       { label: 'Software Solutions', href: '/software' },
       { label: 'Products', href: '/products' },
       { label: 'Startup Lab', href: '/lab' },
-      { label: 'Apply', href: '/apply' },
+      { label: 'Careers', href: '/careers' },
     ],
     socials: [
       { label: 'X (Twitter)', href: 'https://x.com' },

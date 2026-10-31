@@ -73,7 +73,7 @@ const beamFragmentShader = `
   }
 `;
 
-// Starfield Points Component responsive to scroll
+// Starfield Points Component responsive to scroll with smooth decay & reduced motion support
 function Starfield({
   count = 2500,
   mouse,
@@ -84,6 +84,9 @@ function Starfield({
   scrollRef?: React.MutableRefObject<ScrollState>;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
+  const boostRef = useRef(0);
+  const BASE_SPEED = 0.005; // very slow base rotation
+  const MAX_BOOST = BASE_SPEED * 2.0; // clamped so total speed <= ~3x base
 
   const [positions, colors, scales] = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -119,6 +122,12 @@ function Starfield({
 
   useFrame((state, delta) => {
     if (!pointsRef.current) return;
+
+    // Respect prefers-reduced-motion
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     const geom = pointsRef.current.geometry;
     const posAttr = geom.attributes.position;
     const positionsArr = posAttr.array as Float32Array;
@@ -131,12 +140,22 @@ function Starfield({
     const targetY = mouse.current.y * 0.25;
 
     // Starfield streams upward as user scrolls downward into deep space
-    const targetPosY = s * 2.6;
+    const targetPosY = s * 2.2;
     pointsRef.current.position.y += (targetPosY - pointsRef.current.position.y) * 0.05;
     pointsRef.current.position.x += (targetX - pointsRef.current.position.x) * 0.05;
 
-    // Rotation accelerates with scroll velocity for dynamic travel sensation
-    pointsRef.current.rotation.y += delta * 0.03 + Math.abs(v) * 0.005;
+    // Add scroll velocity as a boost, smoothed (lerp/damping), clamped to low max (~3x base), decaying back to base within ~1s after scrolling stops
+    const targetBoost = Math.min(Math.abs(v) * 0.0025, MAX_BOOST);
+    if (targetBoost > boostRef.current) {
+      // Rapid response to scroll onset
+      boostRef.current += (targetBoost - boostRef.current) * Math.min(delta * 5.0, 1.0);
+    } else {
+      // Decays smoothly back to 0 within ~1s (decay constant ~2.8)
+      boostRef.current += (0 - boostRef.current) * Math.min(delta * 2.8, 1.0);
+    }
+
+    const currentRotationSpeed = BASE_SPEED + boostRef.current;
+    pointsRef.current.rotation.y += currentRotationSpeed * (delta * 60);
 
     // Twinkle and subtle drift
     for (let i = 0; i < count; i += 5) {
@@ -203,8 +222,7 @@ function VolumetricBeam({
     cur.y += (mouse.current.y - cur.y) * 0.04;
 
     // Physical beam movement and tilt:
-    // As user scrolls down, beam leans slightly to the left (-X) and tilts diagonally (-Z),
-    // illuminating the back of the division and product cards!
+    // As user scrolls down, beam leans slightly to the left (-X) and tilts diagonally (-Z)
     const targetX = -Math.min(s * 0.85, 2.0);
     const targetY = -s * 1.35;
     const targetRotZ = -Math.min(s * 0.15, 0.32);
@@ -231,7 +249,7 @@ function VolumetricBeam({
   );
 }
 
-// Extruded 3D Floating Logo Mark that glides with scroll
+// Extruded 3D Floating Logo Mark positioned beside the beam, NEVER behind the headline text
 function ExtrudedLogoMark({
   mouse,
   scrollRef,
@@ -265,7 +283,7 @@ function ExtrudedLogoMark({
           // Center geometry
           extrudeGeom.center();
           // Scale to appropriate 3D unit coordinates
-          extrudeGeom.scale(0.009, -0.009, 0.009); // Invert Y because SVG coordinate system is upside down
+          extrudeGeom.scale(0.0085, -0.0085, 0.0085);
           setGeometry(extrudeGeom);
         }
       }
@@ -291,12 +309,14 @@ function ExtrudedLogoMark({
     const targetRotX = mouse.current.y * 0.45;
     const targetRotY = mouse.current.x * 0.55 + s * 0.35;
 
-    // Position floating near the beam to the side
+    // Position floating strictly beside the beam, NEVER behind the headline text:
+    // Desktop: positioned at x = 3.35 (well to the right of the max-w-3xl text area)
+    // Mobile: positioned high beside the beam (x = 1.6, y = 2.45) clear of the headline
     const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768;
-    const baseX = isSmallScreen ? 0 : 2.1;
-    const baseY = isSmallScreen ? 1.7 : 0.2;
+    const baseX = isSmallScreen ? 1.55 : 3.35;
+    const baseY = isSmallScreen ? 2.45 : 0.2;
 
-    const targetX = baseX + (isSmallScreen ? 0 : s * 0.35);
+    const targetX = baseX + (isSmallScreen ? 0 : s * 0.25);
     const targetY = baseY + idleY - s * 2.1;
     const targetZ = 0.2 - s * 0.4;
 
@@ -312,7 +332,7 @@ function ExtrudedLogoMark({
   if (!geometry) return null;
 
   return (
-    <group ref={groupRef} position={[2.1, 0.2, 0.2]}>
+    <group ref={groupRef} position={[3.35, 0.2, 0.2]}>
       {/* 3D Glass/Crystal Logo Object */}
       <mesh geometry={geometry}>
         <meshPhysicalMaterial
@@ -358,7 +378,6 @@ export default function HeroScene({
     const s = scrollRef?.current?.progress || 0;
 
     // Camera 3D Dolly and Parallax Shift:
-    // Follows mouse position + dollies smoothly as user scrolls
     const targetCamX = mouse.current.x * 0.2;
     const targetCamY = mouse.current.y * 0.15 - s * 1.05;
     const targetCamZ = 5.0 + Math.min(s * 1.1, 2.2);

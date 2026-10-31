@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
-import { motion, AnimatePresence } from 'framer-motion';
 import { siteContent } from '@/content/site';
 import MagneticButton from './MagneticButton';
 import { ArrowRight } from 'lucide-react';
@@ -27,165 +26,72 @@ interface HeroProps {
 }
 
 export default function Hero({ showCanvas = false }: HeroProps) {
-  const verbs = siteContent.hero.rotatingVerbs;
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [isManual, setIsManual] = useState(false);
-  const manualTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Auto-cycle through verbs every 3.2 seconds unless recently interacted with
-  useEffect(() => {
-    if (isManual) return;
-    const interval = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % verbs.length);
-    }, 3200);
-
-    return () => clearInterval(interval);
-  }, [isManual, verbs.length]);
-
-  // Scroll reaction: as user scrolls down, advance or map verb to scroll progress
-  useEffect(() => {
-    let lastY = 0;
-    const handleScroll = () => {
-      const y = window.scrollY;
-      const vh = window.innerHeight || 800;
-
-      // When user scrolls through the hero (first 600px), shift verbs with scroll
-      if (y > 30 && y < vh * 1.5) {
-        if (Math.abs(y - lastY) > 80) {
-          const step = Math.min(
-            verbs.length - 1,
-            Math.floor((y / (vh * 0.45)) % verbs.length)
-          );
-          setActiveIdx(step);
-          lastY = y;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [verbs.length]);
-
-  const handleSelectVerb = (idx: number) => {
-    setActiveIdx(idx);
-    setIsManual(true);
-    if (manualTimeoutRef.current) clearTimeout(manualTimeoutRef.current);
-    // Resume auto-cycle after 6 seconds of inactivity
-    manualTimeoutRef.current = setTimeout(() => {
-      setIsManual(false);
-    }, 6000);
-  };
-
-  const currentVerb = verbs[activeIdx] || verbs[0];
-
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center items-center px-6 lg:px-12 pt-16 pb-24 text-center">
+    <section className="relative min-h-[82vh] sm:min-h-[85vh] flex flex-col justify-center items-center px-6 lg:px-12 pt-20 pb-12 text-center">
       {/* 3D WebGL Shader + Logo Scene if rendered directly */}
       {showCanvas && <HeroCanvas />}
 
       {/* Hero Foreground Content */}
       <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
         {/* Top HUD Badge */}
-        <div className="inline-flex items-center rounded-full border border-violet-500/30 bg-violet-950/40 px-4 py-1.5 text-[11px] font-mono tracking-widest text-violet-300 uppercase mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.15)]">
+        <div className="inline-flex items-center rounded-full border border-violet-500/30 bg-violet-950/40 px-3.5 py-1 text-[11px] font-mono tracking-widest text-violet-300 uppercase mb-4 backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.15)]">
           <span>{siteContent.hero.badge}</span>
         </div>
 
-        {/* Dynamic Display Headline */}
-        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tight uppercase leading-[0.95] flex flex-col items-center">
-          {/* Line 1: Dynamic Rolling Verb with 3D Motion Blur */}
-          <div className="relative inline-flex items-center justify-center h-[1.12em] overflow-hidden">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={currentVerb.verb}
-                initial={{ y: 50, opacity: 0, filter: 'blur(8px)' }}
-                animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-                exit={{ y: -50, opacity: 0, filter: 'blur(8px)' }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block text-white drop-shadow-[0_0_25px_rgba(167,139,250,0.35)]"
-              >
-                {currentVerb.verb}
-              </motion.span>
-            </AnimatePresence>
-          </div>
-
-          {/* Line 2: WHAT'S NEXT. */}
-          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 mt-1">
-            <span className="text-white">WHAT&apos;S</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-indigo-200 to-violet-300 drop-shadow-[0_0_12px_rgba(167,139,250,0.35)]">
-              NEXT.
-            </span>
-          </div>
+        {/* Fixed Headline: "Build what's next." in display font, clamp(40px, 6vw, 88px), max 2 lines */}
+        <h1 className="font-display font-extrabold tracking-tight uppercase leading-[0.98] text-[clamp(40px,6vw,88px)] max-w-4xl mx-auto">
+          <span className="text-white">Build what&apos;s</span>{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-indigo-200 to-violet-300 drop-shadow-[0_0_16px_rgba(167,139,250,0.35)]">
+            next.
+          </span>
         </h1>
 
-        {/* Interactive Capability Pills & Tagline */}
-        <div className="mt-7 flex flex-col items-center gap-3">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {verbs.map((item, idx) => {
-              const isActive = activeIdx === idx;
-              return (
-                <button
-                  key={item.verb}
-                  type="button"
-                  onClick={() => handleSelectVerb(idx)}
-                  className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono tracking-widest uppercase transition-all duration-300 border flex items-center gap-1.5 ${
-                    isActive
-                      ? 'border-violet-400 bg-violet-950/70 text-white shadow-[0_0_12px_rgba(139,92,246,0.25)]'
-                      : 'border-white/10 bg-white/5 text-slate-400 hover:text-slate-200 hover:border-white/20'
-                  }`}
-                  data-cursor-expand="true"
-                >
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full transition-opacity duration-300 ${
-                      isActive ? 'opacity-100 animate-pulse' : 'opacity-40'
-                    }`}
-                    style={{ backgroundColor: item.accent }}
-                  />
-                  <span>{item.verb}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Dynamic sub-tagline describing the active capability */}
-          <div className="h-6 flex items-center justify-center overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={currentVerb.tagline}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.3 }}
-                className="font-mono text-[11px] uppercase tracking-wider text-violet-300/80 font-medium"
-              >
-                // {currentVerb.tagline}
-              </motion.span>
-            </AnimatePresence>
-          </div>
-        </div>
-
         {/* Muted Body Copy */}
-        <p className="mt-6 max-w-2xl text-base md:text-lg text-slate-300/90 leading-relaxed font-body font-normal">
+        <p className="mt-4 max-w-2xl text-sm sm:text-base text-slate-300/90 leading-relaxed font-body font-normal">
           {siteContent.hero.subheadline}
         </p>
 
-        {/* CTA Actions: Single call to action across site is "Apply" */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
-          <MagneticButton href={siteContent.hero.ctaPrimary.href} variant="primary">
-            {siteContent.hero.ctaPrimary.label}
+        {/* Small Ticker under the subtext */}
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-widest uppercase text-violet-300/80">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+            <span>BUILD</span>
+          </span>
+          <span className="text-white/20">/</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
+            <span>ENGINEER</span>
+          </span>
+          <span className="text-white/20">/</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+            <span>AUTOMATE</span>
+          </span>
+          <span className="text-white/20">/</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-pink-400" />
+            <span>SCALE</span>
+          </span>
+        </div>
+
+        {/* CTA Actions: fully visible at 1366x768 */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+          <MagneticButton href="/careers#apply" variant="primary">
+            Apply now
             <ArrowRight size={14} />
           </MagneticButton>
-          <MagneticButton href={siteContent.hero.ctaSecondary.href} variant="secondary">
-            {siteContent.hero.ctaSecondary.label}
+          <MagneticButton href="/products" variant="secondary">
+            Explore Products
           </MagneticButton>
         </div>
       </div>
 
       {/* Bottom ambient scroll indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 pointer-events-none">
-        <span className="font-mono text-[10px] tracking-widest text-violet-300 uppercase">
+      <div className="mt-8 flex flex-col items-center gap-1 opacity-50 pointer-events-none">
+        <span className="font-mono text-[9px] tracking-widest text-violet-300 uppercase">
           SCROLL TO EXPLORE
         </span>
-        <div className="h-8 w-[1px] bg-gradient-to-b from-violet-400 to-transparent animate-pulse" />
+        <div className="h-5 w-[1px] bg-gradient-to-b from-violet-400 to-transparent animate-pulse" />
       </div>
     </section>
   );

@@ -9,6 +9,7 @@ import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
 import DriftingLabTiles from '@/components/DriftingLabTiles';
+import ProductLogo from '@/components/ProductLogo';
 import {
   ArrowRight,
   Code2,
@@ -146,11 +147,8 @@ export default function HomePage() {
               <div>
                 {/* Top: Product Name & Status Badge */}
                 <div className="flex items-center justify-between mb-3.5">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="h-2 w-2 rounded-full shrink-0"
-                      style={{ backgroundColor: prod.accentColor }}
-                    />
+                  <div className="flex items-center gap-2.5">
+                    <ProductLogo slug={prod.slug} size={22} />
                     <h3 className="font-display text-lg font-bold text-white tracking-tight">
                       {prod.name}
                     </h3>

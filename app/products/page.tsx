@@ -7,6 +7,7 @@ import GlassCard from '@/components/GlassCard';
 import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
+import ProductLogo from '@/components/ProductLogo';
 import { CheckCircle2, ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -67,9 +68,12 @@ export default function ProductsPage() {
               >
                 <div className="mt-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white">
-                      {prod.name}
-                    </h2>
+                    <div className="flex items-center gap-3">
+                      <ProductLogo slug={prod.slug} size={32} />
+                      <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white">
+                        {prod.name}
+                      </h2>
+                    </div>
                     <span
                       className="rounded-full px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider"
                       style={{

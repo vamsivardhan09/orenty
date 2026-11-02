@@ -8,6 +8,7 @@ import GlassCard from '@/components/GlassCard';
 import HudBox from '@/components/HudBox';
 import MagneticButton from '@/components/MagneticButton';
 import TextReveal from '@/components/TextReveal';
+import ProductLogo from '@/components/ProductLogo';
 import { CheckCircle2, ArrowLeft, ArrowRight, ShieldCheck, Sparkles, Layers, Terminal, ExternalLink } from 'lucide-react';
 
 interface Props {

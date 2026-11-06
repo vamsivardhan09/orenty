@@ -426,7 +426,7 @@ export default function HeroScene({
       <CelestialStarfield scrollRef={scrollRef} isMobile={isMobile} />
 
       {/* 3. Hero 3D Logo Mark */}
-      <HeroLogoMark mouse={mouse} isMobile={isMobile} />
+      {!isMobile && <HeroLogoMark mouse={mouse} isMobile={isMobile} />}
     </>
   );
 }

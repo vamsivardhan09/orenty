@@ -36,7 +36,7 @@ export default function HeroCanvas({ isFixed = true }: HeroCanvasProps) {
 
     // Check mobile profile
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+      setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -126,7 +126,7 @@ export default function HeroCanvas({ isFixed = true }: HeroCanvasProps) {
         className="h-full w-full"
       >
         <Suspense fallback={null}>
-          <HeroScene scrollRef={scrollRef} />
+          <HeroScene scrollRef={scrollRef} isMobile={isMobile} />
         </Suspense>
       </Canvas>
     </div>

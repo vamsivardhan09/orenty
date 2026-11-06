@@ -66,19 +66,23 @@ export default function StackContainer({
     };
   }, [totalCards]);
 
+  const gridColsClass =
+    totalCards === 3
+      ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
+      : 'md:grid md:grid-cols-2 lg:grid-cols-4';
+
   return (
     <div className="relative w-full">
       {/* Mobile-only Progress Indicator (1 / 4) */}
-      <div className="flex md:hidden items-center justify-between mb-4 px-1 text-xs font-mono text-secondary">
-        <span className="uppercase tracking-widest font-semibold">STACK VIEW</span>
-        <span>
+      <div className="flex md:hidden items-center justify-end mb-3 px-1 text-xs text-text-3 font-medium">
+        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold">
           {currentIdx} / {totalCards}
         </span>
       </div>
 
       <div
         ref={containerRef}
-        className={`stack md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 ${className}`}
+        className={`stack ${gridColsClass} gap-6 lg:gap-8 ${className}`}
       >
         {children.map((child, idx) => (
           <div key={idx} className="stack__item rounded-card h-full">

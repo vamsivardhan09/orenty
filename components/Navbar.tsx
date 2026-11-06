@@ -4,9 +4,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { siteContent } from '@/content/site';
 import Button from './Button';
 import { Menu, X, ArrowRight } from 'lucide-react';
+
+export const navItems = [
+  { label: 'Services', href: '/services' },
+  { label: 'Products', href: '/products' },
+  { label: 'Work', href: '/work' },
+  { label: 'Careers', href: '/careers' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,7 +23,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -26,25 +34,23 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Prevent background scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
-
-  const navLinks = siteContent.navigation;
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#05050A]/85 py-3 backdrop-blur-xl border-b border-surface-border shadow-[0_12px_36px_rgba(0,0,0,0.6)]'
+          ? 'bg-[#05050A]/90 py-3.5 backdrop-blur-xl border-b border-border shadow-[0_12px_36px_rgba(0,0,0,0.6)]'
           : 'bg-transparent py-5'
       }`}
     >
@@ -55,12 +61,12 @@ export default function Navbar() {
           className="group flex items-center gap-3 transition-opacity hover:opacity-90"
           aria-label="Orenty Home"
         >
-          <div className="relative h-8 w-28 md:h-9 md:w-34">
+          <div className="relative h-8 w-28 md:h-9 md:w-32">
             <Image
               src="/brand/orenty-logo-white.svg"
-              alt="Orenty Logo"
+              alt="Orenty"
               fill
-              className="object-contain object-left transition-transform duration-300 group-hover:scale-105"
+              className="object-contain object-left"
               priority
             />
           </div>
@@ -68,14 +74,16 @@ export default function Navbar() {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+          {navItems.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== '/' && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative font-body text-sm font-medium transition-colors hover:text-white ${
-                  isActive ? 'text-primary-glow font-semibold' : 'text-text-2'
+                className={`relative font-body text-[15px] font-medium transition-colors hover:text-text ${
+                  isActive ? 'text-text font-semibold' : 'text-text-2'
                 }`}
               >
                 {item.label}
@@ -87,9 +95,9 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right Desktop CTA: Single Primary Button */}
+        {/* Desktop Primary Action: Start a project */}
         <div className="hidden items-center gap-4 md:flex">
-          <Button href="/software#contact" variant="primary">
+          <Button href="/contact" variant="primary">
             <span>Start a project</span>
             <ArrowRight size={15} className="btn-arrow" />
           </Button>
@@ -97,27 +105,30 @@ export default function Navbar() {
 
         {/* Mobile Hamburger Toggle */}
         <button
+          type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-surface-border bg-surface-glass text-text-2 md:hidden hover:text-white focus-visible:outline-none"
-          aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+          className="flex h-11 w-11 items-center justify-center rounded-md text-text-2 hover:text-text md:hidden"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
         >
-          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Full-screen Mobile Glass Menu with Large Links and Primary CTA */}
+      {/* Full-Screen Mobile Glass Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[64px] z-50 flex flex-col justify-between bg-[#05050A]/95 p-8 backdrop-blur-2xl md:hidden animate-in fade-in slide-in-from-top-4 duration-300 border-t border-surface-border">
+        <div className="fixed inset-0 top-[65px] z-40 flex flex-col justify-between bg-[#05050A]/95 p-6 backdrop-blur-2xl md:hidden">
           <nav className="flex flex-col gap-6 pt-6">
-            {navLinks.map((item) => {
-              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+            {navItems.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== '/' && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`font-display text-2xl font-bold tracking-tight transition-colors ${
-                    isActive ? 'text-primary-glow' : 'text-text hover:text-white'
+                  className={`text-2xl font-display font-medium transition-colors ${
+                    isActive ? 'text-primary-glow font-semibold' : 'text-text'
                   }`}
                 >
                   {item.label}
@@ -126,15 +137,10 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="pt-8 pb-12 border-t border-surface-border">
-            <Button
-              href="/software#contact"
-              variant="primary"
-              className="w-full !py-4 !text-base"
-              onClick={() => setMobileMenuOpen(false)}
-            >
+          <div className="pt-6 pb-8 border-t border-border">
+            <Button href="/contact" variant="primary" className="w-full text-center">
               <span>Start a project</span>
-              <ArrowRight size={18} className="btn-arrow" />
+              <ArrowRight size={16} className="btn-arrow" />
             </Button>
           </div>
         </div>

@@ -3,40 +3,37 @@
 @tailwind utilities;
 
 :root {
-  /* Surfaces */
+  /* Design Tokens (Section 4.1) */
   --bg: #05050A;
-  --bg-elevated: #0B0B14;
-  --glass: rgba(255, 255, 255, 0.045);
-  --glass-strong: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.10);
-  --border-top: rgba(255, 255, 255, 0.22);
+  --surface-1: #0A0A12;   /* page sections */
+  --surface-2: #10101B;   /* cards */
+  --surface-3: #171726;   /* raised / hover */
+  --border: rgba(255, 255, 255, 0.09);
+  --border-top: rgba(255, 255, 255, 0.20);
 
-  /* Brand */
-  --primary: #7C5CFF;   /* electric violet — main actions, beam */
+  --primary: #7C5CFF;     /* electric violet — main actions, beam */
   --primary-glow: #A78BFA;
-  --secondary: #38D6FF; /* cool cyan — focus rings, small highlights, links */
-  --warm: #FFB547;      /* amber — ONLY Startup Lab / ownership / equity moments */
+  --secondary: #38D6FF;   /* cool cyan — focus rings, small highlights */
+  --warm: #FFB547;        /* amber — ONLY Startup Lab / ownership / equity */
 
-  /* Text */
   --text: #F4F4FA;
-  --text-2: #A9A9C0;   /* body copy, ≥4.5:1 on --bg */
-  --text-3: #8585A0;   /* meta text only, never body */
+  --text-2: #A9A9C0;      /* body copy, ≥4.5:1 on --bg */
+  --text-3: #8585A0;      /* meta text only, never body */
 
-  /* Shape */
   --r-card: 24px;
   --r-md: 14px;
   --r-pill: 999px;
-
-  /* Spacing scale */
-  --section-pad: clamp(64px, 10vw, 128px);
+  --section-pad: clamp(64px, 10vw, 120px);
   --header-h: 72px;
+
+  /* Aliases for compatibility */
+  --bg-elevated: var(--surface-2);
+  --glass: rgba(255, 255, 255, 0.045);
+  --glass-strong: rgba(255, 255, 255, 0.08);
 
   /* Cursor interaction coordinates */
   --mx: 50%;
   --my: 50%;
-
-  /* Atmosphere shift */
-  --section-accent-glow: rgba(124, 92, 255, 0.08);
 }
 
 * {
@@ -55,7 +52,6 @@ body {
   color: var(--text);
   font-family: var(--font-body), system-ui, sans-serif;
   overflow-x: hidden;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -97,21 +93,33 @@ html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
+/* Section floating ambient light (Section 4.2: ≤10% opacity) */
+.section-glow {
+  position: relative;
 }
 
-/* 4.1 Card (Glass, belongs to the 3D world) */
+.section-glow::before {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(800px, 90vw);
+  height: min(500px, 60vh);
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 4.2 Card Depth & Surfaces */
 .glass-card {
   position: relative;
   border-radius: var(--r-card);
   padding: 24px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)), var(--bg-elevated);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--surface-2);
   border: 1px solid var(--border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 60px -24px rgba(124, 92, 255, 0.35);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 80px -40px rgba(124, 92, 255, 0.35);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
   overflow: hidden;
 }
 
@@ -121,26 +129,26 @@ html.lenis body {
   }
 }
 
-/* Top border gradient highlight */
+/* Top border brighter highlight fading to --border */
 .glass-card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(180deg, var(--border-top), rgba(255, 255, 255, 0.02) 40%, transparent 100%);
+  background: linear-gradient(180deg, var(--border-top), rgba(255, 255, 255, 0.02) 45%, transparent 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
 }
 
-/* Spotlight hover (desktop pointer fine only) */
+/* Desktop hover only (pointer: fine): lift 4px + cursor-following spotlight. No tilt on touch. */
 @media (hover: hover) and (pointer: fine) {
   .glass-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(167, 139, 250, 0.3);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 28px 70px -20px rgba(124, 92, 255, 0.45);
+    background: var(--surface-3);
+    border-color: rgba(167, 139, 250, 0.25);
   }
 
   .glass-card::after {
@@ -148,10 +156,10 @@ html.lenis body {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(350px circle at var(--mx, 50%) var(--my, 50%), rgba(167, 139, 250, 0.12), transparent 70%);
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(167, 139, 250, 0.10), transparent 70%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.25s ease;
   }
 
   .glass-card:hover::after {
@@ -159,28 +167,40 @@ html.lenis body {
   }
 }
 
-/* Typography scale utilities */
+/* Typography Scale (Section 4.4) */
+/* Headings: geometric sans in sentence case, weight 600-700. No wide ALL CAPS. */
 .h1-hero {
   font-family: var(--font-display), system-ui, sans-serif;
-  font-size: clamp(2.4rem, 7vw, 5.5rem);
-  line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.4rem, 6vw, 4.75rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text);
+  text-transform: none;
 }
 
 .h2-section {
   font-family: var(--font-display), system-ui, sans-serif;
-  font-size: clamp(1.8rem, 4.5vw, 3.5rem);
-  line-height: 1.12;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--text);
+  text-transform: none;
+}
+
+.h3-card {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(20px, 2.5vw, 24px);
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--text);
+  text-transform: none;
 }
 
 .eyebrow-label {
-  font-size: 13px;
-  letter-spacing: 0.14em;
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--secondary);
   font-weight: 600;
@@ -192,7 +212,7 @@ html.lenis body {
   color: var(--text-2);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .sub-paragraph {
     font-size: 18px;
   }
@@ -209,17 +229,18 @@ html.lenis body {
   border-radius: var(--r-pill);
   background: var(--primary);
   color: #ffffff;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  box-shadow: 0 4px 20px -2px rgba(124, 92, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(124, 92, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: none;
 }
 
 .btn-primary:hover {
-  background: #8b6dff;
-  box-shadow: 0 6px 28px 0 rgba(124, 92, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+  background: #8B6BFF;
+  box-shadow: 0 6px 28px 0 rgba(124, 92, 255, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .btn-primary:active {
@@ -247,16 +268,16 @@ html.lenis body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 600;
   transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
   background: var(--glass-strong);
   border-color: rgba(255, 255, 255, 0.25);
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
 .btn-secondary:active {
@@ -267,11 +288,15 @@ html.lenis body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--secondary);
   transition: color 0.2s ease;
   position: relative;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .btn-tertiary::after {
@@ -297,7 +322,7 @@ html.lenis body {
   transform: translateX(4px);
 }
 
-/* 4.3 Badges */
+/* Badges */
 .badge-pill {
   display: inline-flex;
   align-items: center;
@@ -306,8 +331,8 @@ html.lenis body {
   border-radius: var(--r-pill);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  background: var(--glass);
+  letter-spacing: 0.03em;
+  background: var(--surface-2);
   border: 1px solid var(--border);
   color: var(--text-2);
 }
@@ -330,13 +355,14 @@ html.lenis body {
   color: #a78bfa;
 }
 
+/* Warm / Amber badge (ONLY on /careers) */
 .badge-amber-equity {
   background: rgba(255, 181, 71, 0.12);
   border-color: rgba(255, 181, 71, 0.35);
   color: var(--warm);
 }
 
-/* 6. Mobile Stacking Cards (≤ 767px) */
+/* Mobile: Overlapping Card Stack (Section 9) */
 @media (max-width: 767px) {
   .stack {
     position: relative;
@@ -346,11 +372,11 @@ html.lenis body {
   .stack__item {
     position: sticky;
     top: calc(var(--header-h, 64px) + 12px + (var(--i, 0) * 14px));
-    min-height: 52svh;
+    min-height: 58svh;
     margin-bottom: 24px;
     transform-origin: top center;
     transform: scale(calc(1 - var(--p, 0) * 0.05));
-    background: var(--bg-elevated);
+    background: var(--surface-2);
     will-change: transform;
   }
 
@@ -366,7 +392,7 @@ html.lenis body {
   }
 }
 
-/* Accessibility: Keyboard focus visible */
+/* Accessibility: Keyboard focus visible (Section 3: 2px --secondary ring, 3px offset) */
 :focus-visible {
   outline: 2px solid var(--secondary) !important;
   outline-offset: 3px !important;

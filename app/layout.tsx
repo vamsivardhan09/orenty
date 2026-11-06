@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
+import { Sora, Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,29 +8,20 @@ import SmoothScroll from '@/components/SmoothScroll';
 import LoadingScreen from '@/components/LoadingScreen';
 import { siteContent } from '@/content/site';
 
-const fontDisplay = Syne({
+const fontDisplay = Sora({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: ['400', '600', '700', '800'],
   display: 'swap',
 });
 
-const fontBody = Plus_Jakarta_Sans({
+const fontBody = Inter({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: ['400', '500', '600'],
-  display: 'swap',
-});
-
-const fontMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  weight: ['400', '500'],
   display: 'swap',
 });
 
 export const viewport: Viewport = {
-  themeColor: '#04060d',
+  themeColor: '#05050A',
   colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
@@ -40,7 +31,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://orenty.in'),
   title: {
-    default: 'Orenty | Build what\'s next',
+    default: 'Orenty | Software for ambitious businesses and products of our own',
     template: '%s | Orenty',
   },
   description: siteContent.meta.description,
@@ -50,6 +41,7 @@ export const metadata: Metadata = {
     'Startup Lab',
     'AI Automation',
     'Web Development',
+    'Mobile Apps',
     'SyncedIn',
     'Fanbase',
     'Job Pilot',
@@ -62,20 +54,20 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://orenty.in',
     siteName: 'Orenty',
-    title: 'Orenty | Build what\'s next',
+    title: 'Orenty | Software for ambitious businesses and products of our own',
     description: siteContent.meta.description,
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Orenty | Build what\'s next',
+        alt: 'Orenty',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Orenty | Build what\'s next',
+    title: 'Orenty | Software for ambitious businesses and products of our own',
     description: siteContent.meta.description,
     images: ['/og-image.png'],
   },
@@ -100,9 +92,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
+      className={`${fontDisplay.variable} ${fontBody.variable} dark`}
     >
-      <body className="bg-background font-body text-foreground selection:bg-violet-600/40 selection:text-white">
+      <body className="bg-bg font-body text-text selection:bg-primary/40 selection:text-white">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -113,7 +105,7 @@ export default function RootLayout({
               url: 'https://orenty.in',
               logo: 'https://orenty.in/brand/orenty-logo-white.svg',
               description:
-                'Orenty builds software for businesses, builds products of its own, and gives builders a path to ownership.',
+                'Orenty builds software for businesses, builds products of its own, and runs an open Startup Lab where builders can earn ownership.',
               sameAs: [
                 'https://github.com/orenty',
                 'https://x.com/orenty',
@@ -122,7 +114,7 @@ export default function RootLayout({
             }),
           }}
         />
-        <a href="#main-content" className="skip-to-content">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md">
           Skip to main content
         </a>
         <LoadingScreen />

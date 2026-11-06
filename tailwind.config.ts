@@ -11,14 +11,22 @@ const config: Config = {
     extend: {
       colors: {
         bg: 'var(--bg)',
-        'bg-elevated': 'var(--bg-elevated)',
+        'surface-1': 'var(--surface-1)',
+        'surface-2': 'var(--surface-2)',
+        'surface-3': 'var(--surface-3)',
+        'bg-elevated': 'var(--surface-2)',
         primary: {
           DEFAULT: 'var(--primary)',
           glow: 'var(--primary-glow)',
         },
         secondary: 'var(--secondary)',
         warm: 'var(--warm)',
+        border: 'var(--border)',
+        'border-top': 'var(--border-top)',
         surface: {
+          1: 'var(--surface-1)',
+          2: 'var(--surface-2)',
+          3: 'var(--surface-3)',
           glass: 'var(--glass)',
           'glass-strong': 'var(--glass-strong)',
           border: 'var(--border)',
@@ -38,7 +46,6 @@ const config: Config = {
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         body: ['var(--font-body)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
       },
       padding: {
         section: 'var(--section-pad)',

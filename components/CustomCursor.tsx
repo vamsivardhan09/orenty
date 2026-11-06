@@ -15,8 +15,12 @@ export default function CustomCursor() {
   const rafId = useRef<number | null>(null);
 
   useEffect(() => {
-    // Only enable on fine pointer (desktop mouse), ignore touch devices
-    if (window.matchMedia('(pointer: coarse)').matches) {
+    // Only enable on fine pointer (desktop mouse), ignore touch devices or reduced motion
+    if (
+      typeof window === 'undefined' ||
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       return;
     }
     setMounted(true);
@@ -29,11 +33,13 @@ export default function CustomCursor() {
         dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
 
-      // Also update CSS custom properties for spotlight effects
+      // Update CSS custom properties for spotlight effects
       const xPercent = (e.clientX / window.innerWidth) * 100;
       const yPercent = (e.clientY / window.innerHeight) * 100;
       document.documentElement.style.setProperty('--mouse-x', `${xPercent}%`);
       document.documentElement.style.setProperty('--mouse-y', `${yPercent}%`);
+      document.documentElement.style.setProperty('--mx', `${xPercent}%`);
+      document.documentElement.style.setProperty('--my', `${yPercent}%`);
     };
 
     const onMouseEnter = () => setIsVisible(true);
@@ -61,7 +67,7 @@ export default function CustomCursor() {
 
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%) scale(${
-          isHovered ? 1.6 : 1
+          isHovered ? 1.5 : 1
         })`;
       }
 
@@ -82,27 +88,26 @@ export default function CustomCursor() {
   if (!mounted) return null;
 
   return (
-    <div
-      className={`pointer-events-none fixed inset-0 z-[9999] transition-opacity duration-300 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      aria-hidden="true"
-    >
-      {/* Precision center dot */}
+    <>
+      {/* Precision Center Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 -ml-1 -mt-1 h-2 w-2 rounded-full bg-violet-300 pointer-events-none transition-transform will-change-transform shadow-[0_0_10px_rgba(167,139,250,0.8)]"
-      />
-
-      {/* Trailing fluid magnetic ring */}
-      <div
-        ref={ringRef}
-        className={`fixed top-0 left-0 h-8 w-8 rounded-full border pointer-events-none will-change-transform transition-[width,height,border-color,background-color] duration-200 ${
-          isHovered
-            ? 'border-violet-400 bg-violet-500/15 shadow-[0_0_20px_rgba(139,92,246,0.4)]'
-            : 'border-violet-400/40 bg-transparent'
+        aria-hidden="true"
+        className={`pointer-events-none fixed top-0 left-0 z-[9999] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white transition-opacity duration-200 ${
+          isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       />
-    </div>
+
+      {/* Trailing Elastic Glow Ring */}
+      <div
+        ref={ringRef}
+        aria-hidden="true"
+        className={`pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-primary-glow/60 transition-opacity duration-300 ${
+          isHovered
+            ? 'h-11 w-11 bg-primary/10 border-primary shadow-[0_0_20px_rgba(124,92,255,0.4)]'
+            : 'h-8 w-8 bg-transparent'
+        } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      />
+    </>
   );
 }

@@ -22,23 +22,38 @@ export async function POST(req: NextRequest) {
       email,
       portfolioUrl,
       challengeOrIdea,
+      challengeSlug,
       solutionDetails,
+      solutionUrl,
+      shortNote,
+      notes,
       whyYou,
       honeypot,
+      website,
     } = body;
 
+    const trap = honeypot || website;
+
     // 3. Honeypot trap: if filled by a bot, fake success without storing
-    if (honeypot && honeypot.trim() !== '') {
+    if (trap && trap.trim() !== '') {
       console.warn(`[Honeypot Triggered] Application bot submission discarded from ${ip}`);
       return NextResponse.json({ success: true, message: 'Application received' });
     }
 
+    const resolvedChallenge = challengeOrIdea || challengeSlug || '';
+    const resolvedSolution =
+      solutionDetails ||
+      (solutionUrl
+        ? `Solution: ${solutionUrl}${shortNote || notes ? `\n\nNotes:\n${shortNote || notes}` : ''}`
+        : '');
+    const resolvedWhyYou = whyYou || 'Challenge solution submission';
+
     // 4. Validate required fields
-    if (!name || !email || !challengeOrIdea || !solutionDetails || !whyYou) {
+    if (!name || !email || !resolvedChallenge || !resolvedSolution) {
       return NextResponse.json(
         {
           error:
-            'Missing required fields. Please ensure Name, Email, Challenge/Idea, Solution, and Why You are filled out.',
+            'Missing required fields. Please ensure Name, Email, Challenge/Idea, and Solution are filled out.',
         },
         { status: 400 }
       );
@@ -58,9 +73,9 @@ export async function POST(req: NextRequest) {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       portfolio_url: portfolioUrl?.trim() || null,
-      challenge_or_idea: challengeOrIdea.trim(),
-      solution_details: solutionDetails.trim(),
-      why_you: whyYou.trim(),
+      challenge_or_idea: resolvedChallenge.trim(),
+      solution_details: resolvedSolution.trim(),
+      why_you: resolvedWhyYou.trim(),
       status: 'submitted',
     };
 

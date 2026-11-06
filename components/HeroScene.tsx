@@ -6,13 +6,13 @@ import * as THREE from 'three';
 import { SVGLoader } from 'three-stdlib';
 
 export interface ScrollState {
-  progress: number; // 0 to 1 across the page
+  progress: number;
   velocity: number;
   y: number;
 }
 
-// 5.1 Circular Star Shader
-const starVertexShader = `
+// 4.3 Round, soft ambient dust dots shader
+const dustVertexShader = `
   attribute float aScale;
   attribute float aPhase;
   attribute vec3 aColor;
@@ -25,27 +25,27 @@ const starVertexShader = `
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
-    float s = uSize * aScale * uPixelRatio * (300.0 / -mv.z);
+    float s = uSize * aScale * uPixelRatio * (280.0 / -mv.z);
     gl_PointSize = max(s, 2.0 * uPixelRatio);
-    vTw = 0.75 + 0.25 * sin(uTime * (0.6 + aScale) + aPhase);
+    vTw = 0.6 + 0.4 * sin(uTime * (0.4 + aScale * 0.5) + aPhase);
     vColor = aColor;
   }
 `;
 
-const starFragmentShader = `
+const dustFragmentShader = `
   varying float vTw;
   varying vec3 vColor;
 
   void main() {
     float d = length(gl_PointCoord - 0.5);
     float core = 1.0 - smoothstep(0.0, 0.5, d);
-    float a = (core * 0.35 + pow(core, 3.0)) * vTw;
-    if (a < 0.01) discard;
+    float a = (core * 0.22 + pow(core, 2.5) * 0.25) * vTw;
+    if (a < 0.008) discard;
     gl_FragColor = vec4(vColor, a);
   }
 `;
 
-// Volumetric Light Beam
+// Volumetric Central Violet Light Beam (Section 4)
 const beamVertexShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
@@ -55,8 +55,8 @@ const beamVertexShader = `
   void main() {
     vUv = uv;
     vec3 pos = position;
-    float sway = sin(pos.y * 1.5 + uTime * 0.8) * 0.04;
-    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.35) * 0.2;
+    float sway = sin(pos.y * 1.5 + uTime * 0.6) * 0.03;
+    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.35) * 0.15;
     vPosition = pos;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
@@ -71,45 +71,41 @@ const beamFragmentShader = `
 
   void main() {
     float dist = abs(vUv.x - 0.5) * 2.0;
-    float core = exp(-dist * 14.0);
-    float shroud = exp(-dist * 3.2) * 0.35;
-    float verticalFade = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.75, vUv.y);
-    float shimmer = 1.0 + sin(vUv.y * 12.0 - uTime * 2.0) * 0.06;
-    float alpha = (core * 0.85 + shroud) * verticalFade * shimmer * uOpacity;
+    float core = exp(-dist * 16.0);
+    float shroud = exp(-dist * 3.5) * 0.28;
+    float verticalFade = smoothstep(0.0, 0.22, vUv.y) * smoothstep(1.0, 0.78, vUv.y);
+    float shimmer = 1.0 + sin(vUv.y * 10.0 - uTime * 1.5) * 0.05;
+    float alpha = (core * 0.8 + shroud) * verticalFade * shimmer * uOpacity;
     vec3 color = mix(uColorGlow, uColorCore, core);
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-// Helper to create star layer buffer geometry
-function createStarLayerGeometry(count: number, zRange: [number, number], radiusRange: [number, number]) {
+function createDustGeometry(count: number, zRange: [number, number], radiusRange: [number, number]) {
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const scales = new Float32Array(count);
   const phases = new Float32Array(count);
 
-  const white = new THREE.Color('#ffffff');
-  const coolBlue = new THREE.Color('#dbeafe'); // cool blue-white
-  const faintViolet = new THREE.Color('#c4b5fd'); // faint violet
+  const white = new THREE.Color('#f4f4fa');
+  const faintViolet = new THREE.Color('#a78bfa');
 
   for (let i = 0; i < count; i++) {
     const radius = radiusRange[0] + Math.random() * (radiusRange[1] - radiusRange[0]);
     const theta = Math.random() * Math.PI * 2;
-    const y = (Math.random() - 0.5) * 22;
+    const y = (Math.random() - 0.5) * 20;
     const z = zRange[0] + Math.random() * (zRange[1] - zRange[0]);
 
     positions[i * 3] = Math.cos(theta) * radius;
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = z;
 
-    // Mostly white, some cool blue-white, a few faint violet
-    const r = Math.random();
-    const col = r > 0.4 ? white : r > 0.15 ? coolBlue : faintViolet;
+    const col = Math.random() > 0.4 ? white : faintViolet;
     colors[i * 3] = col.r;
     colors[i * 3 + 1] = col.g;
     colors[i * 3 + 2] = col.b;
 
-    scales[i] = 0.8 + Math.random() * 1.5;
+    scales[i] = 0.8 + Math.random() * 1.2;
     phases[i] = Math.random() * Math.PI * 2;
   }
 
@@ -121,8 +117,8 @@ function createStarLayerGeometry(count: number, zRange: [number, number], radius
   return geom;
 }
 
-// 5.2 Decoupled Starfield System (3 Depth Layers)
-function DecoupledStarfield({
+// 4.3 Decoupled Ambient Dust System: Slow idle drift + max 10° total scroll smoothed by lerp 0.04
+function DecoupledDustField({
   scrollRef,
   isMobile,
 }: {
@@ -132,35 +128,30 @@ function DecoupledStarfield({
   const groupRef = useRef<THREE.Group>(null);
   const farRef = useRef<THREE.Points>(null);
   const midRef = useRef<THREE.Points>(null);
-  const nearRef = useRef<THREE.Points>(null);
 
-  const IDLE_SPEED = 0.0024; // rad/sec (≈ 0.14°/s)
-  const MAX_SCROLL_ROT = 0.35; // rad over the entire page (~20°)
-  const SMOOTH = 0.04; // lerp factor per frame
+  const IDLE_SPEED = 0.0016; // rad/sec
+  const MAX_SCROLL_ROT = 0.174; // max 10° total over scroll
+  const SMOOTH = 0.04; // lerp 0.04
 
   const idleRef = useRef(0);
   const scrollRotRef = useRef(0);
 
-  // Particle counts: desktop ~1820 total; mobile ~700 total
+  // Modest counts: ~240 total desktop, ~80 mobile (quiet background)
   const counts = useMemo(
     () =>
       isMobile
-        ? { far: 450, mid: 200, near: 50 }
-        : { far: 1200, mid: 500, near: 120 },
+        ? { far: 55, mid: 25 }
+        : { far: 180, mid: 60 },
     [isMobile]
   );
 
   const farGeom = useMemo(
-    () => createStarLayerGeometry(counts.far, [-18, -10], [3, 14]),
+    () => createDustGeometry(counts.far, [-16, -9], [3, 14]),
     [counts.far]
   );
   const midGeom = useMemo(
-    () => createStarLayerGeometry(counts.mid, [-10, -4], [2.5, 11]),
+    () => createDustGeometry(counts.mid, [-9, -3], [2, 10]),
     [counts.mid]
-  );
-  const nearGeom = useMemo(
-    () => createStarLayerGeometry(counts.near, [-4, 1], [2, 8]),
-    [counts.near]
   );
 
   const materials = useMemo(() => {
@@ -175,8 +166,8 @@ function DecoupledStarfield({
           uPixelRatio: { value: dpr },
           uSize: { value: 0.14 },
         },
-        vertexShader: starVertexShader,
-        fragmentShader: starFragmentShader,
+        vertexShader: dustVertexShader,
+        fragmentShader: dustFragmentShader,
       }),
       mid: new THREE.ShaderMaterial({
         transparent: true,
@@ -187,26 +178,13 @@ function DecoupledStarfield({
           uPixelRatio: { value: dpr },
           uSize: { value: 0.22 },
         },
-        vertexShader: starVertexShader,
-        fragmentShader: starFragmentShader,
-      }),
-      near: new THREE.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        uniforms: {
-          uTime: { value: 0 },
-          uPixelRatio: { value: dpr },
-          uSize: { value: 0.35 },
-        },
-        vertexShader: starVertexShader,
-        fragmentShader: starFragmentShader,
+        vertexShader: dustVertexShader,
+        fragmentShader: dustFragmentShader,
       }),
     };
   }, [isMobile]);
 
   useFrame((_, delta) => {
-    // prefers-reduced-motion check
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
@@ -221,16 +199,12 @@ function DecoupledStarfield({
     const baseRot = idleRef.current + scrollRotRef.current;
 
     if (farRef.current) {
-      farRef.current.rotation.y = baseRot * 0.4;
+      farRef.current.rotation.y = baseRot * 0.5;
       materials.far.uniforms.uTime.value += dt;
     }
     if (midRef.current) {
-      midRef.current.rotation.y = baseRot * 0.7;
+      midRef.current.rotation.y = baseRot * 0.8;
       materials.mid.uniforms.uTime.value += dt;
-    }
-    if (nearRef.current) {
-      nearRef.current.rotation.y = baseRot * 1.0;
-      materials.near.uniforms.uTime.value += dt;
     }
   });
 
@@ -238,12 +212,11 @@ function DecoupledStarfield({
     <group ref={groupRef}>
       <points ref={farRef} geometry={farGeom} material={materials.far} />
       <points ref={midRef} geometry={midGeom} material={materials.mid} />
-      <points ref={nearRef} geometry={nearGeom} material={materials.near} />
     </group>
   );
 }
 
-// 7. Hero Focal 3D Object: Logo Mark (Extruded, MeshStandardMaterial, metalness ~0.9, roughness ~0.25)
+// 4.5 Hero 3D Object: Logo Mark (Extruded, MeshStandardMaterial, metalness ~0.9, roughness ~0.25, mouse parallax <=6°)
 function HeroLogoMark({
   mouse,
   isMobile,
@@ -287,18 +260,17 @@ function HeroLogoMark({
     };
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!groupRef.current) return;
     const time = state.clock.elapsedTime;
 
-    // Slow float
-    const floatY = Math.sin(time * 1.2) * 0.06;
-    const floatRotZ = Math.sin(time * 0.7) * 0.025;
+    const floatY = Math.sin(time * 1.1) * 0.05;
+    const floatRotZ = Math.sin(time * 0.6) * 0.02;
 
-    // Max 6° (0.10 rad) mouse parallax on desktop; slow idle only on mobile
-    const maxParallax = 0.105;
+    // Mouse parallax <= 6° (0.10 rad) on desktop
+    const maxParallax = 0.10;
     const targetRotX = isMobile ? 0 : -mouse.current.y * maxParallax;
-    const targetRotY = isMobile ? Math.sin(time * 0.5) * 0.08 : mouse.current.x * maxParallax;
+    const targetRotY = isMobile ? Math.sin(time * 0.4) * 0.06 : mouse.current.x * maxParallax;
 
     groupRef.current.position.y = (isMobile ? 1.6 : 0.0) + floatY;
     groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06;
@@ -309,24 +281,24 @@ function HeroLogoMark({
   if (!geometry) return null;
 
   return (
-    // Desktop: object sits on the right [2.4, 0, 0.2]; mobile: sits above headline [0, 1.6, -0.2]
+    // Desktop: text left, object right [2.5, 0, 0.2]; mobile: object above headline [0, 1.6, -0.2]
     <group ref={groupRef} position={isMobile ? [0, 1.6, -0.2] : [2.5, 0, 0.2]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#f4f4fa"
-          metalness={0.88}
+          metalness={0.90}
           roughness={0.24}
           emissive="#7C5CFF"
-          emissiveIntensity={0.25}
+          emissiveIntensity={0.22}
         />
       </mesh>
-      {/* Violet rim light from the beam */}
-      <pointLight color="#A78BFA" intensity={1.5} distance={3.5} decay={2} position={[-1.2, 0.5, 1]} />
+      {/* Violet rim light */}
+      <pointLight color="#A78BFA" intensity={1.6} distance={3.5} decay={2} position={[-1.2, 0.5, 1]} />
     </group>
   );
 }
 
-// Volumetric Central Light Beam
+// Single Volumetric Violet Light Beam (Section 4)
 function TunedLightBeam({
   mouse,
 }: {
@@ -341,7 +313,7 @@ function TunedLightBeam({
       uCursor: { value: new THREE.Vector2(0, 0) },
       uColorCore: { value: new THREE.Color('#ffffff') },
       uColorGlow: { value: new THREE.Color('#7C5CFF') },
-      uOpacity: { value: 0.65 },
+      uOpacity: { value: 0.60 },
     }),
     []
   );
@@ -400,8 +372,8 @@ export default function HeroScene({
 
   useFrame(() => {
     if (isMobile) return;
-    const targetCamX = mouse.current.x * 0.15;
-    const targetCamY = mouse.current.y * 0.1;
+    const targetCamX = mouse.current.x * 0.12;
+    const targetCamY = mouse.current.y * 0.08;
     camera.position.x += (targetCamX - camera.position.x) * 0.04;
     camera.position.y += (targetCamY - camera.position.y) * 0.04;
   });
@@ -413,9 +385,9 @@ export default function HeroScene({
       <pointLight position={[-3, 1, 2]} intensity={2.0} color="#7C5CFF" />
       <pointLight position={[3, -1, -2]} intensity={1.0} color="#38D6FF" />
 
-      {/* Beam, Decoupled 3-layer starfield, and Hero 3D Extruded Logo */}
+      {/* Beam, Ambient Decoupled Dust Field, and Hero 3D Logo Mark */}
       <TunedLightBeam mouse={mouse} />
-      <DecoupledStarfield scrollRef={scrollRef} isMobile={isMobile} />
+      <DecoupledDustField scrollRef={scrollRef} isMobile={isMobile} />
       <HeroLogoMark mouse={mouse} isMobile={isMobile} />
     </>
   );

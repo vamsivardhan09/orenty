@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
     // 2. Parse request body
     const body = await req.json();
-    const { name, email, company, service, details, budget, website } = body;
+    const { name, email, phone, need, service, details, message, budget, website } = body;
 
     // 3. Honeypot trap: if filled by a bot, fake success without storing
     if (website && website.trim() !== '') {
@@ -25,10 +25,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, message: 'Inquiry received' });
     }
 
+    const messageContent = message || details;
+
     // 4. Validate required fields
-    if (!name || !email || !details) {
+    if (!name || !email || !messageContent) {
       return NextResponse.json(
-        { error: 'Missing required fields: Name, Email, and Details are mandatory.' },
+        { error: 'Missing required fields: Name, Email, and Message are mandatory.' },
         { status: 400 }
       );
     }
@@ -46,9 +48,9 @@ export async function POST(req: NextRequest) {
     const payload = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
-      company: company?.trim() || null,
-      service: service?.trim() || 'Software Development',
-      details: details.trim(),
+      phone: phone?.trim() || null,
+      service: need?.trim() || service?.trim() || 'Web Development',
+      details: messageContent.trim(),
       budget: budget?.trim() || null,
       status: 'pending',
     };
@@ -64,7 +66,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Inquiry received successfully.',
+      message: 'Inquiry received successfully. We will get back to you within 24 hours.',
     });
   } catch (error: unknown) {
     console.error('API Contact Error:', error);

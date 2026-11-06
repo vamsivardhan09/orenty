@@ -9,7 +9,7 @@ export default function LoadingScreen() {
   useEffect(() => {
     // Check if user already saw the loader in this session
     const hasLoaded = sessionStorage.getItem('orenty_intro_played');
-    if (hasLoaded) {
+    if (hasLoaded || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
       setLoading(false);
       return;
     }

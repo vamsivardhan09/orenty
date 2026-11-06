@@ -3,11 +3,12 @@ export type ProductStatus = 'live' | 'building' | 'idea';
 export interface Product {
   slug: string;
   name: string;
-  tagline: string;
+  outcome: string; // One outcome-led line
+  tagline: string; // Alias for outcome
   description: string;
   features: string[];
-  accentColor: string; // hex or tailwind accent
-  status: ProductStatus;
+  accentColor: string; // product logo glow tint only
+  status: string; // e.g. "In build [CONFIRM]"
   ctaLabel: string;
   ctaUrl: string;
   category: string;
@@ -15,12 +16,14 @@ export interface Product {
   websiteUrl?: string;
 }
 
-export interface Service {
+export interface ServiceItem {
   id: string;
   title: string;
-  shortDescription: string;
+  outcome: string; // One outcome sentence
+  shortDescription: string; // Alias for outcome
   bullets: [string, string, string];
-  iconName: string;
+  iconName: 'Globe' | 'Smartphone' | 'Cpu' | 'TrendingUp';
+  href: string;
 }
 
 export interface ProcessStep {
@@ -29,33 +32,28 @@ export interface ProcessStep {
   description: string;
 }
 
-export interface Division {
-  id: string;
-  number: string;
+export interface LabStep {
+  step: number;
   title: string;
-  tagline: string;
-  description: string;
-  href: string;
-  accent: string;
-  badge: string;
+  detail: string;
 }
 
 export interface LabChallenge {
   id: string;
   code: string;
   title: string;
-  track: 'AI Automation' | 'Full-Stack' | 'Product Innovation' | 'Growth';
+  problem: string;
+  brief: string; // Alias for problem
+  track: string;
   difficulty: 'Core' | 'Advanced' | 'Pioneer';
-  brief: string;
-  rewardPool: string; // "Ownership / Equity Pool"
-  status: 'Open' | 'Under Review';
+  reward: string;
+  rewardPool: string; // Alias for reward
+  deadline: string; // [CONFIRM]
 }
 
-export interface RotatingVerb {
-  verb: string;
-  tagline: string;
-  divisionId: string;
-  accent: string;
+export interface TrustMetric {
+  value: string;
+  label: string;
 }
 
 export interface SiteContent {
@@ -63,17 +61,58 @@ export interface SiteContent {
     title: string;
     description: string;
     siteUrl: string;
-    tagline: string;
   };
   navigation: {
     label: string;
     href: string;
   }[];
   hero: {
-    badge: string;
+    eyebrow: string;
     headline: string;
-    headlineAccent: string;
-    rotatingVerbs: RotatingVerb[];
+    subheadline: string;
+    ctaPrimary: {
+      label: string;
+      href: string;
+    };
+    ctaSecondary: {
+      label: string;
+      href: string;
+    };
+    labLink: {
+      label: string;
+      href: string;
+    };
+  };
+  trustStrip: TrustMetric[];
+  services: {
+    eyebrow: string;
+    headline: string;
+    subheadline: string;
+    items: ServiceItem[];
+    processHeadline: string;
+    process: ProcessStep[];
+  };
+  productsSection: {
+    eyebrow: string;
+    headline: string;
+    subheadline: string;
+    items: Product[];
+  };
+  // Backward compatible properties for subpages
+  products: Product[];
+  process: ProcessStep[];
+  lab: {
+    eyebrow: string;
+    headline: string;
+    tagline: string;
+    description: string;
+    subheadline: string;
+    steps: LabStep[];
+    challenges: LabChallenge[];
+    ownershipNote: string;
+  };
+  finalCta: {
+    headline: string;
     subheadline: string;
     ctaPrimary: {
       label: string;
@@ -84,31 +123,9 @@ export interface SiteContent {
       href: string;
     };
   };
-  divisions: Division[];
-  products: Product[];
-  services: Service[];
-  process: ProcessStep[];
-  lab: {
-    badge: string;
-    headline: string;
-    tagline: string;
-    description: string;
-    steps: {
-      step: string;
-      title: string;
-      detail: string;
-    }[];
-    ownershipNote: string;
-    challenges: LabChallenge[];
-  };
   footer: {
-    tagline: string;
-    ownershipNotice: string;
-    contactEmailPlaceholder: string;
-    links: {
-      label: string;
-      href: string;
-    }[];
+    description: string;
+    contactEmail: string; // [CONFIRM]
     socials: {
       label: string;
       href: string;
@@ -116,337 +133,346 @@ export interface SiteContent {
   };
 }
 
+const productsList: Product[] = [
+  {
+    slug: 'syncedin',
+    name: 'SyncedIn',
+    outcome: 'An AI-powered network that connects people to the right people.',
+    tagline: 'An AI-powered network that connects people to the right people.',
+    description:
+      'Cutting through noise with high-signal semantic matching. SyncedIn analyzes goals, expertise, and collaboration velocity to connect you with high-leverage collaborators and peers.',
+    features: [
+      'Semantic matchmaking based on active goals and project requirements',
+      'Intelligent introductions with context-aware briefing cards',
+      'Spam-free direct messaging secured by mutual relevance scoring',
+    ],
+    accentColor: '#7C5CFF', // Violet tint
+    status: 'In build [CONFIRM]',
+    ctaLabel: 'Apply for early access',
+    ctaUrl: '/apply?track=syncedin',
+    category: 'AI Networking',
+    previewImage: '/products/syncedin-preview.webp',
+    websiteUrl: 'https://rightin.vercel.app/',
+  },
+  {
+    slug: 'fanbase',
+    name: 'Fanbase',
+    outcome: 'A home for creators and their communities.',
+    tagline: 'A home for creators and their communities.',
+    description:
+      'The sovereign platform for modern creators. Unify subscriber relationships, direct digital drops, and interactive live rooms without algorithm interference.',
+    features: [
+      'Direct creator-to-community broadcast channels and live sessions',
+      'Frictionless membership tiers, digital drops, and tipping pools',
+      'Sovereign subscriber relationship management with zero algorithmic suppression',
+    ],
+    accentColor: '#FF66B2', // Pink logo tint
+    status: 'In build [CONFIRM]',
+    ctaLabel: 'Apply for creator beta',
+    ctaUrl: '/apply?track=fanbase',
+    category: 'Creator Economy',
+    previewImage: '/products/fanbase-preview.webp',
+    websiteUrl: 'https://fanbase-pink.vercel.app/',
+  },
+  {
+    slug: 'job-pilot',
+    name: 'Job Pilot',
+    outcome: 'AI that tailors your resume and prepares you for interviews.',
+    tagline: 'AI that tailors your resume and prepares you for interviews.',
+    description:
+      'Personal career copilot that aligns your experience to any job requisition in seconds, generates role-specific interview simulators, and monitors application momentum.',
+    features: [
+      'Deterministic ATS resume alignment tailored per role specification',
+      'Real-time voice & text interview simulator with instant qualitative feedback',
+      'Application pipeline intelligence and automated follow-up cadences',
+    ],
+    accentColor: '#38D6FF', // Cyan tint
+    status: 'In build [CONFIRM]',
+    ctaLabel: 'Apply for pilot beta',
+    ctaUrl: '/apply?track=job-pilot',
+    category: 'Career Intelligence',
+    previewImage: '/products/job-pilot-preview.webp',
+    websiteUrl: 'https://jobpilot-jade-five.vercel.app/',
+  },
+  {
+    slug: 'pujari-ai',
+    name: 'Pujari.ai',
+    outcome: 'Your AI guide for puja, panchangam and mantras.',
+    tagline: 'Your AI guide for puja, panchangam and mantras.',
+    description:
+      'Preserving ancient ritual wisdom through respectful modern intelligence. Real-time astrological panchangam calculations, step-by-step puja guidance, and phonetic mantra accompaniment.',
+    features: [
+      'Location-precise Vedic panchangam, muhurtha, and tithi calculations',
+      'Step-by-step procedural puja guides with itemized samagri checklists',
+      'Accurate Sanskrit mantra recitation aids with authentic phonetic cadence',
+    ],
+    accentColor: '#FFB547', // Amber tint
+    status: 'In build [CONFIRM]',
+    ctaLabel: 'Apply for Vedic access',
+    ctaUrl: '/apply?track=pujari-ai',
+    category: 'Spiritual Tech',
+    previewImage: '/products/pujari-ai-preview.webp',
+    websiteUrl: 'https://pujari.ai/',
+  },
+];
+
+const processStepsList: ProcessStep[] = [
+  {
+    step: '01',
+    title: 'Discover',
+    description:
+      'We break down your goals, evaluate technical feasibility, and map the fastest path to measurable value.',
+  },
+  {
+    step: '02',
+    title: 'Design',
+    description:
+      'Interactive prototypes, design systems, and architecture diagrams so every detail is approved before code.',
+  },
+  {
+    step: '03',
+    title: 'Build',
+    description:
+      'Production engineering with TypeScript, automated test suites, and strict performance and security hygiene.',
+  },
+  {
+    step: '04',
+    title: 'Launch & grow',
+    description:
+      'Zero-downtime deployment, live performance monitoring, and iterative improvements that scale with your users.',
+  },
+];
+
 export const siteContent: SiteContent = {
   meta: {
-    title: 'Orenty | Build what\'s next',
-    description: 'Orenty builds software and AI for businesses, creates proprietary products, and incubates teams through the Startup Lab.',
+    title: 'Orenty | Software for businesses. Products of our own. Ownership for builders.',
+    description:
+      'Orenty designs and builds websites, apps and AI automation for growing businesses — and launches its own products through an open Startup Lab where the best builders earn equity.',
     siteUrl: 'https://orenty.in',
-    tagline: 'Build what\'s next.',
   },
   navigation: [
-    { label: 'Software', href: '/software' },
+    { label: 'Services', href: '/software' },
     { label: 'Products', href: '/products' },
-    { label: 'Careers', href: '/careers' },
+    { label: 'Startup Lab', href: '/lab' },
+    { label: 'Contact', href: '/software#contact' },
   ],
   hero: {
-    badge: 'ORENTY // NEXT-GEN ENGINEERING & VENTURE LAB',
-    headline: "Build what's",
-    headlineAccent: 'next.',
-    rotatingVerbs: [
-      {
-        verb: 'BUILD',
-        tagline: 'Proprietary In-House Products',
-        divisionId: 'products',
-        accent: '#c4b5fd',
-      },
-      {
-        verb: 'ENGINEER',
-        tagline: 'Client Software & High-Impact Engineering',
-        divisionId: 'software',
-        accent: '#818cf8',
-      },
-      {
-        verb: 'AUTOMATE',
-        tagline: 'Intelligent AI Workflows & Systems',
-        divisionId: 'software',
-        accent: '#38bdf8',
-      },
-      {
-        verb: 'SCALE',
-        tagline: 'Startup Lab Challenges & Co-Founding',
-        divisionId: 'lab',
-        accent: '#f472b6',
-      },
-    ],
+    eyebrow: 'SOFTWARE · PRODUCTS · STARTUP LAB',
+    headline: 'Software for businesses. Products of our own. Ownership for builders.',
     subheadline:
-      'We engineer intelligent software for ambitious businesses, build category-defining proprietary products, and back top problem solvers with product ownership.',
+      'Orenty designs and builds websites, apps and AI automation for growing businesses — and launches its own products through an open Startup Lab where the best builders earn equity.',
     ctaPrimary: {
-      label: 'Apply now',
-      href: '/careers#apply',
+      label: 'Start a project',
+      href: '/software#contact',
     },
     ctaSecondary: {
-      label: 'Explore Products',
-      href: '/products',
+      label: 'See our products',
+      href: '#products',
+    },
+    labLink: {
+      label: 'Join the Startup Lab →',
+      href: '/lab',
     },
   },
-  divisions: [
-    {
-      id: 'software',
-      number: '01',
-      title: 'Orenty Software Solutions',
-      tagline: 'Bespoke Engineering & AI Automation',
-      description:
-        'End-to-end software development, intelligent workflow automation, and scalable cloud architectures built for forward-thinking businesses.',
-      href: '/software',
-      accent: '#6366f1',
-      badge: 'CLIENT SOLUTIONS',
-    },
-    {
-      id: 'products',
-      number: '02',
-      title: 'Proprietary Products',
-      tagline: 'Focused Solutions Built In-House',
-      description:
-        'A portfolio of purpose-built platforms spanning professional networking, creator economies, career acceleration, and cultural AI.',
-      href: '/products',
-      accent: '#8b5cf6',
-      badge: '4 ACTIVE BUILDS',
-    },
-    {
-      id: 'lab',
-      number: '03',
-      title: 'Startup Lab',
-      tagline: 'Idea to Challenge to Co-Ownership',
-      description:
-        'Solve breakthrough startup challenges. Top contributors form dedicated founding teams and earn real product ownership.',
-      href: '/lab',
-      accent: '#ec4899',
-      badge: 'CHALLENGES OPEN',
-    },
+  trustStrip: [
+    { value: '[CONFIRM]', label: 'projects delivered' },
+    { value: '[CONFIRM]', label: 'clients served' },
+    { value: '4', label: 'products live or in build' },
+    { value: '[CONFIRM]', label: 'open challenges' },
   ],
-  products: [
-    {
-      slug: 'syncedin',
-      name: 'SyncedIn',
-      tagline: 'An AI-powered network that connects people to the right people.',
-      description:
-        'Cutting through noise with high-signal semantic matching. SyncedIn analyzes goals, expertise, and collaboration velocity to connect you with high-leverage collaborators and peers.',
-      features: [
-        'Semantic matchmaking based on active goals and project requirements',
-        'Intelligent introductions with context-aware briefing cards',
-        'Spam-free direct messaging secured by mutual relevance scoring',
-      ],
-      accentColor: '#8b5cf6', // Violet
-      status: 'building',
-      ctaLabel: 'Apply to Early Access',
-      ctaUrl: '/apply?track=syncedin',
-      category: 'AI Networking',
-      previewImage: '/products/syncedin-preview.webp',
-      websiteUrl: 'https://rightin.vercel.app/',
-    },
-    {
-      slug: 'fanbase',
-      name: 'Fanbase',
-      tagline: 'A home for creators and their communities.',
-      description:
-        'The sovereign platform for modern creators. Unify subscriber relationships, direct digital drops, and interactive live rooms without algorithm interference.',
-      features: [
-        'Direct creator-to-community broadcast channels and live sessions',
-        'Frictionless membership tiers, digital drops, and tipping pools',
-        'Sovereign subscriber relationship management with zero algorithmic suppression',
-      ],
-      accentColor: '#ec4899', // Pink
-      status: 'building',
-      ctaLabel: 'Apply for Creator Beta',
-      ctaUrl: '/apply?track=fanbase',
-      category: 'Creator Economy',
-      previewImage: '/products/fanbase-preview.webp',
-      websiteUrl: 'https://fanbase-pink.vercel.app/',
-    },
-    {
-      slug: 'job-pilot',
-      name: 'Job Pilot',
-      tagline: 'AI that tailors your resume and prepares you for interviews.',
-      description:
-        'Personal career copilot that aligns your experience to any job requisition in seconds, generates role-specific interview simulators, and monitors application momentum.',
-      features: [
-        'Deterministic ATS resume alignment tailored per role specification',
-        'Real-time voice & text interview simulator with instant qualitative feedback',
-        'Application pipeline intelligence and automated follow-up cadences',
-      ],
-      accentColor: '#06b6d4', // Cyan
-      status: 'building',
-      ctaLabel: 'Apply for Pilot Beta',
-      ctaUrl: '/apply?track=job-pilot',
-      category: 'Career Intelligence',
-      previewImage: '/products/job-pilot-preview.webp',
-      websiteUrl: 'https://jobpilot-jade-five.vercel.app/',
-    },
-    {
-      slug: 'pujari-ai',
-      name: 'Pujari.ai',
-      tagline: 'Your AI guide for puja, panchangam and mantras.',
-      description:
-        'Preserving ancient ritual wisdom through respectful modern intelligence. Real-time astrological panchangam calculations, step-by-step puja guidance, and phonetic mantra accompaniment.',
-      features: [
-        'Location-precise Vedic panchangam, muhurtha, and tithi calculations',
-        'Step-by-step procedural puja guides with itemized samagri checklists',
-        'Accurate Sanskrit mantra recitation aids with authentic phonetic cadence',
-      ],
-      accentColor: '#f59e0b', // Amber
-      status: 'building',
-      ctaLabel: 'Apply for Vedic Access',
-      ctaUrl: '/apply?track=pujari-ai',
-      category: 'Spiritual Tech',
-      previewImage: '/products/pujari-ai-preview.webp',
-      websiteUrl: 'https://pujari.ai/',
-    },
-  ],
-  services: [
-    {
-      id: 'software-dev',
-      title: 'Software Development',
-      shortDescription: 'Modern, high-performance web and cloud architectures engineered for resilience.',
-      bullets: [
-        'Full-stack Next.js, Node.js, and distributed microservices',
-        'High-concurrency database architecture and caching strategies',
-        'Comprehensive automated testing and zero-downtime CI/CD deployment',
-      ],
-      iconName: 'Code2',
-    },
-    {
-      id: 'web-dev',
-      title: 'Web Development',
-      shortDescription: 'Cinematic digital flagships with fluid interactions, 3D elements, and 60fps performance.',
-      bullets: [
-        'Interactive WebGL, Three.js, and GSAP motion design',
-        'Accessible, mobile-responsive, and pixel-precise UI implementation',
-        'Sub-second LCP optimization and Core Web Vitals excellence',
-      ],
-      iconName: 'Globe',
-    },
-    {
-      id: 'ai-automation',
-      title: 'AI Automation',
-      shortDescription: 'Practical generative AI agents and deterministic workflow automations.',
-      bullets: [
-        'Custom LLM orchestration and Retrieval-Augmented Generation (RAG)',
-        'Autonomous customer service, lead qualification, and data enrichment agents',
-        'Internal enterprise tool augmentation and automated operational pipelines',
-      ],
-      iconName: 'Cpu',
-    },
-    {
-      id: 'growth-strategy',
-      title: 'Growth Strategy',
-      shortDescription: 'Technical product marketing and data-driven user acquisition loops.',
-      bullets: [
-        'Product-led growth (PLG) mechanics and referral funnel instrumentation',
-        'Technical programmatic SEO architecture and search intent capture',
-        'Data tracking pipelines, cohort analytics, and conversion rate optimization',
-      ],
-      iconName: 'TrendingUp',
-    },
-  ],
-  process: [
-    {
-      step: '01',
-      title: 'Discover',
-      description: 'We deconstruct your core problem, evaluate technical viability, and map high-leverage business objectives.',
-    },
-    {
-      step: '02',
-      title: 'Design',
-      description: 'We craft high-fidelity architectural schematics, cinematic user interfaces, and interaction prototypes.',
-    },
-    {
-      step: '03',
-      title: 'Build',
-      description: 'We engineer with strict TypeScript hygiene, robust automated testing, and modern high-throughput stacks.',
-    },
-    {
-      step: '04',
-      title: 'Grow',
-      description: 'We deploy to production, analyze real-world telemetry, and iterate relentlessly to compound growth.',
-    },
-  ],
-  lab: {
-    badge: 'ORENTY STARTUP LAB // INCUBATION ENGINE',
-    headline: 'Solve the challenge.',
-    tagline: 'Earn the equity.',
-    description:
-      'We validate high-potential product ideas and publish them as open engineering challenges. The top contributors form the founding build team and earn real product ownership.',
-    steps: [
+  services: {
+    eyebrow: 'SERVICES // WHAT WE BUILD FOR YOU',
+    headline: 'We build what your business runs on.',
+    subheadline:
+      'One team for design, development and automation — from first idea to launch.',
+    items: [
       {
-        step: '01',
-        title: 'Idea',
-        detail: 'Orenty identifies and stress-tests high-potential startup concepts with market demand.',
+        id: 'web-apps',
+        title: 'Websites & Web Apps',
+        outcome:
+          'Fast, SEO-ready sites and dashboards that turn visitors into customers.',
+        shortDescription:
+          'Fast, SEO-ready sites and dashboards that turn visitors into customers.',
+        bullets: [
+          'High-performance Next.js architectures with sub-second page loads',
+          'Custom operational dashboards, customer portals, and internal tools',
+          'Clean semantic engineering built for search visibility and conversion',
+        ],
+        iconName: 'Globe',
+        href: '/software#websites',
       },
       {
-        step: '02',
-        title: 'Challenge',
-        detail: 'The problem is structured into specific technical and product architectural milestones.',
+        id: 'mobile-apps',
+        title: 'Mobile Apps',
+        outcome: 'iOS/Android apps built from your idea to the store.',
+        shortDescription:
+          'iOS/Android apps built from your idea to the store.',
+        bullets: [
+          'High-fidelity native experiences for both Apple iOS and Google Android',
+          'Offline capability, push notification pipelines, and biometric auth',
+          'End-to-end App Store and Play Store compliance and submission',
+        ],
+        iconName: 'Smartphone',
+        href: '/software#mobile',
       },
       {
-        step: '03',
-        title: 'Submissions',
-        detail: 'Builders submit functioning prototypes, algorithm solutions, or UX paradigms.',
+        id: 'ai-automation',
+        title: 'AI & Automation',
+        outcome: 'Chatbots, voice agents and workflows that remove manual work.',
+        shortDescription:
+          'Chatbots, voice agents and workflows that remove manual work.',
+        bullets: [
+          'Custom autonomous agents with Retrieval-Augmented Generation (RAG)',
+          'Automated data intake, lead routing, and customer support cadences',
+          'Direct integration into your existing CRM, database, and Slack tools',
+        ],
+        iconName: 'Cpu',
+        href: '/software#ai',
       },
       {
-        step: '04',
-        title: 'Team',
-        detail: 'The most capable and dedicated contributors are selected to form the founding team.',
-      },
-      {
-        step: '05',
-        title: 'Ownership',
-        detail: 'The team builds toward release and earns product ownership in the venture.',
+        id: 'growth-strategy',
+        title: 'Growth & Product Strategy',
+        outcome:
+          'Positioning, funnels and roadmaps so what we build actually gets used.',
+        shortDescription:
+          'Positioning, funnels and roadmaps so what we build actually gets used.',
+        bullets: [
+          'Product-led growth mechanics, user journeys, and activation funnels',
+          'Data-driven instrumentation and user behavior telemetry',
+          'Technical SEO structures designed to capture high-intent demand',
+        ],
+        iconName: 'TrendingUp',
+        href: '/software#growth',
       },
     ],
+    processHeadline: 'How we work',
+    process: processStepsList,
+  },
+  productsSection: {
+    eyebrow: 'PRODUCTS // WHAT WE BUILD OURSELVES',
+    headline: 'Products we build ourselves.',
+    subheadline:
+      "We don't only build for others. These are built, owned and run by Orenty.",
+    items: productsList,
+  },
+  products: productsList,
+  process: processStepsList,
+  lab: {
+    eyebrow: 'STARTUP LAB // CO-OWNERSHIP',
+    headline: 'Solve the challenge. Earn ownership.',
+    tagline: 'Idea to Challenge to Co-Ownership',
+    description:
+      'We post real startup problems. You submit a solution. The best builders form a team — and winners earn equity.',
+    subheadline:
+      'We post real startup problems. You submit a solution. The best builders form a team — and winners earn equity.',
     ownershipNote:
       'The best contributors can earn ownership in the product they help build. Terms are set per challenge.',
+    steps: [
+      {
+        step: 1,
+        title: 'Pick a challenge',
+        detail:
+          'Explore open technical and product problems published by Orenty with validated demand.',
+      },
+      {
+        step: 2,
+        title: 'Submit your solution',
+        detail:
+          'Submit your functioning code, prototype, algorithm, or UX architecture for the milestone.',
+      },
+      {
+        step: 3,
+        title: 'We review',
+        detail:
+          'Submissions are evaluated on code quality, user experience, and long-term retention thinking.',
+      },
+      {
+        step: 4,
+        title: 'Build together & earn equity',
+        detail:
+          'The top builders form the core founding team and earn real equity in the product they ship.',
+      },
+    ],
     challenges: [
       {
         id: 'chal-01',
-        code: 'CH-2601',
-        title: 'High-Concurrency Semantic Graph Matching for SyncedIn',
+        code: 'CH-01',
+        title: 'Semantic Graph Matching Engine',
+        problem:
+          'Build sub-50ms vector indexing for professional skill graphs to match collaborators by active goals.',
+        brief:
+          'Build sub-50ms vector indexing for professional skill graphs to match collaborators by active goals.',
         track: 'AI Automation',
         difficulty: 'Advanced',
-        brief:
-          'Design and implement a low-latency graph indexing pipeline that matches professional user embeddings with sub-50ms latency at 100k queries/sec.',
-        rewardPool: 'Founding Team Co-Ownership',
-        status: 'Open',
+        reward: 'Founding Team Equity',
+        rewardPool: 'Founding Team Equity',
+        deadline: '[CONFIRM]',
       },
       {
         id: 'chal-02',
-        code: 'CH-2602',
-        title: 'Zero-Egress Multi-Camera Real-time Stream Orchestrator',
-        track: 'Full-Stack',
-        difficulty: 'Pioneer',
+        code: 'CH-02',
+        title: 'Zero-Latency Audio Stream Sync',
+        problem:
+          'Engineered WebRTC multi-peer audio broadcast rooms with synchronized live chat reactions under high jitter.',
         brief:
-          'Build an ultra-low latency WebRTC interactive broadcast layer for Fanbase creator rooms with client-side audio normalization.',
-        rewardPool: 'Founding Team Co-Ownership',
-        status: 'Open',
+          'Engineered WebRTC multi-peer audio broadcast rooms with synchronized live chat reactions under high jitter.',
+        track: 'Product Innovation',
+        difficulty: 'Advanced',
+        reward: 'Founding Team Equity',
+        rewardPool: 'Founding Team Equity',
+        deadline: '[CONFIRM]',
       },
       {
         id: 'chal-03',
-        code: 'CH-2603',
-        title: 'Deterministic Multilingual Resume-Requisition Alignment',
-        track: 'Product Innovation',
-        difficulty: 'Core',
+        code: 'CH-03',
+        title: 'Deterministic ATS Resume Parser',
+        problem:
+          'Extract structured JSON from arbitrary PDF resumes and align directly against multi-variable job requisitions.',
         brief:
-          'Develop an explainable parser that scores resume fit against ambiguous job descriptions without generative hallucination.',
-        rewardPool: 'Founding Team Co-Ownership',
-        status: 'Open',
+          'Extract structured JSON from arbitrary PDF resumes and align directly against multi-variable job requisitions.',
+        track: 'Full-Stack',
+        difficulty: 'Core',
+        reward: 'Founding Team Equity',
+        rewardPool: 'Founding Team Equity',
+        deadline: '[CONFIRM]',
       },
       {
         id: 'chal-04',
-        code: 'CH-2604',
-        title: 'Offline-First Ephemeris & Panchangam Calculation Engine',
-        track: 'Product Innovation',
-        difficulty: 'Core',
+        code: 'CH-04',
+        title: 'Astronomical Panchangam Engine',
+        problem:
+          'Compute high-precision Vedic solar-lunar coordinates client-side with offline ephemeris lookup.',
         brief:
-          'Implement astronomical algorithms in WebAssembly to compute planetary longitudes and tithis offline within 0.001 degree precision.',
-        rewardPool: 'Founding Team Co-Ownership',
-        status: 'Open',
+          'Compute high-precision Vedic solar-lunar coordinates client-side with offline ephemeris lookup.',
+        track: 'Growth',
+        difficulty: 'Pioneer',
+        reward: 'Founding Team Equity',
+        rewardPool: 'Founding Team Equity',
+        deadline: '[CONFIRM]',
       },
     ],
   },
+  finalCta: {
+    headline: 'Have an idea or a problem worth solving?',
+    subheadline:
+      "Tell us what you're building. We'll tell you how we'd build it.",
+    ctaPrimary: {
+      label: 'Start a project',
+      href: '/software#contact',
+    },
+    ctaSecondary: {
+      label: 'Join the Startup Lab',
+      href: '/lab',
+    },
+  },
   footer: {
-    tagline: 'Build what\'s next.',
-    ownershipNotice:
-      'The best contributors can earn ownership in the product they help build. Terms are set per challenge.',
-    contactEmailPlaceholder: 'contact@orenty.in',
-    links: [
-      { label: 'Software Solutions', href: '/software' },
-      { label: 'Products', href: '/products' },
-      { label: 'Startup Lab', href: '/lab' },
-      { label: 'Careers', href: '/careers' },
-    ],
+    description:
+      'Orenty builds software for businesses, builds products of its own, and gives builders a path to ownership.',
+    contactEmail: 'contact@orenty.in [CONFIRM]',
     socials: [
-      { label: 'X (Twitter)', href: 'https://x.com' },
-      { label: 'GitHub', href: 'https://github.com' },
-      { label: 'LinkedIn', href: 'https://linkedin.com' },
+      { label: 'GitHub', href: 'https://github.com/orenty' },
+      { label: 'Twitter / X', href: 'https://x.com/orenty' },
+      { label: 'LinkedIn', href: 'https://linkedin.com/company/orenty' },
     ],
   },
 };

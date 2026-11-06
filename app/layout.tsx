@@ -103,6 +103,25 @@ export default function RootLayout({
       className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} dark`}
     >
       <body className="bg-background font-body text-foreground selection:bg-violet-600/40 selection:text-white">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Orenty',
+              url: 'https://orenty.in',
+              logo: 'https://orenty.in/brand/orenty-logo-white.svg',
+              description:
+                'Orenty builds software for businesses, builds products of its own, and gives builders a path to ownership.',
+              sameAs: [
+                'https://github.com/orenty',
+                'https://x.com/orenty',
+                'https://linkedin.com/company/orenty',
+              ],
+            }),
+          }}
+        />
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>

@@ -54,7 +54,7 @@ export default function SoftwarePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {siteContent.services.map((svc) => {
+          {siteContent.services.items.map((svc) => {
             const Icon = iconMap[svc.iconName] || Code2;
 
             return (

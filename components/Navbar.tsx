@@ -5,8 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { siteContent } from '@/content/site';
-import MagneticButton from './MagneticButton';
-import { Menu, X } from 'lucide-react';
+import Button from './Button';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,13 +26,25 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  // Prevent background scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = siteContent.navigation;
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-navy-950/80 py-3 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
+          ? 'bg-[#05050A]/85 py-3 backdrop-blur-xl border-b border-surface-border shadow-[0_12px_36px_rgba(0,0,0,0.6)]'
           : 'bg-transparent py-5'
       }`}
     >
@@ -43,7 +55,7 @@ export default function Navbar() {
           className="group flex items-center gap-3 transition-opacity hover:opacity-90"
           aria-label="Orenty Home"
         >
-          <div className="relative h-9 w-32 md:w-36">
+          <div className="relative h-8 w-28 md:h-9 md:w-34">
             <Image
               src="/brand/orenty-logo-white.svg"
               alt="Orenty Logo"
@@ -54,73 +66,77 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links: Software, Products, Careers */}
+        {/* Desktop Navigation Links */}
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((item) => {
-            const isActive = pathname.startsWith(item.href);
+            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative font-display text-xs uppercase tracking-widest font-medium transition-colors hover:text-white ${
-                  isActive ? 'text-violet-300 font-semibold' : 'text-slate-400'
+                className={`relative font-body text-sm font-medium transition-colors hover:text-white ${
+                  isActive ? 'text-primary-glow font-semibold' : 'text-text-2'
                 }`}
               >
                 {item.label}
                 {isActive && (
-                  <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] rounded-full bg-gradient-to-r from-violet-500 to-indigo-500" />
+                  <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] rounded-full bg-primary" />
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right Desktop CTA: Button "Apply now" -> /careers#apply */}
+        {/* Right Desktop CTA: Single Primary Button */}
         <div className="hidden items-center gap-4 md:flex">
-          <MagneticButton href="/careers#apply" variant="primary">
-            Apply now
-          </MagneticButton>
+          <Button href="/software#contact" variant="primary">
+            <span>Start a project</span>
+            <ArrowRight size={15} className="btn-arrow" />
+          </Button>
         </div>
 
         {/* Mobile Hamburger Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-300 md:hidden hover:text-white"
-          aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-surface-border bg-surface-glass text-text-2 md:hidden hover:text-white focus-visible:outline-none"
+          aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
         >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Full-screen Mobile Glass Menu with Large Links and Primary CTA */}
       {mobileMenuOpen && (
-        <div className="fixed inset-x-0 top-[60px] border-b border-white/10 bg-navy-950/95 p-6 backdrop-blur-2xl md:hidden animate-in slide-in-from-top-2 duration-200">
-          <nav className="flex flex-col gap-5">
+        <div className="fixed inset-0 top-[64px] z-50 flex flex-col justify-between bg-[#05050A]/95 p-8 backdrop-blur-2xl md:hidden animate-in fade-in slide-in-from-top-4 duration-300 border-t border-surface-border">
+          <nav className="flex flex-col gap-6 pt-6">
             {navLinks.map((item) => {
-              const isActive = pathname.startsWith(item.href);
+              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-sm font-display uppercase tracking-widest ${
-                    isActive ? 'text-violet-400 font-semibold' : 'text-slate-300'
+                  className={`font-display text-2xl font-bold tracking-tight transition-colors ${
+                    isActive ? 'text-primary-glow' : 'text-text hover:text-white'
                   }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <div className="pt-4 border-t border-white/10">
-              <Link
-                href="/careers#apply"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full items-center justify-center rounded-full bg-violet-600 px-6 py-3 font-display text-xs uppercase tracking-widest font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-              >
-                Apply now
-              </Link>
-            </div>
           </nav>
+
+          <div className="pt-8 pb-12 border-t border-surface-border">
+            <Button
+              href="/software#contact"
+              variant="primary"
+              className="w-full !py-4 !text-base"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>Start a project</span>
+              <ArrowRight size={18} className="btn-arrow" />
+            </Button>
+          </div>
         </div>
       )}
     </header>

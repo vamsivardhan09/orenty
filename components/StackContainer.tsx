@@ -74,7 +74,7 @@ export default function StackContainer({
       ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
       : totalCards === 5
       ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
-      : 'md:grid md:grid-cols-2 lg:grid-cols-2';
+      : 'md:grid md:grid-cols-2 lg:grid-cols-4';
 
   return (
     <div className="relative w-full">

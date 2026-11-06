@@ -2,34 +2,39 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, User } from 'lucide-react';
+import { ArrowUpRight, Compass } from 'lucide-react';
 
 export default function AboutStrip() {
   return (
     <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-20 w-full border-t border-border">
-      <div className="rounded-card border border-border bg-surface-2 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 lg:gap-12">
-        {/* Founder Photo Placeholder */}
-        <div className="relative h-28 w-28 md:h-36 md:w-36 rounded-full border border-border-top bg-surface-3 flex items-center justify-center shrink-0 text-text-3 shadow-inner">
-          <div className="flex flex-col items-center justify-center text-center p-2">
-            <User size={32} className="text-secondary/70 mb-1" />
-            <span className="text-[10px] uppercase tracking-wider text-text-3 font-medium">
-              [CONFIRM PHOTO]
+      <div className="relative rounded-card border border-border bg-surface-2/80 backdrop-blur-md p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 lg:gap-12 overflow-hidden">
+        {/* Subtle traveling laser accent */}
+        <div className="laser-line-top" />
+
+        {/* Studio Monogram Emblem */}
+        <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-2xl border border-border-top bg-surface-3 flex items-center justify-center shrink-0 shadow-lg group">
+          <div className="flex flex-col items-center justify-center text-center p-3">
+            <Compass size={32} className="text-secondary mb-2 animate-pulse" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-text-3 font-semibold">
+              STUDIO // LAB
             </span>
           </div>
+          {/* Subtle glowing ring */}
+          <div className="absolute inset-0 rounded-2xl border border-secondary/20 pointer-events-none" />
         </div>
 
-        {/* 2-Sentence Story + Link */}
+        {/* Story + Link */}
         <div className="flex-1 text-center md:text-left">
           <span className="eyebrow-label block mb-2">ABOUT ORENTY</span>
-          <p className="text-base sm:text-lg text-text leading-relaxed font-normal mb-6">
+          <p className="text-base sm:text-lg text-text leading-relaxed font-normal mb-5">
             Orenty was founded to build software that solves real business problems without bureaucratic bloat or fragile templates. We design, engineer, and automate systems for ambitious companies while incubating proprietary products of our own.
           </p>
           <Link
             href="/about"
-            className="btn-tertiary text-sm"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-3 hover:text-secondary transition-colors"
           >
-            <span>About Orenty</span>
-            <ArrowRight size={14} className="btn-arrow" />
+            <span>Learn about our philosophy & team</span>
+            <ArrowUpRight size={13} />
           </Link>
         </div>
       </div>

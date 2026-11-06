@@ -153,7 +153,7 @@ export const productsList: Product[] = [
       'Relevance scoring to eliminate cold sales spam and clutter',
     ],
     accentColor: '#7C5CFF', // Violet tint
-    status: 'In build [CONFIRM]',
+    status: 'building',
     ctaLabel: 'Join the waitlist',
     ctaUrl: '/products/syncedin#waitlist',
     category: 'AI Networking',
@@ -173,7 +173,7 @@ export const productsList: Product[] = [
       'Direct ownership of subscriber relationships and email contacts',
     ],
     accentColor: '#FF66B2', // Pink tint
-    status: 'In build [CONFIRM]',
+    status: 'building',
     ctaLabel: 'Join the waitlist',
     ctaUrl: '/products/fanbase#waitlist',
     category: 'Creator Platform',
@@ -193,7 +193,7 @@ export const productsList: Product[] = [
       'Application tracking to organize deadlines and follow-up reminders',
     ],
     accentColor: '#38D6FF', // Cyan tint
-    status: 'In build [CONFIRM]',
+    status: 'building',
     ctaLabel: 'Join the waitlist',
     ctaUrl: '/products/job-pilot#waitlist',
     category: 'Career Intelligence',
@@ -213,7 +213,7 @@ export const productsList: Product[] = [
       'Clear audio guides and phonetic recitations for traditional mantras',
     ],
     accentColor: '#FFB547', // Amber tint
-    status: 'In build [CONFIRM]',
+    status: 'building',
     ctaLabel: 'Join the waitlist',
     ctaUrl: '/products/pujari-ai#waitlist',
     category: 'Spiritual Tech',
@@ -261,9 +261,9 @@ export const challengesList: LabChallenge[] = [
       'Build fast vector search for professional skill graphs to match collaborators based on active goals.',
     track: 'AI',
     difficulty: 'Advanced',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
   {
     id: 'chal-02',
@@ -276,9 +276,9 @@ export const challengesList: LabChallenge[] = [
       'Build WebRTC multi-peer audio broadcast rooms with synchronized chat interactions under network jitter.',
     track: 'Engineering',
     difficulty: 'Advanced',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
   {
     id: 'chal-03',
@@ -291,9 +291,9 @@ export const challengesList: LabChallenge[] = [
       'Extract structured information from PDF resumes and align against multi-variable job requirements.',
     track: 'Engineering',
     difficulty: 'Core',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
   {
     id: 'chal-04',
@@ -306,9 +306,9 @@ export const challengesList: LabChallenge[] = [
       'Compute high-precision Vedic solar and lunar coordinates client-side with offline ephemeris lookup.',
     track: 'AI',
     difficulty: 'Pioneer',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
   {
     id: 'chal-05',
@@ -321,9 +321,9 @@ export const challengesList: LabChallenge[] = [
       'Design an intuitive subscription drop and interactive live-room experience for mobile and web.',
     track: 'Design',
     difficulty: 'Core',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
   {
     id: 'chal-06',
@@ -336,9 +336,9 @@ export const challengesList: LabChallenge[] = [
       'Engineer a self-reinforcing invitation and mutual-relevance onboarding mechanism for early network density.',
     track: 'Growth',
     difficulty: 'Advanced',
-    reward: 'Project Equity [CONFIRM]',
-    rewardPool: 'Project Equity [CONFIRM]',
-    deadline: '[CONFIRM]',
+    reward: 'Project Equity',
+    rewardPool: 'Project Equity',
+    deadline: 'Rolling Intake',
   },
 ];
 
@@ -537,7 +537,7 @@ export const siteContent: SiteContent = {
   footer: {
     description:
       'We build software for ambitious businesses and launch products of our own.',
-    contactEmail: 'contact@orenty.in [CONFIRM]',
+    contactEmail: 'contact@orenty.in',
     socials: [
       { label: 'GitHub', href: 'https://github.com/orenty' },
       { label: 'Twitter / X', href: 'https://x.com/orenty' },

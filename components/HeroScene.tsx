@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useMemo, useEffect, useState } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { SVGLoader } from 'three-stdlib';
 
@@ -11,41 +11,54 @@ export interface ScrollState {
   y: number;
 }
 
-// 4.3 Round, soft ambient dust dots shader
-const dustVertexShader = `
+// Crisp, high-end astronomical starfield shader with multi-frequency twinkle
+const starVertexShader = `
   attribute float aScale;
   attribute float aPhase;
+  attribute float aSpeed;
   attribute vec3 aColor;
   uniform float uTime;
   uniform float uPixelRatio;
-  uniform float uSize;
-  varying float vTw;
+  uniform float uBaseSize;
+  varying float vTwinkle;
   varying vec3 vColor;
 
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
-    float s = uSize * aScale * uPixelRatio * (280.0 / -mv.z);
-    gl_PointSize = max(s, 2.0 * uPixelRatio);
-    vTw = 0.6 + 0.4 * sin(uTime * (0.4 + aScale * 0.5) + aPhase);
+    
+    // Attenuate with distance
+    float s = uBaseSize * aScale * uPixelRatio * (320.0 / -mv.z);
+    gl_PointSize = clamp(s, 1.5 * uPixelRatio, 18.0 * uPixelRatio);
+    
+    // Multi-frequency organic twinkle (0.35 to 1.0 luminance)
+    float t1 = sin(uTime * aSpeed + aPhase);
+    float t2 = cos(uTime * (aSpeed * 1.6) + aPhase * 1.3);
+    vTwinkle = 0.45 + 0.55 * (0.6 * t1 + 0.4 * t2);
     vColor = aColor;
   }
 `;
 
-const dustFragmentShader = `
-  varying float vTw;
+const starFragmentShader = `
+  varying float vTwinkle;
   varying vec3 vColor;
 
   void main() {
-    float d = length(gl_PointCoord - 0.5);
-    float core = 1.0 - smoothstep(0.0, 0.5, d);
-    float a = (core * 0.22 + pow(core, 2.5) * 0.25) * vTw;
-    if (a < 0.008) discard;
-    gl_FragColor = vec4(vColor, a);
+    float dist = length(gl_PointCoord - 0.5);
+    if (dist > 0.5) discard;
+    
+    // Crisp diamond core + soft atmospheric falloff
+    float core = 1.0 - smoothstep(0.0, 0.48, dist);
+    float center = 1.0 - smoothstep(0.0, 0.16, dist);
+    
+    float alpha = (core * 0.55 + center * 0.45) * vTwinkle;
+    if (alpha < 0.015) discard;
+    
+    gl_FragColor = vec4(vColor, alpha);
   }
 `;
 
-// Volumetric Central Violet Light Beam (Section 4)
+// Volumetric Central Violet Light Beam
 const beamVertexShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
@@ -56,7 +69,7 @@ const beamVertexShader = `
     vUv = uv;
     vec3 pos = position;
     float sway = sin(pos.y * 1.5 + uTime * 0.6) * 0.03;
-    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.35) * 0.15;
+    pos.x += sway + uCursor.x * (1.0 - abs(pos.y) * 0.35) * 0.18;
     vPosition = pos;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
@@ -71,42 +84,57 @@ const beamFragmentShader = `
 
   void main() {
     float dist = abs(vUv.x - 0.5) * 2.0;
-    float core = exp(-dist * 16.0);
-    float shroud = exp(-dist * 3.5) * 0.28;
-    float verticalFade = smoothstep(0.0, 0.22, vUv.y) * smoothstep(1.0, 0.78, vUv.y);
-    float shimmer = 1.0 + sin(vUv.y * 10.0 - uTime * 1.5) * 0.05;
-    float alpha = (core * 0.8 + shroud) * verticalFade * shimmer * uOpacity;
+    float core = exp(-dist * 18.0);
+    float shroud = exp(-dist * 3.8) * 0.32;
+    float verticalFade = smoothstep(0.0, 0.20, vUv.y) * smoothstep(1.0, 0.80, vUv.y);
+    float shimmer = 1.0 + sin(vUv.y * 12.0 - uTime * 1.6) * 0.06;
+    float alpha = (core * 0.85 + shroud) * verticalFade * shimmer * uOpacity;
     vec3 color = mix(uColorGlow, uColorCore, core);
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-function createDustGeometry(count: number, zRange: [number, number], radiusRange: [number, number]) {
+function createStarGeometry(
+  count: number,
+  zRange: [number, number],
+  radiusRange: [number, number],
+  ySpread: number = 24
+) {
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const scales = new Float32Array(count);
   const phases = new Float32Array(count);
+  const speeds = new Float32Array(count);
 
-  const white = new THREE.Color('#f4f4fa');
-  const faintViolet = new THREE.Color('#a78bfa');
+  const white = new THREE.Color('#FFFFFF');
+  const icyCyan = new THREE.Color('#C8F5FF');
+  const faintLavender = new THREE.Color('#D8B4FE');
+  const warmWhite = new THREE.Color('#FFF5EA');
 
   for (let i = 0; i < count; i++) {
     const radius = radiusRange[0] + Math.random() * (radiusRange[1] - radiusRange[0]);
     const theta = Math.random() * Math.PI * 2;
-    const y = (Math.random() - 0.5) * 20;
+    const y = (Math.random() - 0.5) * ySpread;
     const z = zRange[0] + Math.random() * (zRange[1] - zRange[0]);
 
     positions[i * 3] = Math.cos(theta) * radius;
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = z;
 
-    const col = Math.random() > 0.4 ? white : faintViolet;
+    // 70% pure white, 15% icy cyan, 10% lavender, 5% warm white
+    const randCol = Math.random();
+    let col = white;
+    if (randCol < 0.15) col = icyCyan;
+    else if (randCol < 0.25) col = faintLavender;
+    else if (randCol < 0.30) col = warmWhite;
+
     colors[i * 3] = col.r;
     colors[i * 3 + 1] = col.g;
     colors[i * 3 + 2] = col.b;
 
-    scales[i] = 0.8 + Math.random() * 1.2;
+    scales[i] = 0.6 + Math.random() * 1.4;
     phases[i] = Math.random() * Math.PI * 2;
+    speeds[i] = 0.8 + Math.random() * 1.8;
   }
 
   const geom = new THREE.BufferGeometry();
@@ -114,11 +142,12 @@ function createDustGeometry(count: number, zRange: [number, number], radiusRange
   geom.setAttribute('aColor', new THREE.BufferAttribute(colors, 3));
   geom.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
   geom.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+  geom.setAttribute('aSpeed', new THREE.BufferAttribute(speeds, 1));
   return geom;
 }
 
-// 4.3 Decoupled Ambient Dust System: Slow idle drift + max 10° total scroll smoothed by lerp 0.04
-function DecoupledDustField({
+// Multi-Tier Celestial Cosmic Starfield (Visible, deep, elegant, not noisy)
+function CelestialStarfield({
   scrollRef,
   isMobile,
 }: {
@@ -128,30 +157,35 @@ function DecoupledDustField({
   const groupRef = useRef<THREE.Group>(null);
   const farRef = useRef<THREE.Points>(null);
   const midRef = useRef<THREE.Points>(null);
+  const nearRef = useRef<THREE.Points>(null);
 
-  const IDLE_SPEED = 0.0016; // rad/sec
-  const MAX_SCROLL_ROT = 0.174; // max 10° total over scroll
-  const SMOOTH = 0.04; // lerp 0.04
+  const IDLE_SPEED = 0.0018; // rad/sec
+  const MAX_SCROLL_ROT = 0.18; // max ~10° total over scroll
+  const SMOOTH = 0.04;
 
   const idleRef = useRef(0);
   const scrollRotRef = useRef(0);
 
-  // Modest counts: ~240 total desktop, ~80 mobile (quiet background)
+  // Generous, balanced counts: ~1,500 desktop, ~550 mobile
   const counts = useMemo(
     () =>
       isMobile
-        ? { far: 55, mid: 25 }
-        : { far: 180, mid: 60 },
+        ? { far: 450, mid: 120, near: 30 }
+        : { far: 1100, mid: 320, near: 70 },
     [isMobile]
   );
 
   const farGeom = useMemo(
-    () => createDustGeometry(counts.far, [-16, -9], [3, 14]),
+    () => createStarGeometry(counts.far, [-22, -10], [4, 18], 28),
     [counts.far]
   );
   const midGeom = useMemo(
-    () => createDustGeometry(counts.mid, [-9, -3], [2, 10]),
+    () => createStarGeometry(counts.mid, [-10, -4], [3, 13], 20),
     [counts.mid]
+  );
+  const nearGeom = useMemo(
+    () => createStarGeometry(counts.near, [-4, -1], [2, 8], 14),
+    [counts.near]
   );
 
   const materials = useMemo(() => {
@@ -164,10 +198,10 @@ function DecoupledDustField({
         uniforms: {
           uTime: { value: 0 },
           uPixelRatio: { value: dpr },
-          uSize: { value: 0.14 },
+          uBaseSize: { value: 0.18 },
         },
-        vertexShader: dustVertexShader,
-        fragmentShader: dustFragmentShader,
+        vertexShader: starVertexShader,
+        fragmentShader: starFragmentShader,
       }),
       mid: new THREE.ShaderMaterial({
         transparent: true,
@@ -176,10 +210,22 @@ function DecoupledDustField({
         uniforms: {
           uTime: { value: 0 },
           uPixelRatio: { value: dpr },
-          uSize: { value: 0.22 },
+          uBaseSize: { value: 0.28 },
         },
-        vertexShader: dustVertexShader,
-        fragmentShader: dustFragmentShader,
+        vertexShader: starVertexShader,
+        fragmentShader: starFragmentShader,
+      }),
+      near: new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        uniforms: {
+          uTime: { value: 0 },
+          uPixelRatio: { value: dpr },
+          uBaseSize: { value: 0.42 },
+        },
+        vertexShader: starVertexShader,
+        fragmentShader: starFragmentShader,
       }),
     };
   }, [isMobile]);
@@ -199,12 +245,16 @@ function DecoupledDustField({
     const baseRot = idleRef.current + scrollRotRef.current;
 
     if (farRef.current) {
-      farRef.current.rotation.y = baseRot * 0.5;
+      farRef.current.rotation.y = baseRot * 0.4;
       materials.far.uniforms.uTime.value += dt;
     }
     if (midRef.current) {
-      midRef.current.rotation.y = baseRot * 0.8;
+      midRef.current.rotation.y = baseRot * 0.7;
       materials.mid.uniforms.uTime.value += dt;
+    }
+    if (nearRef.current) {
+      nearRef.current.rotation.y = baseRot * 1.0;
+      materials.near.uniforms.uTime.value += dt;
     }
   });
 
@@ -212,11 +262,12 @@ function DecoupledDustField({
     <group ref={groupRef}>
       <points ref={farRef} geometry={farGeom} material={materials.far} />
       <points ref={midRef} geometry={midGeom} material={materials.mid} />
+      <points ref={nearRef} geometry={nearGeom} material={materials.near} />
     </group>
   );
 }
 
-// 4.5 Hero 3D Object: Logo Mark (Extruded, MeshStandardMaterial, metalness ~0.9, roughness ~0.25, mouse parallax <=6°)
+// Hero 3D Logo Mark: Extruded obsidian-chrome metallic geometry catching beam reflections
 function HeroLogoMark({
   mouse,
   isMobile,
@@ -286,19 +337,20 @@ function HeroLogoMark({
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#f4f4fa"
-          metalness={0.90}
-          roughness={0.24}
+          metalness={0.92}
+          roughness={0.20}
           emissive="#7C5CFF"
-          emissiveIntensity={0.22}
+          emissiveIntensity={0.25}
         />
       </mesh>
-      {/* Violet rim light */}
-      <pointLight color="#A78BFA" intensity={1.6} distance={3.5} decay={2} position={[-1.2, 0.5, 1]} />
+      {/* Violet & Cyan rim lights */}
+      <pointLight color="#A78BFA" intensity={2.0} distance={3.8} decay={2} position={[-1.2, 0.6, 1.2]} />
+      <pointLight color="#38D6FF" intensity={1.2} distance={3.0} decay={2} position={[1.2, -0.5, 0.8]} />
     </group>
   );
 }
 
-// Single Volumetric Violet Light Beam (Section 4)
+// Single Volumetric Violet Light Beam
 function TunedLightBeam({
   mouse,
 }: {
@@ -313,7 +365,7 @@ function TunedLightBeam({
       uCursor: { value: new THREE.Vector2(0, 0) },
       uColorCore: { value: new THREE.Color('#ffffff') },
       uColorGlow: { value: new THREE.Color('#7C5CFF') },
-      uOpacity: { value: 0.60 },
+      uOpacity: { value: 0.68 },
     }),
     []
   );
@@ -322,72 +374,57 @@ function TunedLightBeam({
     if (!materialRef.current) return;
     materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
     const cur = materialRef.current.uniforms.uCursor.value;
-    cur.x += (mouse.current.x - cur.x) * 0.03;
-    cur.y += (mouse.current.y - cur.y) * 0.03;
+    cur.x += (mouse.current.x - cur.x) * 0.035;
+    cur.y += (mouse.current.y - cur.y) * 0.035;
   });
 
   return (
     <mesh ref={meshRef} position={[0, 0, -1.5]}>
-      <planeGeometry args={[4.2, 16, 16, 32]} />
+      <planeGeometry args={[6.5, 18, 1, 1]} />
       <shaderMaterial
         ref={materialRef}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        uniforms={uniforms}
         vertexShader={beamVertexShader}
         fragmentShader={beamFragmentShader}
-        uniforms={uniforms}
-        transparent
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-        side={THREE.DoubleSide}
       />
     </mesh>
   );
 }
 
+// Main Scene Container
 export default function HeroScene({
   scrollRef,
+  isMobile = false,
 }: {
   scrollRef?: React.MutableRefObject<ScrollState>;
+  isMobile?: boolean;
 }) {
   const mouse = useRef({ x: 0, y: 0 });
-  const { camera } = useThree();
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 768);
-      const onResize = () => setIsMobile(window.innerWidth < 768);
-      window.addEventListener('resize', onResize);
-      return () => window.removeEventListener('resize', onResize);
-    }
-  }, []);
-
-  useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
+    const onMove = (e: MouseEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMouseMove);
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => window.removeEventListener('mousemove', onMove);
   }, []);
-
-  useFrame(() => {
-    if (isMobile) return;
-    const targetCamX = mouse.current.x * 0.12;
-    const targetCamY = mouse.current.y * 0.08;
-    camera.position.x += (targetCamX - camera.position.x) * 0.04;
-    camera.position.y += (targetCamY - camera.position.y) * 0.04;
-  });
 
   return (
     <>
-      <ambientLight intensity={0.45} />
-      <directionalLight position={[4, 6, 5]} intensity={1.8} color="#ffffff" />
-      <pointLight position={[-3, 1, 2]} intensity={2.0} color="#7C5CFF" />
-      <pointLight position={[3, -1, -2]} intensity={1.0} color="#38D6FF" />
-
-      {/* Beam, Ambient Decoupled Dust Field, and Hero 3D Logo Mark */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={1.2} />
+      
+      {/* 1. Volumetric Light Beam */}
       <TunedLightBeam mouse={mouse} />
-      <DecoupledDustField scrollRef={scrollRef} isMobile={isMobile} />
+
+      {/* 2. Celestial Multi-Tier Starfield */}
+      <CelestialStarfield scrollRef={scrollRef} isMobile={isMobile} />
+
+      {/* 3. Hero 3D Logo Mark */}
       <HeroLogoMark mouse={mouse} isMobile={isMobile} />
     </>
   );

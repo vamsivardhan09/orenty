@@ -26,7 +26,10 @@ export default function StackContainer({
       container.querySelectorAll<HTMLElement>('.stack__item')
     );
 
-    items.forEach((el, i) => el.style.setProperty('--i', `${i}`));
+    items.forEach((el, i) => {
+      el.style.setProperty('--i', `${i}`);
+      el.style.setProperty('z-index', `${10 + i}`);
+    });
 
     let rafId: number | null = null;
 
@@ -42,7 +45,7 @@ export default function StackContainer({
         const p = Math.min(1, Math.max(0, 1 - gap / el.offsetHeight));
         el.style.setProperty('--p', p.toFixed(3));
 
-        if (el.getBoundingClientRect().top <= 120) {
+        if (el.getBoundingClientRect().top <= 140) {
           activeIndex = i + 1;
         }
       });
@@ -69,13 +72,18 @@ export default function StackContainer({
   const gridColsClass =
     totalCards === 3
       ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
-      : 'md:grid md:grid-cols-2 lg:grid-cols-4';
+      : totalCards === 5
+      ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
+      : 'md:grid md:grid-cols-2 lg:grid-cols-2';
 
   return (
     <div className="relative w-full">
-      {/* Mobile-only Progress Indicator (1 / 4) */}
-      <div className="flex md:hidden items-center justify-end mb-3 px-1 text-xs text-text-3 font-medium">
-        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold">
+      {/* Mobile-only Progress Indicator (1 / 5) */}
+      <div className="flex md:hidden items-center justify-between mb-3 px-1 text-xs text-text-3 font-medium">
+        <span className="text-[11px] font-mono uppercase tracking-wider text-text-3">
+          Scroll to explore works
+        </span>
+        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold font-mono text-[11px]">
           {currentIdx} / {totalCards}
         </span>
       </div>
@@ -85,7 +93,14 @@ export default function StackContainer({
         className={`stack ${gridColsClass} gap-6 lg:gap-8 ${className}`}
       >
         {children.map((child, idx) => (
-          <div key={idx} className="stack__item rounded-card h-full">
+          <div
+            key={idx}
+            className="stack__item rounded-card h-full"
+            style={{
+              '--i': idx,
+              zIndex: 10 + idx,
+            } as React.CSSProperties}
+          >
             {child}
           </div>
         ))}

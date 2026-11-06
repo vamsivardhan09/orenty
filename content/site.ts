@@ -220,6 +220,26 @@ export const productsList: Product[] = [
     previewImage: '/products/pujari-ai-preview.webp',
     websiteUrl: 'https://pujari.ai/',
   },
+  {
+    slug: 'g1-mart',
+    name: 'G1 Mart',
+    outcome: 'Hyperlocal fresh groceries and daily essentials with sub-second ordering.',
+    tagline: 'Fresh groceries and daily essentials delivered to your door.',
+    description:
+      'A full-stack hyperlocal grocery commerce platform engineered for ultra-fast load times, seamless checkout, and real-time inventory management across thousands of daily staple products.',
+    features: [
+      'Hyperlocal catalog spanning fresh staples, dairy, snacks, and personal essentials',
+      'Fast single-tap mobile checkout flow with live order routing',
+      'High-performance Next.js storefront engineered for instant sub-second browsing',
+    ],
+    accentColor: '#10B981', // Emerald / fresh grocery tint
+    status: 'live',
+    ctaLabel: 'Visit live store',
+    ctaUrl: 'https://g1mart.in/',
+    category: 'Client Work · E-Commerce',
+    previewImage: '/products/g1-mart-preview.webp',
+    websiteUrl: 'https://g1mart.in/',
+  },
 ];
 
 export const processStepsList: ProcessStep[] = [
@@ -358,8 +378,8 @@ export const siteContent: SiteContent = {
     { label: 'Contact', href: '/contact' },
   ],
   hero: {
-    eyebrow: 'SOFTWARE · PRODUCTS · CAREERS',
-    headline: 'We build software for ambitious businesses — and products of our own.',
+    eyebrow: 'SOFTWARE · PRODUCTS · LAB',
+    headline: 'Build what’s next.',
     subheadline:
       'Websites, apps and AI automation for growing companies. Plus a Startup Lab where top builders can earn ownership in what we launch.',
     ctaPrimary: {
@@ -371,14 +391,14 @@ export const siteContent: SiteContent = {
       href: '/products',
     },
     labLink: {
-      label: 'Explore careers →',
+      label: 'Explore Startup Lab →',
       href: '/careers',
     },
   },
   trustStrip: [
     { value: '[CONFIRM]', label: 'projects delivered' },
     { value: '[CONFIRM]', label: 'clients served' },
-    { value: '4', label: 'products in build' },
+    { value: '5', label: 'products & works' },
     { value: 'Open', label: 'Startup Lab' },
   ],
   services: {
@@ -444,9 +464,9 @@ export const siteContent: SiteContent = {
     process: processStepsList,
   },
   productsSection: {
-    eyebrow: 'PRODUCTS',
-    headline: 'Products we build ourselves.',
-    subheadline: 'Built, owned and run by Orenty.',
+    eyebrow: 'PRODUCTS & OUR WORKS',
+    headline: 'Software products and client platforms.',
+    subheadline: 'Proprietary products we build and live client platforms we engineer.',
     items: productsList,
   },
   products: productsList,

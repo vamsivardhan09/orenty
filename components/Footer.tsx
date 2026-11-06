@@ -97,6 +97,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/products/g1-mart" className="transition-colors hover:text-text">
+                  G1 Mart
+                </Link>
+              </li>
+              <li>
                 <Link href="/products/pujari-ai" className="transition-colors hover:text-text">
                   Pujari.ai
                 </Link>

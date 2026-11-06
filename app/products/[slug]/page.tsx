@@ -56,6 +56,11 @@ const audienceMap: Record<string, { forWho: string; problemSolved: string; keyBe
     problemSolved: 'Removes the guesswork of applicant tracking systems and generic interview prep.',
     keyBenefit: 'Role-specific resume alignment and realistic AI-powered practice interview simulators.',
   },
+    'g1-mart': {
+    forWho: 'Households, families, and everyday shoppers looking for swift, dependable grocery and essentials delivery.',
+    problemSolved: 'Replaces frustrating stock cancellations and sluggish commerce apps with instant inventory sync and rapid checkout.',
+    keyBenefit: 'Sub-second mobile ordering, fresh quality guarantee, and real-time hyperlocal inventory updates.',
+  },
   'pujari-ai': {
     forWho: 'Individuals, families, and devotees seeking accurate Vedic ritual guidance and daily panchangam.',
     problemSolved: 'Replaces scattered, contradictory online schedules with verified astronomical calculations.',
@@ -117,8 +122,8 @@ export default async function ProductDetailPage({ params }: Props) {
               </h1>
             </div>
             <div className="ml-auto">
-              <Badge variant="building" className="text-xs">
-                {product.status}
+              <Badge variant={product.status === 'live' ? 'live' : 'building'} className="text-xs">
+                {product.status === 'live' ? 'Live · Client Work' : product.status}
               </Badge>
             </div>
           </div>
@@ -131,9 +136,25 @@ export default async function ProductDetailPage({ params }: Props) {
             {product.description}
           </p>
 
-          <div className="flex items-center gap-4">
-            <Button href="#waitlist" variant="primary">
-              <span>{product.ctaLabel}</span>
+          <div className="flex flex-wrap items-center gap-4">
+            {product.status === 'live' && product.websiteUrl ? (
+              <a
+                href={product.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                <span>{product.ctaLabel}</span>
+                <ArrowRight size={15} className="btn-arrow" />
+              </a>
+            ) : (
+              <Button href="#waitlist" variant="primary">
+                <span>{product.ctaLabel}</span>
+                <ArrowRight size={15} className="btn-arrow" />
+              </Button>
+            )}
+            <Button href="/contact" variant="secondary">
+              <span>Discuss similar project</span>
               <ArrowRight size={15} className="btn-arrow" />
             </Button>
           </div>

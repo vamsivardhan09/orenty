@@ -11,6 +11,23 @@ interface GlassCardProps {
   accentColor?: string;
 }
 
+function hexToRgb(hex: string): string {
+  const cleanHex = hex.replace('#', '').trim();
+  if (cleanHex.length === 3) {
+    const r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    const g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    const b = parseInt(cleanHex[2] + cleanHex[2], 16);
+    return `${r}, ${g}, ${b}`;
+  }
+  if (cleanHex.length === 6) {
+    const r = parseInt(cleanHex.substring(0, 2), 16);
+    const g = parseInt(cleanHex.substring(2, 4), 16);
+    const b = parseInt(cleanHex.substring(4, 6), 16);
+    return `${r}, ${g}, ${b}`;
+  }
+  return '167, 139, 250';
+}
+
 export default function GlassCard({
   children,
   className = '',
@@ -55,6 +72,23 @@ export default function GlassCard({
     setTilt({ rotateX: 0, rotateY: 0 });
   };
 
+  const rgb = accentColor ? hexToRgb(accentColor) : null;
+
+  const dynamicStyles: React.CSSProperties = {
+    transform:
+      enableTilt && isHovered
+        ? `perspective(1000px) rotateX(${tilt.rotateX.toFixed(2)}deg) rotateY(${tilt.rotateY.toFixed(2)}deg) translateY(-4px)`
+        : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
+    ...(rgb
+      ? ({
+          '--card-accent': accentColor,
+          '--card-border-hover': `rgba(${rgb}, 0.38)`,
+          '--card-glow-hover': `rgba(${rgb}, 0.20)`,
+          '--card-spotlight': `rgba(${rgb}, 0.15)`,
+        } as React.CSSProperties)
+      : {}),
+  };
+
   return (
     <div
       id={id}
@@ -62,14 +96,17 @@ export default function GlassCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{
-        transform:
-          enableTilt && isHovered
-            ? `perspective(1000px) rotateX(${tilt.rotateX.toFixed(2)}deg) rotateY(${tilt.rotateY.toFixed(2)}deg) translateY(-4px)`
-            : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
-      }}
+      style={dynamicStyles}
       className={`glass-card will-change-transform ${className}`}
     >
+      {/* Optional ambient color aura inside the top of the card */}
+      {accentColor && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-56 h-36 rounded-full blur-3xl opacity-10 group-hover:opacity-25 transition-opacity duration-500"
+          style={{ backgroundColor: accentColor }}
+        />
+      )}
       {children}
     </div>
   );

@@ -298,7 +298,7 @@ function HeroLogoMark({
           });
 
           extrudeGeom.center();
-          extrudeGeom.scale(0.009, -0.009, 0.009);
+          extrudeGeom.scale(0.0055, -0.0055, 0.0055);
           setGeometry(extrudeGeom);
         }
       }
@@ -323,7 +323,8 @@ function HeroLogoMark({
     const targetRotX = isMobile ? 0 : -mouse.current.y * maxParallax;
     const targetRotY = isMobile ? Math.sin(time * 0.4) * 0.06 : mouse.current.x * maxParallax;
 
-    groupRef.current.position.y = (isMobile ? 1.6 : 0.0) + floatY;
+    groupRef.current.position.x = isMobile ? 0 : 1.85;
+    groupRef.current.position.y = (isMobile ? 1.4 : 0.05) + floatY;
     groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06;
     groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.06;
     groupRef.current.rotation.z = floatRotZ;
@@ -332,8 +333,8 @@ function HeroLogoMark({
   if (!geometry) return null;
 
   return (
-    // Desktop: text left, object right [2.5, 0, 0.2]; mobile: object above headline [0, 1.6, -0.2]
-    <group ref={groupRef} position={isMobile ? [0, 1.6, -0.2] : [2.5, 0, 0.2]}>
+    // Desktop: text left, object right [1.85, 0.05, 0.1]; mobile: object above headline [0, 1.4, -0.2]
+    <group ref={groupRef} position={isMobile ? [0, 1.4, -0.2] : [1.85, 0.05, 0.1]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#f4f4fa"

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { siteContent } from '@/content/site';
 import GlassCard from './GlassCard';
 import ProductLogo from './ProductLogo';
+import StackContainer from './StackContainer';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 
 export default function ProductsSection() {
@@ -33,12 +34,12 @@ export default function ProductsSection() {
         </Link>
       </div>
 
-      {/* 2x2 Balanced Bento Grid (Cuts height by >40% compared to 4 cramped towers) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      {/* Mobile: Overlapping Placard Stack; Desktop: Clean Multi-column Grid */}
+      <StackContainer totalCards={productsSection.items.length}>
         {productsSection.items.map((prod) => (
           <GlassCard
             key={prod.slug}
-            className="group relative flex flex-col justify-between p-6 sm:p-7 transition-all duration-300"
+            className="group relative flex flex-col justify-between p-6 sm:p-7 h-full transition-all duration-300"
           >
             {/* Subtle top HUD corner */}
             <div className="hud-corner-tl opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -75,7 +76,7 @@ export default function ProductsSection() {
                     backgroundColor: `${prod.accentColor}12`,
                   }}
                 >
-                  ● {prod.status.replace(' [CONFIRM]', '')}
+                  ● {prod.status === 'live' ? 'Live · Client Work' : prod.status.replace(' [CONFIRM]', '')}
                 </span>
               </div>
 
@@ -102,12 +103,24 @@ export default function ProductsSection() {
 
             {/* Bottom Actions: Single Clean Row */}
             <div className="pt-4 border-t border-border/70 flex items-center justify-between gap-4">
-              <Link
-                href={`/products/${prod.slug}#waitlist`}
-                className="btn-secondary text-xs py-2 px-4 min-h-[38px] flex items-center justify-center font-medium"
-              >
-                <span>{prod.ctaLabel}</span>
-              </Link>
+              {prod.status === 'live' && prod.websiteUrl ? (
+                <a
+                  href={prod.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary text-xs py-2 px-4 min-h-[38px] flex items-center justify-center font-medium gap-1"
+                >
+                  <span>{prod.ctaLabel}</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              ) : (
+                <Link
+                  href={`/products/${prod.slug}#waitlist`}
+                  className="btn-secondary text-xs py-2 px-4 min-h-[38px] flex items-center justify-center font-medium"
+                >
+                  <span>{prod.ctaLabel}</span>
+                </Link>
+              )}
 
               <Link
                 href={`/products/${prod.slug}`}
@@ -119,7 +132,7 @@ export default function ProductsSection() {
             </div>
           </GlassCard>
         ))}
-      </div>
+      </StackContainer>
     </section>
   );
 }

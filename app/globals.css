@@ -51,7 +51,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-body), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -111,15 +111,17 @@ html.lenis body {
   z-index: 0;
 }
 
-/* 4.2 Card Depth & Surfaces */
+/* 4.2 Card Depth & Surfaces (Translucent Frosted Glass) */
 .glass-card {
   position: relative;
   border-radius: var(--r-card);
   padding: 24px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease;
+  background: linear-gradient(180deg, rgba(14, 16, 28, 0.62) 0%, rgba(8, 9, 16, 0.78) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
   overflow: hidden;
 }
 
@@ -129,14 +131,14 @@ html.lenis body {
   }
 }
 
-/* Top border brighter highlight fading to --border */
+/* Top border brighter highlight fading to transparent */
 .glass-card::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(180deg, var(--border-top), rgba(255, 255, 255, 0.02) 45%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.03) 45%, transparent 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -147,8 +149,9 @@ html.lenis body {
 @media (hover: hover) and (pointer: fine) {
   .glass-card:hover {
     transform: translateY(-4px);
-    background: var(--surface-3);
-    border-color: rgba(167, 139, 250, 0.25);
+    background: linear-gradient(180deg, rgba(20, 23, 40, 0.75) 0%, rgba(12, 14, 26, 0.86) 100%);
+    border-color: var(--card-border-hover, rgba(167, 139, 250, 0.35));
+    box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), 0 0 32px -6px var(--card-glow-hover, rgba(167, 139, 250, 0.20)), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .glass-card::after {
@@ -156,7 +159,7 @@ html.lenis body {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(167, 139, 250, 0.10), transparent 70%);
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--card-spotlight, rgba(167, 139, 250, 0.12)), transparent 70%);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
@@ -362,21 +365,23 @@ html.lenis body {
   color: var(--warm);
 }
 
-/* Mobile: Overlapping Card Stack (Section 9) */
+/* Mobile: Overlapping Card Stack (Section 9 Placard Scroll) */
 @media (max-width: 767px) {
   .stack {
     position: relative;
-    padding-bottom: 8svh;
+    padding-bottom: 10svh;
   }
 
   .stack__item {
     position: sticky;
-    top: calc(var(--header-h, 64px) + 12px + (var(--i, 0) * 14px));
-    min-height: 58svh;
-    margin-bottom: 24px;
+    top: calc(var(--header-h, 64px) + 12px + (var(--i, 0) * 10px));
+    min-height: 52svh;
+    margin-bottom: 28px;
     transform-origin: top center;
     transform: scale(calc(1 - var(--p, 0) * 0.05));
     background: var(--surface-2);
+    z-index: calc(10 + var(--i, 0));
+    box-shadow: 0 -8px 24px -4px rgba(0, 0, 0, 0.7);
     will-change: transform;
   }
 
@@ -392,14 +397,24 @@ html.lenis body {
   }
 }
 
-/* Accessibility: Keyboard focus visible (Section 3: 2px --secondary ring, 3px offset) */
-:focus-visible {
-  outline: 2px solid var(--secondary) !important;
-  outline-offset: 3px !important;
-  border-radius: 4px;
+@media (min-width: 768px) {
+  .stack__item {
+    position: relative !important;
+    top: auto !important;
+    min-height: auto !important;
+    margin-bottom: 0 !important;
+    transform: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+  }
+
+  .stack__item::after {
+    display: none !important;
+  }
 }
 
-/* Accessibility: Reduced motion overrides */
+/* Accessibility: Keyboard focus visible (Section 3: 2px --secondary ring, 3px offset) */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

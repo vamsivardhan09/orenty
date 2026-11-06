@@ -12,12 +12,15 @@ export const metadata: Metadata = {
 };
 
 const caseStudies = [
-  {
+    {
     id: 'cs-01',
-    client: 'Enterprise Client [CONFIRM]',
-    category: 'Web Platform & Cloud Architecture',
-    result: 'Sub-second real-time dashboards reducing operational overhead by 40% [CONFIRM].',
-    slug: 'cloud-platform',
+    client: 'G1 Mart',
+    category: 'Hyperlocal E-Commerce Platform',
+    result: 'High-performance Next.js storefront delivering sub-second catalogue browsing, live stock sync, and single-tap checkout.',
+    slug: 'g1-mart',
+    image: '/products/g1-mart-preview.webp',
+    websiteUrl: 'https://g1mart.in/',
+    isLive: true,
   },
   {
     id: 'cs-02',

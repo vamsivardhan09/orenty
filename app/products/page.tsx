@@ -12,7 +12,7 @@ import { Check, ArrowRight } from 'lucide-react';
 export const metadata: Metadata = {
   title: 'Products | Proprietary Platforms Built by Orenty',
   description:
-    'Explore Orenty proprietary products: SyncedIn (AI networking), Fanbase (creator economy), Job Pilot (AI career copilot), and Pujari.ai (spiritual tech).',
+    'Explore Orenty proprietary products: SyncedIn (AI networking), Fanbase (creator economy), Job Pilot (AI career copilot), Pujari.ai (spiritual tech), and G1 Mart (e-commerce platform).',
 };
 
 export default function ProductsPage() {
@@ -26,10 +26,10 @@ export default function ProductsPage() {
         <div className="max-w-3xl">
           <span className="eyebrow-label block mb-3">PRODUCTS</span>
           <h1 className="h1-hero text-text mb-6">
-            Products we build ourselves.
+            Products & Client Platforms.
           </h1>
           <p className="sub-paragraph text-text-2">
-            We don’t just build for others. These four products are built, owned, and run by Orenty.
+            Explore proprietary software built and owned by Orenty, alongside proven client platforms engineered to scale.
           </p>
         </div>
       </section>
@@ -64,8 +64,8 @@ export default function ProductsPage() {
                     </div>
                   </div>
 
-                  <Badge variant="building" className="text-xs">
-                    {prod.status}
+                  <Badge variant={prod.status === 'live' ? 'live' : 'building'} className="text-xs">
+                    {prod.status === 'live' ? 'Live · Client Work' : prod.status}
                   </Badge>
                 </div>
 
@@ -101,14 +101,26 @@ export default function ProductsPage() {
 
               {/* Action buttons: Status-based CTA + View Details */}
               <div className="pt-5 border-t border-border flex flex-col sm:flex-row items-center gap-4">
-                <Button
-                  href={`/products/${prod.slug}#waitlist`}
-                  variant="primary"
-                  className="w-full sm:w-auto"
-                >
-                  <span>{prod.ctaLabel}</span>
-                  <ArrowRight size={14} className="btn-arrow" />
-                </Button>
+                {prod.status === 'live' && prod.websiteUrl ? (
+                  <a
+                    href={prod.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary w-full sm:w-auto text-sm"
+                  >
+                    <span>{prod.ctaLabel}</span>
+                    <ArrowRight size={14} className="btn-arrow" />
+                  </a>
+                ) : (
+                  <Button
+                    href={`/products/${prod.slug}#waitlist`}
+                    variant="primary"
+                    className="w-full sm:w-auto"
+                  >
+                    <span>{prod.ctaLabel}</span>
+                    <ArrowRight size={14} className="btn-arrow" />
+                  </Button>
+                )}
                 <Link
                   href={`/products/${prod.slug}`}
                   className="btn-tertiary text-sm text-text-2 hover:text-text"

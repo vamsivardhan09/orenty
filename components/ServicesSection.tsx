@@ -22,6 +22,67 @@ const capabilityTags: Record<string, string[]> = {
   'growth-strategy': ['Product Roadmaps', 'Conversion UX', 'System Scale'],
 };
 
+// Tailored visual styling per service domain to eliminate monochromatic fatigue
+const serviceVisuals: Record<
+  string,
+  {
+    accent: string;
+    badgeBg: string;
+    badgeBorder: string;
+    badgeText: string;
+    glowClass: string;
+    tagHover: string;
+    linkHover: string;
+  }
+> = {
+  'web-apps': {
+    accent: '#8B5CF6', // Electric Violet (harmonizes with hero light beam)
+    badgeBg: 'bg-violet-500/10',
+    badgeBorder: 'border-violet-500/25',
+    badgeText: 'text-violet-400',
+    glowClass: 'group-hover:border-violet-500/50 group-hover:shadow-[0_0_22px_rgba(139,92,246,0.30)]',
+    tagHover: 'group-hover:border-violet-500/30 group-hover:text-violet-200 group-hover:bg-violet-500/5',
+    linkHover: 'group-hover:text-violet-300',
+  },
+  'mobile-apps': {
+    accent: '#06B6D4', // Vibrant Cyan / Sky Aqua
+    badgeBg: 'bg-cyan-500/10',
+    badgeBorder: 'border-cyan-500/25',
+    badgeText: 'text-cyan-400',
+    glowClass: 'group-hover:border-cyan-500/50 group-hover:shadow-[0_0_22px_rgba(6,182,212,0.30)]',
+    tagHover: 'group-hover:border-cyan-500/30 group-hover:text-cyan-200 group-hover:bg-cyan-500/5',
+    linkHover: 'group-hover:text-cyan-300',
+  },
+  'ai-automation': {
+    accent: '#10B981', // Neural Mint / Cyber Emerald
+    badgeBg: 'bg-emerald-500/10',
+    badgeBorder: 'border-emerald-500/25',
+    badgeText: 'text-emerald-400',
+    glowClass: 'group-hover:border-emerald-500/50 group-hover:shadow-[0_0_22px_rgba(16,185,129,0.30)]',
+    tagHover: 'group-hover:border-emerald-500/30 group-hover:text-emerald-200 group-hover:bg-emerald-500/5',
+    linkHover: 'group-hover:text-emerald-300',
+  },
+  'growth-strategy': {
+    accent: '#F59E0B', // Solar Amber / Warm Gold
+    badgeBg: 'bg-amber-500/10',
+    badgeBorder: 'border-amber-500/25',
+    badgeText: 'text-amber-400',
+    glowClass: 'group-hover:border-amber-500/50 group-hover:shadow-[0_0_22px_rgba(245,158,11,0.30)]',
+    tagHover: 'group-hover:border-amber-500/30 group-hover:text-amber-200 group-hover:bg-amber-500/5',
+    linkHover: 'group-hover:text-amber-300',
+  },
+};
+
+const defaultVisual = {
+  accent: '#7C5CFF',
+  badgeBg: 'bg-primary/10',
+  badgeBorder: 'border-primary/25',
+  badgeText: 'text-primary',
+  glowClass: 'group-hover:border-primary/50 group-hover:shadow-[0_0_22px_rgba(124,92,255,0.30)]',
+  tagHover: 'group-hover:border-primary/30 group-hover:text-primary-glow group-hover:bg-primary/5',
+  linkHover: 'group-hover:text-primary',
+};
+
 export default function ServicesSection() {
   const { services } = siteContent;
 
@@ -37,15 +98,17 @@ export default function ServicesSection() {
         </p>
       </div>
 
-      {/* 4 Compact Proportional Service Cards */}
+      {/* 4 Compact Translucent Frosted Glass Placards */}
       <StackContainer totalCards={services.items.length}>
         {services.items.map((service, idx) => {
           const Icon = iconMap[service.iconName] || Globe;
           const tags = capabilityTags[service.id] || ['Engineering', 'Design', 'Scale'];
+          const visual = serviceVisuals[service.id] || defaultVisual;
 
           return (
             <GlassCard
               key={service.id}
+              accentColor={visual.accent}
               className="group relative flex flex-col justify-between p-6 md:p-7 min-h-[300px] transition-all duration-300"
             >
               {/* Corner HUD accent */}
@@ -53,12 +116,17 @@ export default function ServicesSection() {
               <div className="hud-corner-br opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
-                {/* Header: Micro Index & Icon */}
+                {/* Header: Micro Index & Distinctive Tinted Icon Badge */}
                 <div className="flex items-center justify-between mb-5">
-                  <div className="h-10 w-10 rounded-lg border border-border bg-surface-3/80 flex items-center justify-center text-secondary group-hover:border-secondary/40 transition-colors">
-                    <Icon size={18} />
+                  <div
+                    className={`h-11 w-11 rounded-xl border ${visual.badgeBorder} ${visual.badgeBg} flex items-center justify-center ${visual.badgeText} ${visual.glowClass} transition-all duration-300`}
+                  >
+                    <Icon size={19} />
                   </div>
-                  <span className="text-[11px] font-mono tracking-widest text-text-3 font-semibold">
+                  <span
+                    className="text-[12px] font-mono tracking-widest font-semibold transition-colors duration-300"
+                    style={{ color: visual.accent }}
+                  >
                     0{idx + 1}
                   </span>
                 </div>
@@ -78,7 +146,7 @@ export default function ServicesSection() {
                   {tags.map((tag, tIdx) => (
                     <span
                       key={tIdx}
-                      className="inline-block px-2.5 py-1 text-[11px] font-mono font-medium rounded-md border border-border/70 bg-surface-3/60 text-text-3"
+                      className={`inline-block px-2.5 py-1 text-[11px] font-mono font-medium rounded-md border border-white/[0.08] bg-white/[0.03] text-text-2 ${visual.tagHover} transition-all duration-200`}
                     >
                       {tag}
                     </span>
@@ -86,14 +154,18 @@ export default function ServicesSection() {
                 </div>
               </div>
 
-              {/* Bottom Action: Compact Interactive Row */}
-              <div className="pt-3 border-t border-border/60 flex items-center justify-between">
+              {/* Bottom Action: Compact Interactive Row with matching accent arrow */}
+              <div className="pt-3.5 border-t border-white/[0.07] flex items-center justify-between">
                 <Link
                   href={service.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-3 group-hover:text-secondary transition-colors"
+                  className={`inline-flex items-center gap-1.5 text-xs font-semibold text-text-3 ${visual.linkHover} transition-colors group/link`}
                 >
                   <span>Explore capabilities</span>
-                  <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight
+                    size={14}
+                    className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                    style={{ color: visual.accent }}
+                  />
                 </Link>
               </div>
             </GlassCard>
@@ -102,7 +174,7 @@ export default function ServicesSection() {
       </StackContainer>
 
       {/* Process: 4 steps */}
-      <div className="mt-16 lg:mt-24 pt-10 border-t border-border/80">
+      <div className="mt-16 lg:mt-24 pt-10 border-t border-white/[0.08]">
         <div className="max-w-2xl mb-8">
           <span className="eyebrow-label block mb-2">OUR PROCESS</span>
           <h3 className="h2-section text-text">
@@ -114,7 +186,7 @@ export default function ServicesSection() {
           {services.process.map((step) => (
             <div
               key={step.step}
-              className="relative p-6 rounded-card border border-border bg-surface-2/80 backdrop-blur-sm flex flex-col justify-between hover:border-border-top transition-colors"
+              className="relative p-6 rounded-card border border-white/[0.08] bg-white/[0.02] backdrop-blur-md flex flex-col justify-between hover:bg-white/[0.05] hover:border-white/[0.18] transition-all duration-300"
             >
               <div>
                 <span className="text-xs font-mono font-semibold text-secondary tracking-wider block mb-3">

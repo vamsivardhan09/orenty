@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { siteContent } from '@/content/site';
 import GlassCard from './GlassCard';
 import Button from './Button';
-import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function FinalCtaSection() {
   const { finalCta } = siteContent;
@@ -13,7 +13,7 @@ export default function FinalCtaSection() {
   return (
     <section id="final-cta" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-24 lg:py-32 w-full border-t border-border">
       <GlassCard className="group relative p-10 md:p-16 lg:p-20 text-center overflow-hidden max-w-5xl mx-auto shadow-2xl">
-        {/* Layer 1: Atmospheric Background Image with Decreased Opacity (Capacity) */}
+        {/* Layer 1: Atmospheric Background Image with Decreased Opacity */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
             src="/cta-iconic-bg.jpg"
@@ -28,15 +28,15 @@ export default function FinalCtaSection() {
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(ellipse 75% 65% at 50% 50%, rgba(8, 9, 20, 0.45) 0%, rgba(8, 9, 20, 0.85) 70%, rgba(8, 9, 20, 0.98) 100%)',
+                'radial-gradient(circle at 50% 50%, rgba(5, 5, 10, 0.40) 0%, rgba(5, 5, 10, 0.88) 75%, #05050A 100%)',
             }}
           />
-          {/* Subtle luminous grid overlay */}
+          {/* Layer 3: Ultra-Subtle Architectural Grid Pattern */}
           <div
             className="absolute inset-0 opacity-[0.06]"
             style={{
               backgroundImage:
-                'radial-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px)',
+                'linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)',
               backgroundSize: '24px 24px',
             }}
           />
@@ -57,13 +57,6 @@ export default function FinalCtaSection() {
 
         {/* Foreground Content */}
         <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 backdrop-blur-md mb-6">
-            <Sparkles size={13} className="text-violet-400 animate-pulse" />
-            <span className="text-[11.5px] uppercase tracking-widest font-semibold text-violet-300">
-              START A PROJECT
-            </span>
-          </div>
-
           <h2 className="h2-section text-text mb-4 max-w-xl font-bold tracking-tight">
             Let&apos;s build something{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-100 to-violet-400 drop-shadow-[0_0_25px_rgba(139,92,246,0.35)]">

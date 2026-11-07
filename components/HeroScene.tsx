@@ -11,54 +11,169 @@ export interface ScrollState {
   y: number;
 }
 
-// Crisp, high-end astronomical starfield shader with multi-frequency twinkle
+// ============================================================================
+// 1. PROCEDURAL VOLUMETRIC COSMIC NEBULA SHADER
+// Deep space gas clouds, subtle galactic violet and stellar cyan filaments
+// ============================================================================
+const nebulaVertexShader = `
+  varying vec2 vUv;
+  varying vec3 vPos;
+  void main() {
+    vUv = uv;
+    vPos = position;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const nebulaFragmentShader = `
+  varying vec2 vUv;
+  uniform float uTime;
+  uniform vec2 uCursor;
+  uniform vec3 uColorBase;
+  uniform vec3 uColorViolet;
+  uniform vec3 uColorTeal;
+
+  // Ultra-fast 2D hash and smooth pseudo-noise
+  float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+  }
+
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+  }
+
+  // 3-octave FBM for organic billowing dust lanes
+  float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.5;
+    mat2 rot = mat2(0.877, 0.479, -0.479, 0.877);
+    for (int i = 0; i < 3; ++i) {
+      v += a * noise(p);
+      p = rot * p * 2.05 + vec2(12.5, 34.2);
+      a *= 0.5;
+    }
+    return v;
+  }
+
+  void main() {
+    vec2 uv = vUv;
+    vec2 p = (uv - 0.5) * 2.4;
+    
+    // Subtle mouse parallax
+    p += uCursor * 0.08;
+
+    // Slow organic cosmic drift
+    float t = uTime * 0.035;
+
+    // Multi-frequency gas layers
+    float n1 = fbm(p * 1.35 + vec2(t * 0.5, -t * 0.35));
+    float n2 = fbm(p * 2.1 - vec2(-t * 0.25, t * 0.4) + n1 * 0.65);
+
+    // Volumetric cloud density
+    float cloudViolet = smoothstep(0.32, 0.78, n1) * 0.28;
+    float cloudTeal = smoothstep(0.42, 0.85, n2) * 0.16;
+
+    // Central volumetric beam scattering (soft bloom glow around center vertical axis)
+    float centerGlow = exp(-abs(p.x) * 2.2) * exp(-abs(p.y) * 0.8) * 0.18;
+
+    // Combine into deep celestial atmospheric palette
+    vec3 col = uColorBase;
+    col += uColorViolet * cloudViolet;
+    col += uColorTeal * cloudTeal;
+    col += mix(uColorViolet, vec3(0.92, 0.88, 1.0), 0.35) * centerGlow;
+
+    // Vignette to gently fade edges
+    float vig = 1.0 - smoothstep(0.55, 1.45, length(p * vec2(0.75, 1.05)));
+    float alpha = clamp((cloudViolet * 0.85 + cloudTeal + centerGlow) * vig, 0.0, 0.58);
+
+    gl_FragColor = vec4(col, alpha);
+  }
+`;
+
+// ============================================================================
+// 2. ASTRONOMICAL 3-TIER STARFIELD SHADERS
+// Sub-pixel stardust, gaussian glow stars, & optical 4-point cross diffraction spikes
+// ============================================================================
 const starVertexShader = `
   attribute float aScale;
   attribute float aPhase;
   attribute float aSpeed;
+  attribute float aHero;
   attribute vec3 aColor;
   uniform float uTime;
   uniform float uPixelRatio;
   uniform float uBaseSize;
   varying float vTwinkle;
   varying vec3 vColor;
+  varying float vHero;
 
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mv;
     
-    // Attenuate with distance
+    // Attenuate with camera distance
     float s = uBaseSize * aScale * uPixelRatio * (320.0 / -mv.z);
-    gl_PointSize = clamp(s, 1.5 * uPixelRatio, 18.0 * uPixelRatio);
+    
+    // Hero stars with diffraction spikes get expanded point size quad
+    // Micro stardust is permitted to be delicate and sub-pixel (down to 0.75 * uPixelRatio)
+    if (aHero > 0.5) {
+      gl_PointSize = clamp(s * 2.8, 16.0 * uPixelRatio, 44.0 * uPixelRatio);
+    } else {
+      gl_PointSize = clamp(s * 0.85, 0.75 * uPixelRatio, 6.0 * uPixelRatio);
+    }
     
     // Multi-frequency organic twinkle (0.35 to 1.0 luminance)
     float t1 = sin(uTime * aSpeed + aPhase);
     float t2 = cos(uTime * (aSpeed * 1.6) + aPhase * 1.3);
     vTwinkle = 0.45 + 0.55 * (0.6 * t1 + 0.4 * t2);
     vColor = aColor;
+    vHero = aHero;
   }
 `;
 
 const starFragmentShader = `
   varying float vTwinkle;
   varying vec3 vColor;
+  varying float vHero;
 
   void main() {
-    float dist = length(gl_PointCoord - 0.5);
+    vec2 coord = gl_PointCoord - 0.5;
+    float dist = length(coord);
     if (dist > 0.5) discard;
-    
-    // Crisp diamond core + soft atmospheric falloff
-    float core = 1.0 - smoothstep(0.0, 0.48, dist);
-    float center = 1.0 - smoothstep(0.0, 0.16, dist);
-    
-    float alpha = (core * 0.55 + center * 0.45) * vTwinkle;
-    if (alpha < 0.015) discard;
-    
-    gl_FragColor = vec4(vColor, alpha);
+
+    // 1. Soft exponential luminous core (no artificial hard-circle disc edges!)
+    float core = exp(-dist * 14.0);
+    float halo = exp(-dist * 4.2) * 0.40;
+    float lum = core + halo;
+
+    // 2. Anamorphic 4-point cross diffraction flare for hero celestial stars
+    if (vHero > 0.5) {
+      vec2 p = abs(coord);
+      // Cross spikes along X and Y axes
+      float spikeX = exp(-p.y * 36.0) * exp(-p.x * 4.0);
+      float spikeY = exp(-p.x * 36.0) * exp(-p.y * 4.0);
+      // Delicate diagonal flare glint
+      float diag = exp(-abs(p.x - p.y) * 40.0) * exp(-dist * 10.0) * 0.22;
+      float spikes = max(spikeX, spikeY) * 0.95 + diag;
+      lum = max(lum, spikes);
+    }
+
+    float alpha = lum * vTwinkle;
+    if (alpha < 0.012) discard;
+
+    // Intense diamond-white core reflection
+    vec3 finalColor = mix(vColor, vec3(1.0), core * 0.75);
+    gl_FragColor = vec4(finalColor, alpha);
   }
 `;
 
-// Volumetric Central Violet Light Beam
+// ============================================================================
+// 3. VOLUMETRIC CENTRAL VIOLET LIGHT BEAM
+// ============================================================================
 const beamVertexShader = `
   varying vec2 vUv;
   varying vec3 vPosition;
@@ -84,11 +199,11 @@ const beamFragmentShader = `
 
   void main() {
     float dist = abs(vUv.x - 0.5) * 2.0;
-    float core = exp(-dist * 18.0);
-    float shroud = exp(-dist * 3.8) * 0.32;
-    float verticalFade = smoothstep(0.0, 0.20, vUv.y) * smoothstep(1.0, 0.80, vUv.y);
+    float core = exp(-dist * 16.0);
+    float shroud = exp(-dist * 3.4) * 0.38;
+    float verticalFade = smoothstep(0.0, 0.18, vUv.y) * smoothstep(1.0, 0.82, vUv.y);
     float shimmer = 1.0 + sin(vUv.y * 12.0 - uTime * 1.6) * 0.06;
-    float alpha = (core * 0.85 + shroud) * verticalFade * shimmer * uOpacity;
+    float alpha = (core * 0.88 + shroud) * verticalFade * shimmer * uOpacity;
     vec3 color = mix(uColorGlow, uColorCore, core);
     gl_FragColor = vec4(color, alpha);
   }
@@ -98,13 +213,15 @@ function createStarGeometry(
   count: number,
   zRange: [number, number],
   radiusRange: [number, number],
-  ySpread: number = 24
+  ySpread: number = 26,
+  heroRatio: number = 0.04
 ) {
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const scales = new Float32Array(count);
   const phases = new Float32Array(count);
   const speeds = new Float32Array(count);
+  const heroes = new Float32Array(count);
 
   const white = new THREE.Color('#FFFFFF');
   const icyCyan = new THREE.Color('#C8F5FF');
@@ -121,20 +238,32 @@ function createStarGeometry(
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = z;
 
-    // 70% pure white, 15% icy cyan, 10% lavender, 5% warm white
+    // Realistic stellar spectral classification
     const randCol = Math.random();
     let col = white;
-    if (randCol < 0.15) col = icyCyan;
-    else if (randCol < 0.25) col = faintLavender;
-    else if (randCol < 0.30) col = warmWhite;
+    if (randCol < 0.16) col = icyCyan;
+    else if (randCol < 0.26) col = faintLavender;
+    else if (randCol < 0.32) col = warmWhite;
 
     colors[i * 3] = col.r;
     colors[i * 3 + 1] = col.g;
     colors[i * 3 + 2] = col.b;
 
-    scales[i] = 0.6 + Math.random() * 1.4;
+    // Top 4% are prominent hero stars with diffraction spikes
+    const isHero = Math.random() < heroRatio;
+    heroes[i] = isHero ? 1.0 : 0.0;
+
+    if (isHero) {
+      scales[i] = 1.2 + Math.random() * 0.8;
+      speeds[i] = 0.6 + Math.random() * 1.0;
+    } else {
+      // 80% micro-dust (scale 0.35 - 0.75), 20% medium field stars
+      const isMicro = Math.random() < 0.80;
+      scales[i] = isMicro ? 0.35 + Math.random() * 0.4 : 0.8 + Math.random() * 0.6;
+      speeds[i] = 0.8 + Math.random() * 1.8;
+    }
+
     phases[i] = Math.random() * Math.PI * 2;
-    speeds[i] = 0.8 + Math.random() * 1.8;
   }
 
   const geom = new THREE.BufferGeometry();
@@ -143,10 +272,60 @@ function createStarGeometry(
   geom.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
   geom.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
   geom.setAttribute('aSpeed', new THREE.BufferAttribute(speeds, 1));
+  geom.setAttribute('aHero', new THREE.BufferAttribute(heroes, 1));
   return geom;
 }
 
-// Multi-Tier Celestial Cosmic Starfield (Visible, deep, elegant, not noisy)
+// ============================================================================
+// COMPONENT: Procedural Volumetric Cosmic Nebula
+// ============================================================================
+function CosmicNebula({
+  mouse,
+  isMobile,
+}: {
+  mouse: React.MutableRefObject<{ x: number; y: number }>;
+  isMobile: boolean;
+}) {
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uCursor: { value: new THREE.Vector2(0, 0) },
+      uColorBase: { value: new THREE.Color('#030308') },
+      uColorViolet: { value: new THREE.Color('#381268') },
+      uColorTeal: { value: new THREE.Color('#083344') },
+    }),
+    []
+  );
+
+  useFrame((state) => {
+    if (!materialRef.current) return;
+    materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+    const cur = materialRef.current.uniforms.uCursor.value;
+    cur.x += (mouse.current.x - cur.x) * 0.025;
+    cur.y += (mouse.current.y - cur.y) * 0.025;
+  });
+
+  return (
+    <mesh position={[0, 0, -22]}>
+      <planeGeometry args={isMobile ? [28, 40, 1, 1] : [44, 28, 1, 1]} />
+      <shaderMaterial
+        ref={materialRef}
+        transparent
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        uniforms={uniforms}
+        vertexShader={nebulaVertexShader}
+        fragmentShader={nebulaFragmentShader}
+      />
+    </mesh>
+  );
+}
+
+// ============================================================================
+// COMPONENT: Multi-Tier Celestial Cosmic Starfield
+// ============================================================================
 function CelestialStarfield({
   scrollRef,
   isMobile,
@@ -166,25 +345,25 @@ function CelestialStarfield({
   const idleRef = useRef(0);
   const scrollRotRef = useRef(0);
 
-  // Generous, balanced counts: ~1,500 desktop, ~550 mobile
+  // Balanced counts: generous micro-stardust without performance impact
   const counts = useMemo(
     () =>
       isMobile
-        ? { far: 450, mid: 120, near: 30 }
-        : { far: 1100, mid: 320, near: 70 },
+        ? { far: 520, mid: 140, near: 35 }
+        : { far: 1400, mid: 380, near: 80 },
     [isMobile]
   );
 
   const farGeom = useMemo(
-    () => createStarGeometry(counts.far, [-22, -10], [4, 18], 28),
+    () => createStarGeometry(counts.far, [-22, -10], [4, 18], 28, 0.03),
     [counts.far]
   );
   const midGeom = useMemo(
-    () => createStarGeometry(counts.mid, [-10, -4], [3, 13], 20),
+    () => createStarGeometry(counts.mid, [-10, -4], [3, 13], 20, 0.05),
     [counts.mid]
   );
   const nearGeom = useMemo(
-    () => createStarGeometry(counts.near, [-4, -1], [2, 8], 14),
+    () => createStarGeometry(counts.near, [-4, -1], [2, 8], 14, 0.08),
     [counts.near]
   );
 
@@ -198,7 +377,7 @@ function CelestialStarfield({
         uniforms: {
           uTime: { value: 0 },
           uPixelRatio: { value: dpr },
-          uBaseSize: { value: 0.18 },
+          uBaseSize: { value: 0.16 },
         },
         vertexShader: starVertexShader,
         fragmentShader: starFragmentShader,
@@ -210,7 +389,7 @@ function CelestialStarfield({
         uniforms: {
           uTime: { value: 0 },
           uPixelRatio: { value: dpr },
-          uBaseSize: { value: 0.28 },
+          uBaseSize: { value: 0.26 },
         },
         vertexShader: starVertexShader,
         fragmentShader: starFragmentShader,
@@ -222,7 +401,7 @@ function CelestialStarfield({
         uniforms: {
           uTime: { value: 0 },
           uPixelRatio: { value: dpr },
-          uBaseSize: { value: 0.42 },
+          uBaseSize: { value: 0.40 },
         },
         vertexShader: starVertexShader,
         fragmentShader: starFragmentShader,
@@ -267,7 +446,9 @@ function CelestialStarfield({
   );
 }
 
-// Hero 3D Logo Mark: Extruded obsidian-chrome metallic geometry catching beam reflections
+// ============================================================================
+// COMPONENT: Hero 3D Logo Mark
+// ============================================================================
 function HeroLogoMark({
   mouse,
   isMobile,
@@ -298,7 +479,8 @@ function HeroLogoMark({
           });
 
           extrudeGeom.center();
-          extrudeGeom.scale(0.0055, -0.0055, 0.0055);
+          const scale = isMobile ? 0.0038 : 0.0055;
+          extrudeGeom.scale(scale, -scale, scale);
           setGeometry(extrudeGeom);
         }
       }
@@ -309,7 +491,7 @@ function HeroLogoMark({
     return () => {
       if (geometry) geometry.dispose();
     };
-  }, []);
+  }, [isMobile]);
 
   useFrame((state) => {
     if (!groupRef.current) return;
@@ -318,13 +500,12 @@ function HeroLogoMark({
     const floatY = Math.sin(time * 1.1) * 0.05;
     const floatRotZ = Math.sin(time * 0.6) * 0.02;
 
-    // Mouse parallax <= 6° (0.10 rad) on desktop
     const maxParallax = 0.10;
     const targetRotX = isMobile ? 0 : -mouse.current.y * maxParallax;
     const targetRotY = isMobile ? Math.sin(time * 0.4) * 0.06 : mouse.current.x * maxParallax;
 
     groupRef.current.position.x = isMobile ? 0 : 1.85;
-    groupRef.current.position.y = (isMobile ? 1.4 : 0.05) + floatY;
+    groupRef.current.position.y = (isMobile ? 1.35 : 0.05) + floatY;
     groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06;
     groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.06;
     groupRef.current.rotation.z = floatRotZ;
@@ -333,8 +514,7 @@ function HeroLogoMark({
   if (!geometry) return null;
 
   return (
-    // Desktop: text left, object right [1.85, 0.05, 0.1]; mobile: object above headline [0, 1.4, -0.2]
-    <group ref={groupRef} position={isMobile ? [0, 1.4, -0.2] : [1.85, 0.05, 0.1]}>
+    <group ref={groupRef} position={isMobile ? [0, 1.35, -0.2] : [1.85, 0.05, 0.1]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
           color="#f4f4fa"
@@ -351,7 +531,9 @@ function HeroLogoMark({
   );
 }
 
-// Single Volumetric Violet Light Beam
+// ============================================================================
+// COMPONENT: Tuned Central Volumetric Violet Light Beam
+// ============================================================================
 function TunedLightBeam({
   mouse,
 }: {
@@ -366,7 +548,7 @@ function TunedLightBeam({
       uCursor: { value: new THREE.Vector2(0, 0) },
       uColorCore: { value: new THREE.Color('#ffffff') },
       uColorGlow: { value: new THREE.Color('#7C5CFF') },
-      uOpacity: { value: 0.68 },
+      uOpacity: { value: 0.72 },
     }),
     []
   );
@@ -381,7 +563,7 @@ function TunedLightBeam({
 
   return (
     <mesh ref={meshRef} position={[0, 0, -1.5]}>
-      <planeGeometry args={[6.5, 18, 1, 1]} />
+      <planeGeometry args={[6.8, 18, 1, 1]} />
       <shaderMaterial
         ref={materialRef}
         transparent
@@ -395,7 +577,9 @@ function TunedLightBeam({
   );
 }
 
-// Main Scene Container
+// ============================================================================
+// MAIN HERO SCENE CONTAINER
+// ============================================================================
 export default function HeroScene({
   scrollRef,
   isMobile = false,
@@ -418,15 +602,18 @@ export default function HeroScene({
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1.2} />
-      
-      {/* 1. Volumetric Light Beam */}
+
+      {/* 1. Procedural Volumetric Cosmic Nebula Layer */}
+      <CosmicNebula mouse={mouse} isMobile={isMobile} />
+
+      {/* 2. Volumetric Light Beam */}
       <TunedLightBeam mouse={mouse} />
 
-      {/* 2. Celestial Multi-Tier Starfield */}
+      {/* 3. Celestial Multi-Tier Starfield */}
       <CelestialStarfield scrollRef={scrollRef} isMobile={isMobile} />
 
-      {/* 3. Hero 3D Logo Mark */}
-      {!isMobile && <HeroLogoMark mouse={mouse} isMobile={isMobile} />}
+      {/* 4. Hero 3D Logo Mark */}
+      <HeroLogoMark mouse={mouse} isMobile={isMobile} />
     </>
   );
 }

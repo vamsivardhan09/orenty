@@ -45,8 +45,8 @@ export default function StackContainer({
         const p = Math.min(1, Math.max(0, 1 - gap / el.offsetHeight));
         el.style.setProperty('--p', p.toFixed(3));
 
-        if (el.getBoundingClientRect().top <= 140) {
-          activeIndex = i + 1;
+        if (el.getBoundingClientRect().top <= window.innerHeight * 0.55) {
+          activeIndex = i;
         }
       });
 

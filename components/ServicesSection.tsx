@@ -5,6 +5,12 @@ import Link from 'next/link';
 import { siteContent } from '@/content/site';
 import GlassCard from './GlassCard';
 import { Globe, Smartphone, Cpu, TrendingUp, ArrowUpRight } from 'lucide-react';
+import {
+  WebAppsMockup,
+  AiAutomationMockup,
+  MobileAppsMockup,
+  GrowthStrategyMockup,
+} from './ServiceVisualArtifacts';
 
 const iconMap = {
   Globe,
@@ -35,9 +41,9 @@ export default function ServicesSection() {
       {/* Background ambient lighting */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[380px] rounded-full blur-[130px] opacity-15"
+        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[400px] rounded-full blur-[140px] opacity-20"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(129, 140, 248, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(129, 140, 248, 0.35) 0%, transparent 70%)',
         }}
       />
 
@@ -51,7 +57,7 @@ export default function ServicesSection() {
         </p>
       </div>
 
-      {/* Crafted 2x2 Bento Engineering Grid — Eliminates the [icon-tile-stack] cliché */}
+      {/* Crafted 2x2 Bento Engineering Grid with Rich Visual Artifacts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
         {services.items.map((service, idx) => {
           const Icon = iconMap[service.iconName] || Globe;
@@ -64,10 +70,10 @@ export default function ServicesSection() {
               href={service.href}
               className="group block"
             >
-              <GlassCard className="h-full p-7 md:p-8 flex flex-col justify-between transition-all duration-300 hover:border-white/20">
+              <GlassCard className="h-full p-6 md:p-8 flex flex-col justify-between transition-all duration-300 hover:border-white/20">
                 <div>
                   {/* Integrated Header: Category Eyebrow + Inline Icon + Trailing Action */}
-                  <div className="flex items-center justify-between pb-4 border-b border-border">
+                  <div className="flex items-center justify-between pb-3.5 border-b border-border">
                     <div className="flex items-center gap-2.5">
                       <Icon size={17} className="text-text-2 group-hover:text-white transition-colors" />
                       <span className="text-[11px] font-mono uppercase tracking-widest text-text-3 font-medium">
@@ -81,20 +87,26 @@ export default function ServicesSection() {
                   </div>
 
                   {/* Title & Core Value Proposition */}
-                  <h3 className="text-xl md:text-2xl font-bold text-text group-hover:text-white transition-colors mt-5 mb-2.5 tracking-tight">
+                  <h3 className="text-xl md:text-2xl font-bold text-text group-hover:text-white transition-colors mt-4 mb-2 tracking-tight">
                     {service.title}
                   </h3>
-                  <p className="text-[14.5px] text-text-2 font-normal leading-relaxed mb-6">
+                  <p className="text-[14px] text-text-2 font-normal leading-relaxed mb-3">
                     {service.outcome}
                   </p>
+
+                  {/* Rich Visual Card Artifact (Browser / Agent Graph / Device / Telemetry) */}
+                  {service.id === 'web-apps' && <WebAppsMockup />}
+                  {service.id === 'ai-automation' && <AiAutomationMockup />}
+                  {service.id === 'mobile-apps' && <MobileAppsMockup />}
+                  {service.id === 'growth-strategy' && <GrowthStrategyMockup />}
                 </div>
 
-                {/* Structured Architectural Specifications Row (No generic pill chips) */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-4 border-t border-border mt-auto">
+                {/* Structured Architectural Specifications Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-4 border-t border-border mt-3">
                   {specs.map((spec, sIdx) => (
                     <div
                       key={sIdx}
-                      className="flex items-center gap-2 text-[11.5px] font-mono text-text-3 group-hover:text-text-2 transition-colors"
+                      className="flex items-center gap-2 text-[11px] font-mono text-text-3 group-hover:text-text-2 transition-colors"
                     >
                       <span className="h-1 w-1 rounded-full bg-text-3 shrink-0" />
                       <span className="truncate">{spec}</span>
@@ -107,7 +119,7 @@ export default function ServicesSection() {
         })}
       </div>
 
-      {/* Process: 4 sequential phases — Natural inline step titles (Eliminates [hero-metric]) */}
+      {/* Process: 4 sequential phases */}
       <div className="mt-16 lg:mt-24 pt-10 border-t border-border relative z-10">
         <div className="max-w-2xl mb-8">
           <span className="eyebrow-label block mb-2">OUR PROCESS</span>

@@ -50,7 +50,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#05050A]/90 py-3.5 backdrop-blur-xl border-b border-border shadow-[0_12px_36px_rgba(0,0,0,0.6)]'
+          ? 'bg-[#07080D]/90 py-3.5 backdrop-blur-xl border-b border-border shadow-[0_12px_36px_rgba(0,0,0,0.6)]'
           : 'bg-transparent py-5'
       }`}
     >
@@ -97,7 +97,7 @@ export default function Navbar() {
 
         {/* Desktop Primary Action: Start a project */}
         <div className="hidden items-center gap-4 md:flex">
-          <Button href="/contact" variant="primary">
+          <Button href="/contact" variant="primary" className="!min-h-[40px] !py-2 !px-5 !text-[14px]">
             <span>Start a project</span>
             <ArrowRight size={15} className="btn-arrow" />
           </Button>
@@ -117,7 +117,7 @@ export default function Navbar() {
 
       {/* Full-Screen Mobile Glass Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[65px] z-40 flex flex-col justify-between bg-[#05050A]/95 p-6 backdrop-blur-2xl md:hidden">
+        <div className="fixed inset-0 top-[65px] z-40 flex flex-col justify-between bg-[#07080D]/95 p-6 backdrop-blur-2xl md:hidden">
           <nav className="flex flex-col gap-6 pt-6">
             {navItems.map((item) => {
               const isActive =

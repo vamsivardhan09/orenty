@@ -4,32 +4,32 @@
 
 :root {
   /* Design Tokens (Section 4.1) */
-  --bg: #030306;
-  --surface-1: #07070c;   /* page sections */
-  --surface-2: #0b0b12;   /* cards */
-  --surface-3: #12121e;   /* raised / hover */
-  --border: rgba(255, 255, 255, 0.07);
-  --border-top: rgba(255, 255, 255, 0.18);
+  --bg: #07080D;
+  --surface-1: #0B0D14;   /* page sections */
+  --surface-2: #10131E;   /* cards */
+  --surface-3: #171B2A;   /* raised / hover */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-top: rgba(255, 255, 255, 0.14);
 
-  --primary: #7C5CFF;     /* electric violet — main actions, beam */
-  --primary-glow: #A78BFA;
-  --secondary: #38D6FF;   /* cool cyan — focus rings, small highlights */
-  --warm: #FFB547;        /* amber — ONLY Startup Lab / ownership / equity */
+  --primary: #6366F1;     /* electric violet — main actions, beam */
+  --primary-glow: #818CF8;
+  --secondary: #38BDF8;   /* cool cyan — focus rings, small highlights */
+  --warm: #F59E0B;        /* amber — ONLY Startup Lab / ownership / equity */
 
-  --text: #F4F4FA;
-  --text-2: #A3A3B8;      /* body copy, ≥4.5:1 on --bg */
-  --text-3: #71718A;      /* meta text only, never body */
+  --text: #F8FAFC;
+  --text-2: #94A3B8;      /* body copy, ≥4.5:1 on --bg */
+  --text-3: #64748B;      /* meta text only, never body */
 
-  --r-card: 24px;
-  --r-md: 14px;
+  --r-card: 20px;
+  --r-md: 12px;
   --r-pill: 999px;
   --section-pad: clamp(64px, 10vw, 120px);
   --header-h: 72px;
 
   /* Aliases for compatibility */
   --bg-elevated: var(--surface-2);
-  --glass: rgba(255, 255, 255, 0.045);
-  --glass-strong: rgba(255, 255, 255, 0.08);
+  --glass: rgba(255, 255, 255, 0.035);
+  --glass-strong: rgba(255, 255, 255, 0.07);
 
   /* Cursor interaction coordinates */
   --mx: 50%;
@@ -67,12 +67,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 92, 255, 0.25);
+  background: rgba(99, 102, 241, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 92, 255, 0.5);
+  background: rgba(99, 102, 241, 0.5);
 }
 
 /* Lenis smooth scrolling rules */
@@ -106,7 +106,7 @@ html.lenis body {
   transform: translate(-50%, -50%);
   width: min(800px, 90vw);
   height: min(500px, 60vh);
-  background: radial-gradient(circle, rgba(124, 92, 255, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -116,9 +116,9 @@ html.lenis body {
   position: relative;
   border-radius: var(--r-card);
   padding: 24px;
-  background: linear-gradient(180deg, rgba(14, 16, 28, 0.62) 0%, rgba(8, 9, 16, 0.78) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, rgba(17, 21, 33, 0.65) 0%, rgba(10, 12, 20, 0.78) 100%);
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
@@ -138,7 +138,7 @@ html.lenis body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.03) 45%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.05) 35%, transparent 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -149,9 +149,9 @@ html.lenis body {
 @media (hover: hover) and (pointer: fine) {
   .glass-card:hover {
     transform: translateY(-4px);
-    background: linear-gradient(180deg, rgba(20, 23, 40, 0.75) 0%, rgba(12, 14, 26, 0.86) 100%);
-    border-color: var(--card-border-hover, rgba(167, 139, 250, 0.35));
-    box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), 0 0 32px -6px var(--card-glow-hover, rgba(167, 139, 250, 0.20)), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    background: linear-gradient(180deg, rgba(24, 29, 46, 0.82) 0%, rgba(14, 17, 28, 0.90) 100%);
+    border-color: var(--card-border-hover, rgba(129, 140, 248, 0.35));
+    box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), 0 0 32px -6px var(--card-glow-hover, rgba(99, 102, 241, 0.20)), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .glass-card::after {
@@ -159,7 +159,7 @@ html.lenis body {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--card-spotlight, rgba(167, 139, 250, 0.12)), transparent 70%);
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--card-spotlight, rgba(129, 140, 248, 0.12)), transparent 70%);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
@@ -230,20 +230,21 @@ html.lenis body {
   gap: 8px;
   padding: 12px 28px;
   border-radius: var(--r-pill);
-  background: var(--primary);
+  background: linear-gradient(180deg, #6366F1 0%, #4F46E5 100%);
   color: #ffffff;
   font-size: 15.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  box-shadow: 0 4px 20px -2px rgba(124, 92, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
 }
 
 .btn-primary:hover {
-  background: #8B6BFF;
-  box-shadow: 0 6px 28px 0 rgba(124, 92, 255, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(180deg, #7175F3 0%, #5B52EE 100%);
+  box-shadow: 0 6px 28px 0 rgba(99, 102, 241, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
 }
 
 .btn-primary:active {
@@ -273,14 +274,16 @@ html.lenis body {
   color: var(--text);
   font-size: 15.5px;
   font-weight: 600;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
   transition: all 0.25s ease;
   cursor: pointer;
 }
 
 .btn-secondary:hover {
   background: var(--glass-strong);
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.18);
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .btn-secondary:active {

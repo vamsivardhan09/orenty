@@ -103,7 +103,7 @@ export default function GlassCard({
       {accentColor && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-56 h-36 rounded-full blur-3xl opacity-10 group-hover:opacity-25 transition-opacity duration-500"
+          className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-64 h-40 rounded-full blur-3xl opacity-15 group-hover:opacity-35 transition-opacity duration-500"
           style={{ backgroundColor: accentColor }}
         />
       )}

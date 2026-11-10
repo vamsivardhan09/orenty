@@ -13,7 +13,7 @@ import FinalCtaSection from '@/components/FinalCtaSection';
 
 export default function HomePage() {
   return (
-    <div className="relative flex flex-col bg-bg text-text">
+    <div className="relative flex flex-col bg-transparent text-text">
       {/* 3D Volumetric Light-Beam & Hero 3D Logo Canvas (Fades smoothly into page bg) */}
       <SceneBackground />
 

@@ -58,10 +58,7 @@ export default function FinalCtaSection() {
         {/* Foreground Content */}
         <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
           <h2 className="h2-section text-text mb-4 max-w-xl font-bold tracking-tight">
-            Let&apos;s build something{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-100 to-violet-400 drop-shadow-[0_0_25px_rgba(139,92,246,0.35)]">
-              iconic.
-            </span>
+            Let&apos;s build something <span className="text-white font-extrabold">iconic.</span>
           </h2>
 
           <p className="sub-paragraph text-text-2 mb-8 max-w-lg font-normal leading-relaxed text-balance">

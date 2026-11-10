@@ -26,7 +26,7 @@ export default function ProductLogo({ slug, size = 22, className = '' }: Product
             height: size,
             borderRadius,
           }}
-          className={`shrink-0 flex items-center justify-center bg-gradient-to-br from-indigo-500/25 to-violet-600/20 border border-violet-500/35 shadow-xs shadow-violet-500/20 select-none ${className}`}
+          className={`shrink-0 flex items-center justify-center bg-surface-3 border border-border select-none ${className}`}
           title="SyncedIn Logo"
           aria-label="SyncedIn Logo"
         >

@@ -85,7 +85,7 @@ export default function HeroCanvas({ isFixed = true }: HeroCanvasProps) {
         } overflow-hidden`}
         aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-[#05050A]" />
+        <div className="absolute inset-0 bg-[#07080D]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] bg-radial-gradient from-primary/10 via-transparent to-transparent blur-[120px]" />
       </div>
     );

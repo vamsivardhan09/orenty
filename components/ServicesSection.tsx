@@ -21,45 +21,63 @@ const capabilityTags: Record<string, string[]> = {
   'growth-strategy': ['Product Roadmaps', 'Conversion UX', 'System Scale'],
 };
 
-const serviceTheme: Record<string, {
+interface ServiceTheme {
   index: string;
   color: string;
   iconBg: string;
   iconBorder: string;
-  iconColor: string;
   hoverBorder: string;
-}> = {
+  cardBorder: string;
+  cardShadow: string;
+  gradientGrade: string;
+  blendGrade: string;
+}
+
+const serviceTheme: Record<string, ServiceTheme> = {
   'web-apps': {
     index: '01',
     color: '#818CF8',
-    iconBg: 'bg-indigo-500/10',
-    iconBorder: 'border-indigo-500/20',
-    iconColor: 'text-indigo-400',
-    hoverBorder: 'group-hover:border-indigo-500/40',
+    iconBg: 'rgba(99, 102, 241, 0.12)',
+    iconBorder: 'rgba(99, 102, 241, 0.25)',
+    hoverBorder: 'group-hover:border-indigo-500/50 group-hover:shadow-[0_0_25px_rgba(99,102,241,0.12)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: '',
+    gradientGrade: 'from-[#0A0D18] via-[#0A0D18]/85 to-[#312E81]/30',
+    blendGrade: 'bg-indigo-600/10',
   },
   'mobile-apps': {
     index: '02',
     color: '#38BDF8',
-    iconBg: 'bg-sky-500/10',
-    iconBorder: 'border-sky-500/20',
-    iconColor: 'text-sky-400',
-    hoverBorder: 'group-hover:border-sky-500/40',
+    iconBg: 'rgba(56, 189, 248, 0.12)',
+    iconBorder: 'rgba(56, 189, 248, 0.25)',
+    hoverBorder: 'group-hover:border-sky-500/50 group-hover:shadow-[0_0_25px_rgba(56,189,248,0.12)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: '',
+    gradientGrade: 'from-[#0A0D18] via-[#0A0D18]/85 to-[#0369A1]/30',
+    blendGrade: 'bg-sky-600/10',
   },
   'ai-automation': {
     index: '03',
     color: '#34D399',
-    iconBg: 'bg-emerald-500/10',
-    iconBorder: 'border-emerald-500/30',
-    iconColor: 'text-emerald-400',
-    hoverBorder: 'group-hover:border-emerald-500/50',
+    iconBg: 'rgba(52, 211, 153, 0.15)',
+    iconBorder: 'rgba(52, 211, 153, 0.35)',
+    hoverBorder: 'group-hover:border-emerald-400/70 group-hover:shadow-[0_0_35px_rgba(16,185,129,0.2)]',
+    // Active prominent state matching official live site (Card 03 in Image 1)
+    cardBorder: 'border-[#10B981]/50',
+    cardShadow: 'shadow-[0_0_28px_rgba(16,185,129,0.12)]',
+    gradientGrade: 'from-[#0A0D18] via-[#0A0D18]/80 to-[#047857]/35',
+    blendGrade: 'bg-emerald-600/12',
   },
   'growth-strategy': {
     index: '04',
     color: '#FBBF24',
-    iconBg: 'bg-amber-500/10',
-    iconBorder: 'border-amber-500/20',
-    iconColor: 'text-amber-400',
-    hoverBorder: 'group-hover:border-amber-500/40',
+    iconBg: 'rgba(251, 191, 36, 0.12)',
+    iconBorder: 'rgba(251, 191, 36, 0.25)',
+    hoverBorder: 'group-hover:border-amber-500/50 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.12)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: '',
+    gradientGrade: 'from-[#0A0D18] via-[#0A0D18]/85 to-[#B45309]/30',
+    blendGrade: 'bg-amber-600/10',
   },
 };
 
@@ -75,16 +93,20 @@ export default function ServicesSection() {
 
   return (
     <section id="services" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 w-full">
+      {/* Eyebrow & Section Headline matching Image 1 */}
       <div className="relative z-10 mb-10 lg:mb-12">
-        <h2 className="h2-section max-w-xl text-text mb-3">
+        <span className="text-[#38BDF8] text-[11px] font-mono tracking-[0.2em] font-semibold uppercase block mb-2.5">
+          SERVICES
+        </span>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 sm:mb-4">
           {services.headline}
         </h2>
-        <p className="sub-paragraph max-w-xl text-text-2">
+        <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
           {services.subheadline}
         </p>
       </div>
 
-      {/* Official 4-Placard Horizontal Row */}
+      {/* Official 4-Placard Grid with Full-Frame Decreased Opacity Imagery & Color Grading */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 relative z-10">
         {services.items.map((service, idx) => {
           const Icon = iconMap[service.iconName] || Globe;
@@ -92,10 +114,13 @@ export default function ServicesSection() {
           const theme = serviceTheme[service.id] || {
             index: `0${idx + 1}`,
             color: '#818CF8',
-            iconBg: 'bg-indigo-500/10',
-            iconBorder: 'border-indigo-500/20',
-            iconColor: 'text-indigo-400',
-            hoverBorder: 'group-hover:border-indigo-500/40',
+            iconBg: 'rgba(99, 102, 241, 0.12)',
+            iconBorder: 'rgba(99, 102, 241, 0.25)',
+            hoverBorder: 'group-hover:border-indigo-500/50',
+            cardBorder: 'border-white/[0.08]',
+            cardShadow: '',
+            gradientGrade: 'from-[#0A0D18] via-[#0A0D18]/85 to-[#312E81]/30',
+            blendGrade: 'bg-indigo-600/10',
           };
           const imageSrc = serviceImages[service.id] || '/images/service-web-apps.jpg';
 
@@ -106,85 +131,83 @@ export default function ServicesSection() {
               className="group block h-full"
             >
               <GlassCard
-                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[520px] rounded-[22px] border border-white/[0.08] bg-[#0A0D18]/90 backdrop-blur-xl transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
+                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[390px] sm:min-h-[410px] rounded-[22px] border ${theme.cardBorder} ${theme.cardShadow} bg-[#0A0D18]/90 backdrop-blur-xl transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
               >
-                {/* Subtle Ambient Card Backdrop with Lowered Opacity */}
+                {/* 1. Full-Frame Background Image Layer with Decreased Opacity */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 opacity-[0.06] group-hover:opacity-[0.14] transition-opacity duration-500 overflow-hidden"
+                  className="pointer-events-none absolute inset-0 overflow-hidden z-0"
                 >
                   <Image
                     src={imageSrc}
                     alt=""
                     fill
-                    className="object-cover object-center blur-sm scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-center opacity-20 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700 ease-out"
+                    priority={idx < 2}
                   />
+
+                  {/* 2. Color Grading Gradient Scrim Overlay per Service */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${theme.gradientGrade} pointer-events-none`} />
+                  <div className={`absolute inset-0 ${theme.blendGrade} mix-blend-color pointer-events-none`} />
                 </div>
 
-                {/* Top Section */}
-                <div className="relative z-10">
-                  {/* Top Bar: Icon Box + Index Number */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div
-                      className={`h-11 w-11 rounded-xl flex items-center justify-center border ${theme.iconBg} ${theme.iconBorder} ${theme.iconColor} transition-transform duration-300 group-hover:scale-105`}
-                    >
-                      <Icon size={18} />
+                {/* 3. Foreground Content */}
+                <div className="relative z-10 flex flex-col h-full justify-between">
+                  <div>
+                    {/* Top Bar: Icon Box + Index Number */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div
+                        className="h-11 w-11 rounded-xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-105"
+                        style={{
+                          backgroundColor: theme.iconBg,
+                          borderColor: theme.iconBorder,
+                          color: theme.color,
+                        }}
+                      >
+                        <Icon size={18} />
+                      </div>
+                      <span
+                        className="text-xs font-mono font-bold tracking-widest"
+                        style={{ color: theme.color }}
+                      >
+                        {theme.index}
+                      </span>
                     </div>
-                    <span
-                      className="text-xs font-mono font-bold tracking-widest"
-                      style={{ color: theme.color }}
-                    >
-                      {theme.index}
+
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-[22px] font-bold text-white mb-2.5 tracking-tight group-hover:text-white transition-colors">
+                      {service.title}
+                    </h3>
+
+                    {/* Outcome Description */}
+                    <p className="text-[13.5px] text-slate-300 font-normal leading-relaxed mb-5">
+                      {service.outcome}
+                    </p>
+
+                    {/* Capability Tags / Pills */}
+                    <div className="flex flex-wrap gap-1.5 mb-5">
+                      {tags.map((tag, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2.5 py-1 text-xs font-mono font-medium rounded-md border border-white/[0.08] bg-[#161B26]/85 text-slate-300 group-hover:border-white/15 transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Row Action */}
+                  <div className="pt-3.5 border-t border-white/[0.06] flex items-center justify-between mt-auto">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 group-hover:text-white transition-colors">
+                      <span>Explore capabilities</span>
+                      <ArrowUpRight
+                        size={13}
+                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
                     </span>
                   </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl sm:text-[22px] font-bold text-white mb-2.5 tracking-tight group-hover:text-white transition-colors">
-                    {service.title}
-                  </h3>
-
-                  {/* Outcome Description */}
-                  <p className="text-[13.5px] text-text-2 font-normal leading-relaxed mb-4">
-                    {service.outcome}
-                  </p>
-
-                  {/* Authentic Framed Visual Showcase with Soft Lowered Opacity */}
-                  <div className="relative w-full h-36 rounded-xl overflow-hidden border border-white/[0.08] bg-[#07080D] my-3.5 group-hover:border-white/20 transition-all duration-300 shadow-inner">
-                    <Image
-                      src={imageSrc}
-                      alt={`${service.title} showcase`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover object-center opacity-70 group-hover:opacity-95 group-hover:scale-105 transition-all duration-500"
-                      priority={idx < 2}
-                    />
-
-                    {/* Gradient scrim for seamless integration */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D18]/90 via-transparent to-transparent pointer-events-none" />
-                  </div>
-
-                  {/* Capability Tags */}
-                  <div className="flex flex-wrap gap-1.5 my-3">
-                    {tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-1 text-xs font-mono font-medium rounded-md border border-white/[0.08] bg-white/[0.03] text-text-3 group-hover:text-text-2 group-hover:border-white/10 transition-colors"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom Row Action */}
-                <div className="relative z-10 pt-3.5 border-t border-border/50 flex items-center justify-between mt-auto">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-3 group-hover:text-white transition-colors">
-                    <span>Explore capabilities</span>
-                    <ArrowUpRight
-                      size={13}
-                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    />
-                  </span>
                 </div>
               </GlassCard>
             </Link>
@@ -193,9 +216,9 @@ export default function ServicesSection() {
       </div>
 
       {/* Process: 4 sequential phases */}
-      <div className="mt-16 lg:mt-24 pt-10 border-t border-border relative z-10">
+      <div className="mt-16 lg:mt-24 pt-10 border-t border-white/[0.08] relative z-10">
         <div className="max-w-xl mb-8">
-          <h3 className="h2-section text-text">
+          <h3 className="h2-section text-white">
             {services.processHeadline}
           </h3>
         </div>
@@ -204,14 +227,14 @@ export default function ServicesSection() {
           {services.process.map((step) => (
             <div
               key={step.step}
-              className="relative p-6 rounded-card border border-border bg-surface-2 flex flex-col justify-between hover:bg-surface-3 transition-colors duration-200"
+              className="relative p-6 rounded-card border border-white/[0.08] bg-[#0A0D18]/80 backdrop-blur-md flex flex-col justify-between hover:bg-[#101322] transition-colors duration-200"
             >
               <div>
-                <h4 className="text-base font-semibold text-text mb-2.5">
-                  <span className="text-text-3 font-mono text-xs mr-2">{step.step}.</span>
+                <h4 className="text-base font-semibold text-white mb-2.5">
+                  <span className="text-slate-400 font-mono text-xs mr-2">{step.step}.</span>
                   {step.title}
                 </h4>
-                <p className="text-sm text-text-2 leading-relaxed">
+                <p className="text-sm text-slate-400 leading-relaxed">
                   {step.description}
                 </p>
               </div>

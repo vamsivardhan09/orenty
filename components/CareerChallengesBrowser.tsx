@@ -61,13 +61,13 @@ export default function CareerChallengesBrowser() {
             <div>
               {/* Badges: Track, Difficulty, and Amber Equity Badge */}
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider bg-surface-3 px-2.5 py-1 rounded-pill border border-border">
+                <span className="text-xs font-semibold text-secondary uppercase tracking-wider bg-surface-3 px-2.5 py-1 rounded-pill border border-border">
                   {chal.track}
                 </span>
-                <span className="text-[11px] font-medium text-text-3 uppercase tracking-wider bg-surface-3 px-2.5 py-1 rounded-pill border border-border">
+                <span className="text-xs font-medium text-text-3 uppercase tracking-wider bg-surface-3 px-2.5 py-1 rounded-pill border border-border">
                   {chal.difficulty}
                 </span>
-                <Badge variant="equity" className="text-[11px]">
+                <Badge variant="equity" className="text-xs">
                   {chal.reward}
                 </Badge>
               </div>
@@ -112,10 +112,10 @@ export default function CareerChallengesBrowser() {
               <div className="rounded-card border border-border bg-surface-2 p-6 flex flex-col justify-between h-full min-h-[340px]">
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-4">
-                    <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider bg-surface-3 px-2 py-0.5 rounded-pill border border-border">
+                    <span className="text-xs font-semibold text-secondary uppercase tracking-wider bg-surface-3 px-2 py-0.5 rounded-pill border border-border">
                       {chal.track}
                     </span>
-                    <Badge variant="equity" className="text-[11px]">
+                    <Badge variant="equity" className="text-xs">
                       {chal.reward}
                     </Badge>
                   </div>

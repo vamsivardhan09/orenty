@@ -40,8 +40,7 @@ export default function WhatWeDoSection() {
   return (
     <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 w-full">
       <div className="mb-10 lg:mb-12">
-        <span className="eyebrow-label block mb-2.5">WHAT WE DO</span>
-        <h2 className="h2-section max-w-2xl text-text">
+        <h2 className="h2-section max-w-xl text-text">
           Three divisions, one mission: building what matters.
         </h2>
       </div>
@@ -59,24 +58,23 @@ export default function WhatWeDoSection() {
               <div className="hud-corner-br opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="h-10 w-10 rounded-lg border border-border bg-surface-3/80 flex items-center justify-center text-secondary group-hover:border-secondary/40 transition-colors">
-                    <Icon size={18} />
+                <div className="flex items-center justify-between pb-3.5 border-b border-border mb-5">
+                  <div className="flex items-center gap-2.5">
+                    <Icon size={16} className="text-text-2 group-hover:text-white transition-colors" />
+                    <span className="text-xs font-mono tracking-widest text-text-3 font-medium uppercase">
+                      DIVISION // {div.index}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-mono tracking-widest text-text-3 font-semibold">
-                    DIVISION // {div.index}
+                  <span className="text-xs font-mono uppercase tracking-wider text-text-3">
+                    {div.tag}
                   </span>
                 </div>
-
-                <span className="text-[11px] font-mono uppercase tracking-wider text-secondary block mb-1">
-                  {div.tag}
-                </span>
 
                 <h3 className="h3-card text-text mb-3 group-hover:text-white transition-colors">
                   {div.title}
                 </h3>
 
-                <p className="text-[14.5px] text-text-2 leading-relaxed font-normal mb-6">
+                <p className="text-[15px] text-text-2 leading-relaxed font-normal mb-6">
                   {div.description}
                 </p>
               </div>
@@ -84,7 +82,7 @@ export default function WhatWeDoSection() {
               <div className="pt-3 border-t border-border/60">
                 <Link
                   href={div.linkHref}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-3 group-hover:text-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-2 group-hover:text-white transition-colors"
                 >
                   <span>{div.linkText}</span>
                   <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

@@ -30,7 +30,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
             <div
               className="relative flex items-center justify-center p-2 rounded-xl bg-surface-3 border border-border"
               style={{
-                boxShadow: `0 0 16px ${product.accentColor}25`,
+                
               }}
             >
               <ProductLogo slug={product.slug} size={22} />
@@ -39,7 +39,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
               <h3 className="h3-card text-text group-hover:text-white transition-colors">
                 {product.name}
               </h3>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-text-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-text-3">
                 {product.category}
               </span>
             </div>
@@ -47,7 +47,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
 
           {/* Status Pill */}
           <span
-            className="px-2.5 py-1 text-[11px] font-mono font-semibold rounded-full border border-border shrink-0"
+            className="px-2.5 py-1 text-xs font-mono font-semibold rounded-full border border-border shrink-0"
             style={{
               color: product.accentColor,
               borderColor: `${product.accentColor}40`,

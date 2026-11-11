@@ -104,7 +104,7 @@ export default function CustomCursor() {
         aria-hidden="true"
         className={`pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-primary-glow/60 transition-opacity duration-300 ${
           isHovered
-            ? 'h-11 w-11 bg-primary/10 border-primary shadow-[0_0_20px_rgba(124,92,255,0.4)]'
+            ? 'h-11 w-11 bg-primary/10 border-primary border-white/60'
             : 'h-8 w-8 bg-transparent'
         } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       />

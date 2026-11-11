@@ -241,7 +241,7 @@ export default async function ProductDetailPage({ params }: Props) {
             {product.name} is actively being engineered in-house. We are finalizing core architecture milestones and preparing private beta slots [CONFIRM timeline].
           </p>
           <div className="inline-flex items-center gap-2 text-xs text-text-3 font-medium">
-            <span className="h-2 w-2 rounded-full bg-secondary animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-secondary" />
             <span>Active development sprint</span>
           </div>
         </div>

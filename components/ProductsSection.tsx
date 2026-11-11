@@ -20,11 +20,10 @@ export default function ProductsSection() {
       <div className="block lg:hidden">
         <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <span className="eyebrow-label block mb-2.5">{productsSection.eyebrow}</span>
-            <h2 className="h2-section max-w-2xl text-text mb-3">
+                        <h2 className="h2-section max-w-xl text-text mb-3">
               {productsSection.headline}
             </h2>
-            <p className="sub-paragraph max-w-2xl text-text-2">
+            <p className="sub-paragraph max-w-xl text-text-2">
               {productsSection.subheadline}
             </p>
           </div>

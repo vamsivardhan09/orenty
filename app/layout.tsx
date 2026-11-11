@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Sora, Inter } from 'next/font/google';
+import { Sora, DM_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -14,7 +14,7 @@ const fontDisplay = Sora({
   display: 'swap',
 });
 
-const fontBody = Inter({
+const fontBody = DM_Sans({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',

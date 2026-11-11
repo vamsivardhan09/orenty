@@ -162,9 +162,8 @@ export default function DesktopProductScroller({
       {/* Top Header Row with Active Layer Indicators and Navigation */}
       <div className="mb-8 flex items-end justify-between gap-6">
         <div>
-          <span className="eyebrow-label block mb-2.5">{eyebrow}</span>
-          <h2 className="h2-section max-w-2xl text-text mb-3">{headline}</h2>
-          <p className="sub-paragraph max-w-2xl text-text-2">{subheadline}</p>
+                    <h2 className="h2-section max-w-xl text-text mb-3">{headline}</h2>
+          <p className="sub-paragraph max-w-xl text-text-2">{subheadline}</p>
         </div>
 
         {/* HUD Controls & Actions */}
@@ -189,7 +188,7 @@ export default function DesktopProductScroller({
               >
                 <ChevronLeft size={16} />
               </button>
-              <span className="px-2 font-mono text-[11px] font-semibold text-text-3">
+              <span className="px-2 font-mono text-xs font-semibold text-text-3">
                 0{activeStep + 1} / 03
               </span>
               <button
@@ -205,8 +204,8 @@ export default function DesktopProductScroller({
           </div>
 
           {/* Active Layer Badge */}
-          <div className="flex items-center gap-2 text-[11px] font-mono text-text-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+          <div className="flex items-center gap-2 text-xs font-mono text-text-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
             <span className="text-text-2 font-medium">{stepLabels[activeStep]}</span>
           </div>
         </div>

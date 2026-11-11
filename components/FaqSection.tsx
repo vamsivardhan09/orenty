@@ -15,8 +15,7 @@ export default function FaqSection() {
   return (
     <section id="faq" className="relative z-10 mx-auto max-w-4xl px-6 lg:px-12 py-20 lg:py-28 w-full border-t border-border">
       <div className="text-center mb-14">
-        <span className="eyebrow-label block mb-3">FAQ</span>
-        <h2 className="h2-section text-text mb-4">
+                <h2 className="h2-section text-text mb-4">
           Frequently asked questions.
         </h2>
         <p className="sub-paragraph text-text-2">
@@ -50,7 +49,7 @@ export default function FaqSection() {
               </button>
 
               {isOpen && (
-                <div className="px-6 pb-6 text-[15px] text-text-2 leading-relaxed border-t border-border/50 pt-4">
+                <div className="px-6 pb-6 text-[15px] text-text-2 leading-relaxed border-t border-border/50 pt-4 max-w-[68ch]">
                   {item.answer}
                 </div>
               )}

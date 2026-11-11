@@ -42,16 +42,14 @@ export default function FinalCtaSection() {
           />
         </div>
 
-        {/* Ambient Top Glow Line & Refraction */}
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-violet-400/60 to-transparent z-10" />
-        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-[220px] w-[500px] rounded-full bg-violet-600/20 blur-[100px] z-0" />
-        <div className="pointer-events-none absolute -bottom-24 right-1/4 h-[200px] w-[400px] rounded-full bg-cyan-500/15 blur-[110px] z-0" />
+        {/* Ambient Top Hairline Refraction */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
 
         {/* Corner HUD Accents */}
-        <div className="pointer-events-none absolute top-5 left-5 text-white/20 font-mono text-[10px] tracking-widest hidden sm:block z-10">
+        <div className="pointer-events-none absolute top-5 left-5 text-white/30 font-mono text-xs tracking-widest hidden sm:block z-10">
           ┌ ICONIC.STUDIO
         </div>
-        <div className="pointer-events-none absolute top-5 right-5 text-white/20 font-mono text-[10px] tracking-widest hidden sm:block z-10">
+        <div className="pointer-events-none absolute top-5 right-5 text-white/30 font-mono text-xs tracking-widest hidden sm:block z-10">
           // 2026 ┐
         </div>
 
@@ -69,7 +67,7 @@ export default function FinalCtaSection() {
             <Button
               href={finalCta.ctaPrimary.href}
               variant="primary"
-              className="w-full sm:w-auto shadow-[0_0_24px_rgba(139,92,246,0.35)] hover:shadow-[0_0_35px_rgba(139,92,246,0.55)]"
+              className="w-full sm:w-auto shadow-lg hover:shadow-xl"
             >
               <span>{finalCta.ctaPrimary.label}</span>
               <ArrowRight size={16} className="btn-arrow ml-1" />

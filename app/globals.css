@@ -17,8 +17,8 @@
   --warm: #F59E0B;        /* amber — ONLY Startup Lab / ownership / equity */
 
   --text: #F8FAFC;
-  --text-2: #94A3B8;      /* body copy, ≥4.5:1 on --bg */
-  --text-3: #64748B;      /* meta text only, never body */
+  --text-2: #CBD5E1;      /* body copy, ≥4.5:1 on --bg */
+  --text-3: #94A3B8;      /* meta text only, never body */
 
   --r-card: 20px;
   --r-md: 12px;
@@ -45,6 +45,14 @@ html {
   color: var(--text);
   color-scheme: dark;
   scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 body {
@@ -151,7 +159,7 @@ html.lenis body {
     transform: translateY(-4px);
     background: linear-gradient(180deg, rgba(24, 29, 46, 0.82) 0%, rgba(14, 17, 28, 0.90) 100%);
     border-color: var(--card-border-hover, rgba(129, 140, 248, 0.35));
-    box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), 0 0 32px -6px var(--card-glow-hover, rgba(99, 102, 241, 0.20)), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .glass-card::after {
@@ -159,7 +167,7 @@ html.lenis body {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--card-spotlight, rgba(129, 140, 248, 0.12)), transparent 70%);
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.06), transparent 70%);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
@@ -235,7 +243,7 @@ html.lenis body {
   font-size: 15.5px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
@@ -243,7 +251,7 @@ html.lenis body {
 
 .btn-primary:hover {
   background: linear-gradient(180deg, #7175F3 0%, #5B52EE 100%);
-  box-shadow: 0 6px 28px 0 rgba(99, 102, 241, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.45);
   transform: translateY(-1px);
 }
 

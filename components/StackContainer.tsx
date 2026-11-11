@@ -80,10 +80,10 @@ export default function StackContainer({
     <div className="relative w-full">
       {/* Mobile-only Progress Indicator (1 / 5) */}
       <div className="flex md:hidden items-center justify-between mb-3 px-1 text-xs text-text-3 font-medium">
-        <span className="text-[11px] font-mono uppercase tracking-wider text-text-3">
+        <span className="text-xs font-mono uppercase tracking-wider text-text-3">
           Scroll to explore works
         </span>
-        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold font-mono text-[11px]">
+        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold font-mono text-xs">
           {currentIdx} / {totalCards}
         </span>
       </div>

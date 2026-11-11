@@ -61,7 +61,7 @@ export default function LabTimeline() {
       {steps.map((st) => (
         <div key={st.step} className="relative flex items-start gap-4">
           {/* Node Indicator */}
-          <div className="absolute -left-[30px] md:-left-[36px] top-1 flex h-7 w-7 items-center justify-center rounded-full border border-warm/40 bg-surface-2 text-warm text-xs font-semibold shadow-[0_0_12px_rgba(255,181,71,0.25)]">
+          <div className="absolute -left-[30px] md:-left-[36px] top-1 flex h-7 w-7 items-center justify-center rounded-full border border-warm/40 bg-surface-2 text-warm text-xs font-semibold shadow-sm">
             {st.step}
           </div>
 

@@ -24,7 +24,7 @@ export default function CareersPage() {
       <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 pt-16 pb-16 w-full">
         <div className="max-w-3xl mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <span className="h-2 w-2 rounded-full bg-warm animate-pulse" />
+            <span className="h-2 w-2 rounded-full bg-warm" />
             <span className="text-xs font-semibold uppercase tracking-widest text-warm">
               STARTUP LAB
             </span>

@@ -36,7 +36,7 @@ export default function Hero() {
           
           {/* Eyebrow Pill */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono tracking-wider bg-white/5 border border-white/10 text-violet-300 mb-4 sm:mb-5">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
             <span>{hero.eyebrow}</span>
           </div>
 
@@ -46,7 +46,7 @@ export default function Hero() {
           </h1>
 
           {/* Subparagraph */}
-          <p className="sub-paragraph max-w-xl lg:max-w-2xl text-text-2 mb-6 sm:mb-8 font-normal leading-relaxed">
+          <p className="sub-paragraph max-w-xl lg:max-w-xl text-text-2 mb-6 sm:mb-8 font-normal leading-relaxed">
             {hero.subheadline}
           </p>
 
@@ -69,11 +69,11 @@ export default function Hero() {
 
           {/* Tech Stack Micro-Tags (as seen in Clarity reference) */}
           <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/[0.08] w-full max-w-xl">
-            <span className="text-[10px] font-mono text-slate-500 uppercase mr-1">Stack //</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-[11px] font-mono text-slate-300">Next.js 15</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-[11px] font-mono text-slate-300">AI Agents</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-[11px] font-mono text-slate-300">Edge Compute</span>
-            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-[11px] font-mono text-slate-300">Venture Studio</span>
+            <span className="text-xs font-mono text-slate-400 uppercase mr-1">Stack //</span>
+            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-200">Next.js 15</span>
+            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-200">AI Agents</span>
+            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-200">Edge Compute</span>
+            <span className="px-2.5 py-1 rounded-md bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-slate-200">Venture Studio</span>
           </div>
 
         </div>

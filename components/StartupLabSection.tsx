@@ -35,14 +35,10 @@ const steps = [
 export default function StartupLabSection() {
   return (
     <section id="careers" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-20 lg:py-24 w-full border-t border-border">
-      {/* Background warm amber glow (subtle, strictly in Startup Lab) */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[500px] rounded-full bg-warm/[0.05] blur-[140px]" />
+      
 
-      <div className="mx-auto max-w-3xl text-center mb-14">
-        <span className="text-xs font-semibold uppercase tracking-widest text-warm mb-3 block">
-          STARTUP LAB
-        </span>
-        <h2 className="h2-section text-text mb-4">
+      <div className="mx-auto max-w-xl text-center mb-14">
+                <h2 className="h2-section text-text mb-4">
           Build with us. Earn ownership.
         </h2>
         <p className="sub-paragraph text-text-2">

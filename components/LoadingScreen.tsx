@@ -33,12 +33,12 @@ export default function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#FAFAF8] overflow-hidden transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#08080A] overflow-hidden transition-opacity duration-300 ${
         fading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       {/* Subtle ambient light burst */}
-      <div className="absolute h-96 w-96 rounded-full bg-indigo-500/10 blur-[100px] pointer-events-none" />
+      <div className="absolute h-96 w-96 rounded-full bg-primary/20 blur-[100px] pointer-events-none" />
 
       {/* Mark Drawing */}
       <div className="relative z-10 flex flex-col items-center">
@@ -51,13 +51,13 @@ export default function LoadingScreen() {
         >
           <path
             d="M37.773 11.555C25.103 14.626 15.454 21.773 10.845 31.5l-2.843 6-.001 51.281c-.001 58.645-.362 56.47 7.895 47.597 5.023-5.398 60.824-65.933 92.354-100.19C119.112 24.387 128 14.373 128 13.937c0-.437-.707-1.501-1.571-2.366-1.38-1.379-6.53-1.561-42.25-1.488-31.053.064-42.034.412-46.406 1.472m100.977-.475c-3.47 2.021-2.18 6.611 3.583 12.744 2.933 3.122 14.252 15.801 25.154 28.176s20.461 22.652 21.242 22.838 2.286-.447 3.345-1.405c1.799-1.628 1.925-3.301 1.904-25.338-.019-20.799-.241-24.069-1.868-27.595-2.136-4.628-5.422-7.917-9.425-9.433-3.653-1.384-41.556-1.373-43.935.013m-1.436 81.61c-6.497 5.33-23.289 19.589-37.314 31.688a48014 48014 0 0 1-34.75 29.954c-14.774 12.708-18.154 11.787 42 11.453l51.25-.285 7.82-3.734c10.227-4.883 19.531-13.689 23.959-22.676l3.221-6.536.31-19.926c.332-21.417-.121-24.154-4.58-27.662-2.284-1.796-4.122-1.966-21.3-1.966h-18.801z"
-            stroke="#6366F1"
+            stroke="#818CF8"
             strokeWidth="2.5"
-            fill="#1E1B4B"
+            fill="#FFFFFF"
           />
         </svg>
         <div className="mt-5">
-          <span className="font-display tracking-[0.25em] text-sm text-slate-900 font-semibold">
+          <span className="font-display tracking-[0.25em] text-sm text-white font-semibold">
             ORENTY
           </span>
         </div>

@@ -12,19 +12,19 @@ interface MarqueeItem {
 }
 
 const capabilities: MarqueeItem[] = [
-  { icon: ShieldCheck, tag: 'PRODUCT', title: 'Pujari.ai', status: 'BUILDING', accent: '#D97706' },
+  { icon: ShieldCheck, tag: 'PRODUCT', title: 'Pujari.ai', status: 'BUILDING', accent: '#FBBF24' },
   { icon: Terminal, tag: 'STACK', title: 'Next.js 15 App Router & React 19' },
-  { icon: Sparkles, tag: 'PRODUCT', title: 'SyncedIn', status: 'BUILDING', accent: '#6366F1' },
+  { icon: Sparkles, tag: 'PRODUCT', title: 'SyncedIn', status: 'BUILDING', accent: '#818CF8' },
   { icon: Cpu, tag: 'SYSTEMS', title: 'Distributed AI & Agentic Workflows' },
-  { icon: Code2, tag: 'PRODUCT', title: 'Job Pilot', status: 'BETA', accent: '#0284C7' },
+  { icon: Code2, tag: 'PRODUCT', title: 'Job Pilot', status: 'BETA', accent: '#38BDF8' },
   { icon: Zap, tag: 'PERFORMANCE', title: 'Sub-100ms Global Edge Compute' },
-  { icon: Globe2, tag: 'PRODUCT', title: 'Fanbase', status: 'BUILDING', accent: '#EC4899' },
+  { icon: Globe2, tag: 'PRODUCT', title: 'Fanbase', status: 'BUILDING', accent: '#F472B6' },
   { icon: Layers, tag: '3D/GRAPHICS', title: 'Three.js & Custom WebGL Shaders' },
 ];
 
 export default function TrustStrip() {
   return (
-    <section className="relative z-10 w-full overflow-hidden border-y border-black/[0.08] bg-white/80 backdrop-blur-md">
+    <section className="relative z-10 w-full overflow-hidden border-y border-white/[0.08] bg-[#08080A]/85 backdrop-blur-md">
       {/* Top and Bottom Traveling Laser Beams */}
       <div className="laser-line-top" />
       <div className="laser-line-bottom" />
@@ -38,20 +38,20 @@ export default function TrustStrip() {
             return (
               <div
                 key={idx}
-                className="flex items-center gap-3 text-xs tracking-wider uppercase font-medium text-slate-700 transition-colors hover:text-slate-900"
+                className="flex items-center gap-3 text-xs tracking-wider uppercase font-medium text-slate-300 transition-colors hover:text-white"
               >
                 {/* Tech / Product Icon */}
-                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-black/[0.08] bg-slate-50 text-indigo-600 shrink-0 shadow-sm">
+                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-white/[0.1] bg-white/[0.04] text-indigo-400 shrink-0 shadow-sm">
                   <Icon size={12} />
                 </span>
 
                 {/* Category tag */}
-                <span className="text-[11px] text-slate-400 font-mono tracking-widest">
+                <span className="text-[11px] text-slate-500 font-mono tracking-widest">
                   [{item.tag}]
                 </span>
 
                 {/* Title */}
-                <span className="font-semibold text-slate-900 tracking-normal normal-case text-xs sm:text-sm">
+                <span className="font-semibold text-white tracking-normal normal-case text-xs sm:text-sm">
                   {item.title}
                 </span>
 
@@ -60,9 +60,9 @@ export default function TrustStrip() {
                   <span
                     className="px-2 py-0.5 text-[10px] font-mono font-semibold rounded-full border shrink-0"
                     style={{
-                      color: item.accent || '#6366F1',
-                      borderColor: `${item.accent || '#6366F1'}40`,
-                      backgroundColor: `${item.accent || '#6366F1'}12`,
+                      color: item.accent || '#818CF8',
+                      borderColor: `${item.accent || '#818CF8'}40`,
+                      backgroundColor: `${item.accent || '#818CF8'}18`,
                     }}
                   >
                     ● {item.status}
@@ -70,9 +70,9 @@ export default function TrustStrip() {
                 )}
 
                 {/* Vertical slide bar separator */}
-                <div className="flex items-center gap-2 ml-5 text-black/20 shrink-0">
-                  <ChevronRight size={12} className="text-black/30" />
-                  <span className="h-3.5 w-[1.5px] bg-black/15 select-none inline-block" />
+                <div className="flex items-center gap-2 ml-5 text-white/20 shrink-0">
+                  <ChevronRight size={12} className="text-white/30" />
+                  <span className="h-3.5 w-[1.5px] bg-white/20 select-none inline-block" />
                 </div>
               </div>
             );

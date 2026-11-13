@@ -516,18 +516,19 @@ function HeroLogoMark({
     <group ref={groupRef} position={[0, 0, 0]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
-          color="#1E1B4B"
-          metalness={0.80}
-          roughness={0.20}
-          emissive="#6366F1"
-          emissiveIntensity={0.28}
+          color="#E2E8F0"
+          metalness={0.92}
+          roughness={0.12}
+          emissive="#818CF8"
+          emissiveIntensity={0.30}
         />
       </mesh>
-      {/* Studio rim lights for the whitish canvas */}
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[3, 4, 5]} intensity={2.2} />
-      <pointLight color="#818CF8" intensity={3.0} distance={6} decay={2} position={[-2, 2, 3]} />
-      <pointLight color="#38BDF8" intensity={2.5} distance={5} decay={2} position={[2, -1.5, 2]} />
+      {/* Studio vertical spotlight matching parametric canyon core */}
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[0, 5, 2]} intensity={3.8} />
+      <pointLight color="#FFFFFF" intensity={4.0} distance={6} decay={2} position={[0, 2, 2]} />
+      <pointLight color="#818CF8" intensity={3.0} distance={6} decay={2} position={[-2, 1, 2]} />
+      <pointLight color="#38BDF8" intensity={2.5} distance={6} decay={2} position={[2, -1, 2]} />
     </group>
   );
 }

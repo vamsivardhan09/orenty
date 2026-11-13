@@ -35,44 +35,44 @@ interface ServiceTheme {
 const serviceTheme: Record<string, ServiceTheme> = {
   'web-apps': {
     index: '01',
-    color: '#6366F1',
-    iconBg: 'bg-indigo-50',
-    iconBorder: 'border-indigo-200/80',
-    iconColor: 'text-indigo-600',
-    hoverBorder: 'group-hover:border-indigo-400 group-hover:shadow-[0_20px_40px_-10px_rgba(99,102,241,0.15)]',
-    cardBorder: 'border-slate-200/90',
-    cardShadow: 'shadow-[0_4px_25px_-5px_rgba(0,0,0,0.06)]',
+    color: '#818CF8',
+    iconBg: 'bg-indigo-500/10',
+    iconBorder: 'border-indigo-500/30',
+    iconColor: 'text-indigo-400',
+    hoverBorder: 'group-hover:border-indigo-500/60 group-hover:shadow-[0_0_35px_rgba(99,102,241,0.25)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: 'shadow-[0_10px_30px_rgba(0,0,0,0.5)]',
   },
   'mobile-apps': {
     index: '02',
-    color: '#0284C7',
-    iconBg: 'bg-sky-50',
-    iconBorder: 'border-sky-200/80',
-    iconColor: 'text-sky-600',
-    hoverBorder: 'group-hover:border-sky-400 group-hover:shadow-[0_20px_40px_-10px_rgba(2,132,199,0.15)]',
-    cardBorder: 'border-slate-200/90',
-    cardShadow: 'shadow-[0_4px_25px_-5px_rgba(0,0,0,0.06)]',
+    color: '#38BDF8',
+    iconBg: 'bg-sky-500/10',
+    iconBorder: 'border-sky-500/30',
+    iconColor: 'text-sky-400',
+    hoverBorder: 'group-hover:border-sky-500/60 group-hover:shadow-[0_0_35px_rgba(2,132,199,0.25)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: 'shadow-[0_10px_30px_rgba(0,0,0,0.5)]',
   },
   'ai-automation': {
     index: '03',
-    color: '#059669',
-    iconBg: 'bg-emerald-50',
-    iconBorder: 'border-emerald-200/80',
-    iconColor: 'text-emerald-600',
-    hoverBorder: 'group-hover:border-emerald-500 group-hover:shadow-[0_20px_45px_-8px_rgba(16,185,129,0.22)]',
-    // Active prominent state matching official site
-    cardBorder: 'border-emerald-500/80 ring-1 ring-emerald-500/30',
-    cardShadow: 'shadow-[0_10px_35px_-5px_rgba(16,185,129,0.15)]',
+    color: '#34D399',
+    iconBg: 'bg-emerald-500/10',
+    iconBorder: 'border-emerald-500/40',
+    iconColor: 'text-emerald-400',
+    hoverBorder: 'group-hover:border-emerald-400 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.35)]',
+    // Active prominent state matching official reference
+    cardBorder: 'border-emerald-500/60 ring-1 ring-emerald-500/30',
+    cardShadow: 'shadow-[0_0_35px_rgba(16,185,129,0.2)]',
   },
   'growth-strategy': {
     index: '04',
-    color: '#D97706',
-    iconBg: 'bg-amber-50',
-    iconBorder: 'border-amber-200/80',
-    iconColor: 'text-amber-600',
-    hoverBorder: 'group-hover:border-amber-400 group-hover:shadow-[0_20px_40px_-10px_rgba(217,119,6,0.15)]',
-    cardBorder: 'border-slate-200/90',
-    cardShadow: 'shadow-[0_4px_25px_-5px_rgba(0,0,0,0.06)]',
+    color: '#FBBF24',
+    iconBg: 'bg-amber-500/10',
+    iconBorder: 'border-amber-500/30',
+    iconColor: 'text-amber-400',
+    hoverBorder: 'group-hover:border-amber-500/60 group-hover:shadow-[0_0_35px_rgba(217,119,6,0.25)]',
+    cardBorder: 'border-white/[0.08]',
+    cardShadow: 'shadow-[0_10px_30px_rgba(0,0,0,0.5)]',
   },
 };
 
@@ -88,15 +88,15 @@ export default function ServicesSection() {
 
   return (
     <section id="services" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 w-full">
-      {/* Section Eyebrow & Headline in Meta AI / Groq Clean Aesthetic */}
+      {/* Section Eyebrow & Headline matching Next-Gen AI Reference */}
       <div className="relative z-10 mb-10 lg:mb-12">
-        <span className="text-indigo-600 text-[11px] font-mono tracking-[0.2em] font-bold uppercase block mb-2.5">
+        <span className="text-indigo-400 text-[11px] font-mono tracking-[0.2em] font-bold uppercase block mb-2.5">
           SERVICES
         </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-3 sm:mb-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 sm:mb-4">
           {services.headline}
         </h2>
-        <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
+        <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
           {services.subheadline}
         </p>
       </div>
@@ -108,13 +108,13 @@ export default function ServicesSection() {
           const tags = capabilityTags[service.id] || ['Core', 'Strategy', 'Scale'];
           const theme = serviceTheme[service.id] || {
             index: `0${idx + 1}`,
-            color: '#6366F1',
-            iconBg: 'bg-indigo-50',
-            iconBorder: 'border-indigo-200/80',
-            iconColor: 'text-indigo-600',
+            color: '#818CF8',
+            iconBg: 'bg-indigo-500/10',
+            iconBorder: 'border-indigo-500/30',
+            iconColor: 'text-indigo-400',
             hoverBorder: 'group-hover:border-indigo-400',
-            cardBorder: 'border-slate-200/90',
-            cardShadow: 'shadow-sm',
+            cardBorder: 'border-white/[0.08]',
+            cardShadow: 'shadow-md',
           };
           const imageSrc = serviceImages[service.id] || '/images/service-web-apps.jpg';
 
@@ -125,7 +125,7 @@ export default function ServicesSection() {
               className="group block h-full"
             >
               <GlassCard
-                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[490px] sm:min-h-[510px] rounded-[22px] border ${theme.cardBorder} ${theme.cardShadow} bg-white transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
+                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[490px] sm:min-h-[510px] rounded-[22px] border ${theme.cardBorder} ${theme.cardShadow} bg-[#0D0F14]/85 backdrop-blur-xl transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
               >
                 {/* Foreground Content */}
                 <div className="relative z-10 flex flex-col h-full justify-between">
@@ -146,23 +146,30 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl sm:text-[21px] font-bold text-slate-900 mb-2 tracking-tight group-hover:text-indigo-600 transition-colors">
+                    <h3 className="text-xl sm:text-[21px] font-bold text-white mb-2 tracking-tight group-hover:text-indigo-300 transition-colors">
                       {service.title}
                     </h3>
 
                     {/* Outcome Description */}
-                    <p className="text-[13.5px] text-slate-600 font-normal leading-relaxed mb-3">
+                    <p className="text-[13.5px] text-slate-400 font-normal leading-relaxed mb-3">
                       {service.outcome}
                     </p>
 
                     {/* High-Capacity Visual Showcase Frame (100% Visible & Crisp Details) */}
-                    <div className="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden border border-slate-200/90 bg-slate-100/70 my-3 group-hover:border-slate-300 transition-all duration-300 shadow-inner">
+                    <div className="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden border border-white/[0.12] bg-[#050608] my-3 group-hover:border-white/30 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
+                      {/* Subtle accent color aura behind the image to elevate contrast */}
+                      <div
+                        className="absolute inset-0 opacity-20 pointer-events-none group-hover:opacity-35 transition-opacity duration-300"
+                        style={{
+                          background: `radial-gradient(circle at 50% 50%, ${theme.color} 0%, transparent 85%)`,
+                        }}
+                      />
                       <Image
                         src={imageSrc}
                         alt={`${service.title} visual showcase`}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover object-top opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                        className="object-cover object-center opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                         priority={idx < 2}
                       />
                     </div>
@@ -172,7 +179,7 @@ export default function ServicesSection() {
                       {tags.map((tag, tIdx) => (
                         <span
                           key={tIdx}
-                          className="px-2.5 py-1 text-xs font-mono font-medium rounded-md border border-slate-200 bg-slate-50 text-slate-700 group-hover:border-slate-300 group-hover:bg-slate-100 transition-colors"
+                          className="px-2.5 py-1 text-xs font-mono font-medium rounded-md border border-white/[0.08] bg-white/[0.04] text-slate-300 group-hover:border-white/15 group-hover:bg-white/[0.08] transition-colors"
                         >
                           {tag}
                         </span>
@@ -181,8 +188,8 @@ export default function ServicesSection() {
                   </div>
 
                   {/* Bottom Row Action */}
-                  <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between mt-auto">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors">
+                  <div className="pt-3.5 border-t border-white/[0.08] flex items-center justify-between mt-auto">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-300 group-hover:text-white transition-colors">
                       <span>Explore capabilities</span>
                       <ArrowUpRight
                         size={13}
@@ -198,9 +205,9 @@ export default function ServicesSection() {
       </div>
 
       {/* Process: 4 sequential phases */}
-      <div className="mt-16 lg:mt-24 pt-10 border-t border-slate-200 relative z-10">
+      <div className="mt-16 lg:mt-24 pt-10 border-t border-white/[0.08] relative z-10">
         <div className="max-w-xl mb-8">
-          <h3 className="h2-section text-slate-900">
+          <h3 className="h2-section text-white">
             {services.processHeadline}
           </h3>
         </div>
@@ -209,14 +216,14 @@ export default function ServicesSection() {
           {services.process.map((step) => (
             <div
               key={step.step}
-              className="relative p-6 rounded-card border border-slate-200 bg-white flex flex-col justify-between hover:border-slate-300 hover:shadow-md transition-all duration-200 shadow-sm"
+              className="relative p-6 rounded-card border border-white/[0.08] bg-[#0D0F14]/80 backdrop-blur-md flex flex-col justify-between hover:border-white/[0.18] hover:shadow-xl transition-all duration-200 shadow-sm"
             >
               <div>
-                <h4 className="text-base font-semibold text-slate-900 mb-2.5">
-                  <span className="text-indigo-600 font-mono text-xs mr-2">{step.step}.</span>
+                <h4 className="text-base font-semibold text-white mb-2.5">
+                  <span className="text-indigo-400 font-mono text-xs mr-2">{step.step}.</span>
                   {step.title}
                 </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-400 leading-relaxed">
                   {step.description}
                 </p>
               </div>

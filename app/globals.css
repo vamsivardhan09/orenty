@@ -3,33 +3,33 @@
 @tailwind utilities;
 
 :root {
-  /* Modern Studio Whitish Aesthetic (Meta AI / Groq style) */
-  --bg: #FAFAF8;          /* Warm, pristine whitish canvas */
-  --surface-1: #FFFFFF;    /* Pure white surfaces */
-  --surface-2: #FFFFFF;    /* Crisp white cards */
-  --surface-3: #F4F4F0;    /* Soft raised / hover */
-  --border: rgba(0, 0, 0, 0.08); /* 1px crisp technical border */
-  --border-top: rgba(0, 0, 0, 0.12);
+  /* Next-Gen AI Futuristic Dark Obsidian Aesthetic (matching reference) */
+  --bg: #08080A;          /* Deepest obsidian black */
+  --surface-1: #0D0F14;    /* Translucent dark glass */
+  --surface-2: #12151D;    /* Sleek card surface */
+  --surface-3: #181C26;    /* Raised hover state */
+  --border: rgba(255, 255, 255, 0.08); /* 1px hairline precision border */
+  --border-top: rgba(255, 255, 255, 0.16);
 
   --primary: #6366F1;      /* Electric violet */
   --primary-glow: #818CF8;
-  --secondary: #0284C7;    /* Technical cyan / sky */
-  --warm: #D97706;         /* Amber — Startup Lab */
+  --secondary: #0284C7;    /* Technical cyan */
+  --warm: #D97706;         /* Amber */
 
-  --text: #0A0D14;         /* Deep razor-sharp obsidian text */
-  --text-2: #475569;       /* Slate-600 body copy */
+  --text: #FFFFFF;         /* Pure crisp white */
+  --text-2: #94A3B8;       /* Slate-400 body copy */
   --text-3: #64748B;       /* Slate-500 meta & labels */
 
-  --r-card: 20px;
+  --r-card: 22px;
   --r-md: 12px;
   --r-pill: 999px;
   --section-pad: clamp(64px, 10vw, 120px);
   --header-h: 72px;
 
   /* Aliases for compatibility */
-  --bg-elevated: #FFFFFF;
-  --glass: rgba(255, 255, 255, 0.85);
-  --glass-strong: rgba(255, 255, 255, 0.95);
+  --bg-elevated: #0E1015;
+  --glass: rgba(13, 15, 20, 0.75);
+  --glass-strong: rgba(18, 21, 29, 0.90);
 
   /* Cursor interaction coordinates */
   --mx: 50%;
@@ -43,7 +43,7 @@
 html {
   background-color: var(--bg);
   color: var(--text);
-  color-scheme: light;
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -64,7 +64,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Minimal clean scrollbar */
+/* Minimal dark scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -75,12 +75,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Lenis smooth scrolling rules */
@@ -105,7 +105,7 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* 4.1 Typography Classes */
+/* Typography Classes */
 .h1-hero {
   font-family: var(--font-display), system-ui, sans-serif;
   font-weight: 800;
@@ -148,30 +148,30 @@ html.lenis body {
   color: var(--primary);
 }
 
-/* 4.2 Buttons (48px minimum height, 15–16px semibold) */
+/* Reference Matching Solid White & Frosted Pill Buttons */
 .btn-primary {
-  min-height: 48px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 12px 28px;
   border-radius: var(--r-pill);
-  background: linear-gradient(180deg, #686BF2 0%, #534BEB 100%);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: #0A0D14;
   font-family: var(--font-body), system-ui, sans-serif;
   font-weight: 600;
   font-size: 15px;
   line-height: 1;
   text-decoration: none;
-  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.35), 0 4px 14px rgba(0, 0, 0, 0.4);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(180deg, #7175F3 0%, #5B52EE 100%);
-  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  background: #E2E8F0;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.55), 0 6px 20px rgba(0, 0, 0, 0.5);
   transform: translateY(-1px);
 }
 
@@ -188,31 +188,31 @@ html.lenis body {
 }
 
 .btn-secondary {
-  min-height: 48px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 12px 24px;
   border-radius: var(--r-pill);
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
   font-family: var(--font-body), system-ui, sans-serif;
   font-weight: 600;
   font-size: 15px;
   line-height: 1;
   text-decoration: none;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  backdrop-blur-md: blur(12px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-secondary:hover {
-  background: #F8F9FA;
-  border-color: rgba(0, 0, 0, 0.2);
-  color: var(--text);
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .btn-secondary:active {
@@ -226,29 +226,31 @@ html.lenis body {
   font-family: var(--font-body), system-ui, sans-serif;
   font-weight: 600;
   font-size: 14px;
-  color: var(--primary);
+  color: #818CF8;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .btn-tertiary:hover {
-  color: #4338CA;
+  color: #A5B4FC;
 }
 
-/* 4.3 Glass Cards (light studio variant) */
+/* Reference Matching Dark Glass Cards */
 .glass-card {
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(14, 16, 21, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--r-card);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(0, 0, 0, 0.15);
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7);
   transform: translateY(-2px);
 }
 
@@ -263,9 +265,9 @@ html.lenis body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  background: rgba(16, 185, 129, 0.1);
-  color: #059669;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .badge-building {
@@ -278,9 +280,9 @@ html.lenis body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  background: rgba(99, 102, 241, 0.08);
-  color: #4F46E5;
-  border: 1px solid rgba(99, 102, 241, 0.22);
+  background: rgba(99, 102, 241, 0.12);
+  color: #A5B4FC;
+  border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .badge-idea {
@@ -293,12 +295,12 @@ html.lenis body {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  background: rgba(217, 119, 6, 0.1);
-  color: #B45309;
-  border: 1px solid rgba(217, 119, 6, 0.25);
+  background: rgba(217, 119, 6, 0.12);
+  color: #FBBF24;
+  border: 1px solid rgba(217, 119, 6, 0.3);
 }
 
-/* Horizontal Traveling Laser & Marquee Styles */
+/* Marquee & Laser Styles */
 @keyframes laser-sweep {
   0% { transform: translateX(-100%); opacity: 0; }
   25% { opacity: 1; }
@@ -317,7 +319,7 @@ html.lenis body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), rgba(2, 132, 199, 0.6), rgba(99, 102, 241, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2), transparent);
   animation: laser-sweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -327,7 +329,7 @@ html.lenis body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.3), rgba(99, 102, 241, 0.6), rgba(2, 132, 199, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), rgba(2, 132, 199, 0.7), rgba(99, 102, 241, 0.3), transparent);
   animation: laser-sweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
 }
 
@@ -347,9 +349,9 @@ html.lenis body {
 }
 
 /* Subtle architectural low grid lines */
-.bg-whitish-grid {
+.bg-dark-grid {
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }

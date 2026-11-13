@@ -63,17 +63,19 @@ export default function HeroCanvas({ isFixed = false }: HeroCanvasProps) {
     if (isFixed) return null;
     return (
       <div className="w-full h-full relative z-10 flex items-center justify-center pointer-events-none">
-        <div className="relative w-72 h-72 flex items-center justify-center">
-          {/* Ambient studio glow */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500/20 via-purple-500/15 to-sky-400/20 blur-3xl animate-pulse" />
-          <div className="relative w-44 h-44 rounded-3xl bg-white/95 p-8 shadow-[0_20px_60px_-15px_rgba(99,102,241,0.20)] border border-slate-200/90 flex items-center justify-center backdrop-blur-md">
+        <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
+          {/* Focused spotlight glow */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-t from-white/30 via-indigo-500/20 to-transparent blur-2xl animate-pulse" />
+          
+          {/* Floating Rounded 3D Glass/Metallic Token */}
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-b from-white/20 via-white/5 to-black/60 p-6 shadow-[0_0_40px_rgba(255,255,255,0.25)] border border-white/30 flex items-center justify-center backdrop-blur-xl transition-transform duration-500 hover:scale-105">
             <svg
-              width="90"
-              height="80"
+              width="64"
+              height="58"
               viewBox="0 0 200 170"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="drop-shadow-md text-[#1E1B4B]"
+              className="drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] text-white"
             >
               <path
                 d="M37.773 11.555C25.103 14.626 15.454 21.773 10.845 31.5l-2.843 6-.001 51.281c-.001 58.645-.362 56.47 7.895 47.597 5.023-5.398 60.824-65.933 92.354-100.19C119.112 24.387 128 14.373 128 13.937c0-.437-.707-1.501-1.571-2.366-1.38-1.379-6.53-1.561-42.25-1.488-31.053.064-42.034.412-46.406 1.472m100.977-.475c-3.47 2.021-2.18 6.611 3.583 12.744 2.933 3.122 14.252 15.801 25.154 28.176s20.461 22.652 21.242 22.838 2.286-.447 3.345-1.405c1.799-1.628 1.925-3.301 1.904-25.338-.019-20.799-.241-24.069-1.868-27.595-2.136-4.628-5.422-7.917-9.425-9.433-3.653-1.384-41.556-1.373-43.935.013m-1.436 81.61c-6.497 5.33-23.289 19.589-37.314 31.688a48014 48014 0 0 1-34.75 29.954c-14.774 12.708-18.154 11.787 42 11.453l51.25-.285 7.82-3.734c10.227-4.883 19.531-13.689 23.959-22.676l3.221-6.536.31-19.926c.332-21.417-.121-24.154-4.58-27.662-2.284-1.796-4.122-1.966-21.3-1.966h-18.801z"
@@ -98,7 +100,7 @@ export default function HeroCanvas({ isFixed = false }: HeroCanvasProps) {
     >
       <Canvas
         frameloop={shouldRender ? 'always' : 'never'}
-        camera={{ position: [0, 0, 4.2], fov: 45 }}
+        camera={{ position: [0, 0, 3.8], fov: 45 }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
         gl={{
           antialias: true,

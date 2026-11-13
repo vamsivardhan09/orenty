@@ -21,7 +21,7 @@ const fontBody = DM_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#05050A',
+  themeColor: '#08080A',
   colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontBody.variable}`}
+      className={`${fontDisplay.variable} ${fontBody.variable} dark`}
     >
       <body className="bg-bg font-body text-text selection:bg-primary/40 selection:text-white">
         <script

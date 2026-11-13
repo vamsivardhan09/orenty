@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontDisplay.variable} ${fontBody.variable} dark`}
+      className={`${fontDisplay.variable} ${fontBody.variable}`}
     >
       <body className="bg-bg font-body text-text selection:bg-primary/40 selection:text-white">
         <script

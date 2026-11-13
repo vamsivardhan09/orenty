@@ -5,6 +5,12 @@ import Link from 'next/link';
 import { siteContent } from '@/content/site';
 import Button from './Button';
 import { ArrowRight } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const HeroCanvas = dynamic(() => import('./HeroCanvas'), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Hero() {
   const { hero } = siteContent;
@@ -19,18 +25,18 @@ export default function Hero() {
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col items-start text-left">
           
           {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider bg-white/5 border border-white/10 text-cyan-300 mb-4 sm:mb-5">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider bg-black/[0.04] border border-black/[0.08] text-indigo-600 mb-4 sm:mb-5 shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
             <span>{hero.eyebrow}</span>
           </div>
 
           {/* Punchy Hero Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white max-w-3xl mb-4 sm:mb-5 leading-[1.08]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 max-w-3xl mb-4 sm:mb-5 leading-[1.08]">
             {hero.headline}
           </h1>
 
           {/* Subparagraph */}
-          <p className="sub-paragraph max-w-xl lg:max-w-xl text-text-2 mb-6 sm:mb-8 font-normal leading-relaxed text-sm sm:text-base text-slate-300">
+          <p className="sub-paragraph max-w-xl lg:max-w-xl text-slate-600 mb-6 sm:mb-8 font-normal leading-relaxed text-sm sm:text-base">
             {hero.subheadline}
           </p>
 
@@ -49,7 +55,7 @@ export default function Hero() {
           <div>
             <Link
               href={hero.labLink.href}
-              className="inline-flex items-center gap-1.5 text-sm text-cyan-300 hover:text-white transition group py-1"
+              className="inline-flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-800 font-semibold transition group py-1"
             >
               <span>{hero.labLink.label}</span>
             </Link>
@@ -57,9 +63,9 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Column: Spatial Clearance for the 3D Volumetric Light-Beam & Extruded Logo Mark */}
-        <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 h-[400px] w-full items-center justify-center pointer-events-none">
-          {/* WebGL 3D Canvas shines unobstructed in this quadrant */}
+        {/* Right Column: Spatial Clearance for 3D Logo Mark */}
+        <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 h-[420px] w-full items-center justify-center relative pointer-events-none">
+          <HeroCanvas isFixed={false} />
         </div>
       </div>
     </section>

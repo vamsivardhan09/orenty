@@ -18,7 +18,7 @@ export default function Footer() {
             <Link href="/" className="inline-block" aria-label="Orenty Home">
               <div className="relative h-8 w-28 md:w-32">
                 <Image
-                  src="/brand/orenty-logo-white.svg"
+                  src="/brand/orenty-logo-black.svg"
                   alt="Orenty"
                   fill
                   className="object-contain object-left"

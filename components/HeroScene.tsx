@@ -479,7 +479,7 @@ function HeroLogoMark({
           });
 
           extrudeGeom.center();
-          const scale = isMobile ? 0.0038 : 0.0055;
+          const scale = isMobile ? 0.0055 : 0.0075;
           extrudeGeom.scale(scale, -scale, scale);
           setGeometry(extrudeGeom);
         }
@@ -497,36 +497,37 @@ function HeroLogoMark({
     if (!groupRef.current) return;
     const time = state.clock.elapsedTime;
 
-    const floatY = Math.sin(time * 1.1) * 0.05;
-    const floatRotZ = Math.sin(time * 0.6) * 0.02;
+    const floatY = Math.sin(time * 1.2) * 0.06;
+    const floatRotY = Math.sin(time * 0.5) * 0.14;
+    const floatRotX = Math.sin(time * 0.8) * 0.06;
 
-    const maxParallax = 0.10;
-    const targetRotX = isMobile ? 0 : -mouse.current.y * maxParallax;
-    const targetRotY = isMobile ? Math.sin(time * 0.4) * 0.06 : mouse.current.x * maxParallax;
+    const targetRotX = -0.12 + floatRotX - mouse.current.y * 0.10;
+    const targetRotY = 0.28 + floatRotY + mouse.current.x * 0.10;
 
-    groupRef.current.position.x = isMobile ? 0 : 1.85;
-    groupRef.current.position.y = (isMobile ? 1.35 : 0.05) + floatY;
-    groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.06;
-    groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.06;
-    groupRef.current.rotation.z = floatRotZ;
+    groupRef.current.position.set(0, floatY, 0);
+    groupRef.current.rotation.x += (targetRotX - groupRef.current.rotation.x) * 0.08;
+    groupRef.current.rotation.y += (targetRotY - groupRef.current.rotation.y) * 0.08;
+    groupRef.current.rotation.z = Math.sin(time * 0.6) * 0.02;
   });
 
   if (!geometry) return null;
 
   return (
-    <group ref={groupRef} position={isMobile ? [0, 1.35, -0.2] : [1.85, 0.05, 0.1]}>
+    <group ref={groupRef} position={[0, 0, 0]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
-          color="#f4f4fa"
-          metalness={0.92}
+          color="#1E1B4B"
+          metalness={0.80}
           roughness={0.20}
-          emissive="#7C5CFF"
-          emissiveIntensity={0.25}
+          emissive="#6366F1"
+          emissiveIntensity={0.28}
         />
       </mesh>
-      {/* Violet & Cyan rim lights */}
-      <pointLight color="#A78BFA" intensity={2.0} distance={3.8} decay={2} position={[-1.2, 0.6, 1.2]} />
-      <pointLight color="#38D6FF" intensity={1.2} distance={3.0} decay={2} position={[1.2, -0.5, 0.8]} />
+      {/* Studio rim lights for the whitish canvas */}
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[3, 4, 5]} intensity={2.2} />
+      <pointLight color="#818CF8" intensity={3.0} distance={6} decay={2} position={[-2, 2, 3]} />
+      <pointLight color="#38BDF8" intensity={2.5} distance={5} decay={2} position={[2, -1.5, 2]} />
     </group>
   );
 }
@@ -603,16 +604,7 @@ export default function HeroScene({
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1.2} />
 
-      {/* 1. Procedural Volumetric Cosmic Nebula Layer */}
-      <CosmicNebula mouse={mouse} isMobile={isMobile} />
-
-      {/* 2. Volumetric Light Beam */}
-      <TunedLightBeam mouse={mouse} />
-
-      {/* 3. Celestial Multi-Tier Starfield */}
-      <CelestialStarfield scrollRef={scrollRef} isMobile={isMobile} />
-
-      {/* 4. Hero 3D Logo Mark */}
+      {/* Hero 3D Extruded Logo Mark */}
       <HeroLogoMark mouse={mouse} isMobile={isMobile} />
     </>
   );

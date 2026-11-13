@@ -355,3 +355,71 @@ html.lenis body {
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
+
+/* Mobile & Tablet: Stacking & Overlaying Placards (< 1024px) */
+@media (max-width: 1023px) {
+  .stack {
+    position: relative;
+    padding-bottom: 8svh;
+  }
+
+  .stack__item {
+    position: sticky;
+    top: calc(var(--header-h, 72px) + 12px + (var(--i, 0) * 14px));
+    margin-bottom: 32vh;
+    transform-origin: top center;
+    transform: scale(calc(1 - var(--p, 0) * 0.05));
+    z-index: calc(10 + var(--i, 0));
+    box-shadow: 0 -12px 36px -6px rgba(0, 0, 0, 0.8), 0 20px 45px rgba(0, 0, 0, 0.7);
+    will-change: transform;
+    transition: transform 0.15s ease-out;
+  }
+
+  .stack__item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Darkening scrim as the next card joins above */
+  .stack__item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: #000;
+    opacity: calc(var(--p, 0) * 0.45);
+    pointer-events: none;
+    transition: opacity 0.15s ease-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stack {
+    padding-bottom: 0;
+  }
+
+  .stack__item {
+    position: relative !important;
+    top: auto !important;
+    margin-bottom: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+  }
+
+  .stack__item::after {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack__item {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+  }
+
+  .stack__item::after {
+    display: none !important;
+  }
+}
+

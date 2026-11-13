@@ -34,19 +34,25 @@ export default function StackContainer({
     let rafId: number | null = null;
 
     const updateStack = () => {
-      if (window.innerWidth >= 768) return; // Desktop / tablet uses grid
+      // Mobile & tablet stacking (< 1024px)
+      if (window.innerWidth >= 1024) return;
 
       let activeIndex = 0;
       items.forEach((el, i) => {
         const next = items[i + 1];
         if (!next) return;
 
-        const gap = next.getBoundingClientRect().top - el.getBoundingClientRect().top;
-        const p = Math.min(1, Math.max(0, 1 - gap / el.offsetHeight));
+        const currentTop = el.getBoundingClientRect().top;
+        const nextTop = next.getBoundingClientRect().top;
+        const gap = nextTop - currentTop;
+        const cardHeight = el.offsetHeight || 480;
+
+        // Progress 0 -> 1 as the next card joins above this one
+        const p = Math.min(1, Math.max(0, 1 - gap / cardHeight));
         el.style.setProperty('--p', p.toFixed(3));
 
-        if (el.getBoundingClientRect().top <= window.innerHeight * 0.55) {
-          activeIndex = i;
+        if (currentTop <= 160) {
+          activeIndex = i + 1;
         }
       });
 
@@ -69,33 +75,26 @@ export default function StackContainer({
     };
   }, [totalCards]);
 
-  const gridColsClass =
-    totalCards === 3
-      ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
-      : totalCards === 5
-      ? 'md:grid md:grid-cols-2 lg:grid-cols-3'
-      : 'md:grid md:grid-cols-2 lg:grid-cols-4';
-
   return (
     <div className="relative w-full">
-      {/* Mobile-only Progress Indicator (1 / 5) */}
-      <div className="flex md:hidden items-center justify-between mb-3 px-1 text-xs text-text-3 font-medium">
-        <span className="text-xs font-mono uppercase tracking-wider text-text-3">
-          Scroll to explore works
+      {/* Mobile-only Progress Indicator (e.g. 1 / 4) */}
+      <div className="flex lg:hidden items-center justify-between mb-4 px-2 text-xs text-slate-400 font-medium max-w-[440px] sm:max-w-[480px] mx-auto">
+        <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+          Scroll to explore capabilities
         </span>
-        <span className="bg-surface-3 px-2.5 py-1 rounded-pill border border-border text-secondary font-semibold font-mono text-xs">
+        <span className="bg-white/[0.06] px-2.5 py-1 rounded-full border border-white/[0.1] text-indigo-400 font-semibold font-mono text-[11px]">
           {currentIdx} / {totalCards}
         </span>
       </div>
 
       <div
         ref={containerRef}
-        className={`stack ${gridColsClass} gap-6 lg:gap-8 ${className}`}
+        className={`stack flex flex-col items-center lg:grid lg:grid-cols-4 gap-0 lg:gap-6 w-full ${className}`}
       >
         {children.map((child, idx) => (
           <div
             key={idx}
-            className="stack__item rounded-card h-full"
+            className="stack__item w-full max-w-[420px] sm:max-w-[460px] lg:max-w-none mx-auto rounded-[22px] lg:h-full"
             style={{
               '--i': idx,
               zIndex: 10 + idx,

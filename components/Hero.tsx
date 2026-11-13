@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { siteContent } from '@/content/site';
 import Button from './Button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const HeroCanvas = dynamic(() => import('./HeroCanvas'), {
@@ -40,7 +40,6 @@ export default function Hero() {
         
         {/* Centered Eyebrow Pill */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono tracking-wider bg-white/[0.04] border border-white/[0.12] text-neutral-300 mb-5 sm:mb-6 shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md">
-          <Sparkles size={13} className="text-indigo-400" />
           <span>{hero.eyebrow}</span>
         </div>
 

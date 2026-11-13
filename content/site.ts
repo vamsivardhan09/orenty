@@ -559,8 +559,7 @@ export const siteContent: SiteContent = {
       'We build software for ambitious businesses and launch products of our own.',
     contactEmail: 'contact@orenty.in',
     socials: [
-      { label: 'GitHub', href: 'https://github.com/orenty' },
-      { label: 'Twitter / X', href: 'https://x.com/orenty' },
+      { label: 'X', href: 'https://x.com/orenty' },
       { label: 'LinkedIn', href: 'https://linkedin.com/company/orenty' },
     ],
   },

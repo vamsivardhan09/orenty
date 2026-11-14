@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import GlassCard from '@/components/GlassCard';
 import Button from '@/components/Button';
 import { User, ShieldCheck, Code, Users, ArrowRight, Sparkles } from 'lucide-react';
@@ -80,24 +81,25 @@ export default function AboutPage() {
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
-            {/* Monogram Avatar & Visual Identity */}
+            {/* Framed Founder & CTO Portrait */}
             <div className="relative shrink-0">
-              <div className="relative h-32 w-32 md:h-40 md:w-40 rounded-2xl border border-secondary/30 bg-surface-3 flex items-center justify-center shadow-xl group overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-secondary/20 opacity-80" />
-                <div className="relative z-10 flex flex-col items-center justify-center text-center">
-                  <span className="text-3xl md:text-4xl font-extrabold tracking-wider bg-gradient-to-br from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent font-mono">
-                    SG
-                  </span>
-                  <span className="mt-1 text-[10px] font-mono tracking-widest uppercase text-secondary font-semibold">
-                    ARCHITECT
-                  </span>
-                </div>
-                {/* Subtle border highlight */}
-                <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none" />
+              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-[#12131A] shadow-2xl overflow-hidden group">
+                <Image
+                  src="/team/sai-gumma.jpg"
+                  alt="Sai Gumma - Founder & CTO"
+                  fill
+                  sizes="(max-width: 768px) 144px, 176px"
+                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                  priority
+                />
+                {/* Subtle inner glass highlight */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20 pointer-events-none" />
+                {/* Soft gradient edge at base */}
+                <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-surface-1 border border-border px-2.5 py-1 rounded-full text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-md">
+              <div className="absolute -bottom-2.5 -right-2 bg-[#0D0F14]/95 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-xl z-20">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Active</span>
+                <span className="font-semibold tracking-wider">FOUNDER & CTO</span>
               </div>
             </div>
 
@@ -108,15 +110,15 @@ export default function AboutPage() {
                 Sai Gumma
               </h2>
               <p className="text-sm font-semibold text-secondary mb-4">
-                Founder & Lead Software Architect, Orenty
+                Founder & CTO, Orenty
               </p>
               
               <div className="space-y-3 text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
                 <p>
-                  Sai Gumma founded Orenty with a clear mission: small, disciplined engineering teams with deep architecture skills and modern tooling consistently out-build legacy agencies burdened by bureaucracy and overhead.
+                  Sai Gumma is the Founder & CTO of Orenty. Driven by the principle that small, disciplined engineering teams with deep architecture skills consistently out-build legacy agencies burdened by bureaucracy, Sai directs all technology strategy, infrastructure, and technical execution.
                 </p>
                 <p>
-                  With expertise spanning distributed web architectures, high-performance Next.js systems, and pragmatic AI automations, Sai steers technical execution across all client engineering projects. In addition, Sai directs the engineering and product incubation of Orenty&apos;s proprietary platforms—including SyncedIn, Fanbase, Job Pilot, and Pujari.ai—and leads the Startup Lab ecosystem to empower top-tier builders.
+                  With expertise spanning distributed web architectures, high-performance Next.js systems, and pragmatic AI automations, Sai leads client engineering solutions while directing the engineering and product incubation of Orenty&apos;s proprietary platforms—including SyncedIn, Fanbase, Job Pilot, and Pujari.ai—and heading the Startup Lab.
                 </p>
               </div>
 

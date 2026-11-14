@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Compass } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function AboutStrip() {
   return (
@@ -11,22 +12,29 @@ export default function AboutStrip() {
         {/* Subtle traveling laser accent */}
         <div className="laser-line-top" />
 
-        {/* Studio Monogram Emblem */}
-        <div className="relative h-24 w-24 md:h-32 md:w-32 rounded-2xl border border-border-top bg-surface-3 flex items-center justify-center shrink-0 shadow-lg group">
-          <div className="flex flex-col items-center justify-center text-center p-3">
-            <Compass size={32} className="text-secondary mb-2" />
-            <span className="text-xs font-mono uppercase tracking-widest text-text-3 font-semibold">
-              STUDIO // LAB
-            </span>
+        {/* Founder & CTO Portrait Frame */}
+        <div className="relative shrink-0">
+          <div className="relative h-24 w-24 md:h-28 md:w-28 rounded-2xl border border-white/15 bg-[#12131A] shadow-xl overflow-hidden group">
+            <Image
+              src="/team/sai-gumma.jpg"
+              alt="Sai Gumma - Founder & CTO"
+              fill
+              sizes="(max-width: 768px) 96px, 112px"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+              priority
+            />
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20 pointer-events-none" />
           </div>
-          {/* Subtle glowing ring */}
-          <div className="absolute inset-0 rounded-2xl border border-secondary/20 pointer-events-none" />
+          <div className="absolute -bottom-2 -right-1 bg-[#0D0F14]/95 backdrop-blur-md border border-white/15 px-2 py-0.5 rounded-full text-[9px] font-mono text-emerald-400 flex items-center gap-1 shadow-md z-10">
+            <span className="h-1 w-1 rounded-full bg-emerald-400 animate-pulse" />
+            <span>CTO</span>
+          </div>
         </div>
 
         {/* Story + Link */}
         <div className="flex-1 text-center md:text-left">
           <p className="text-base text-text leading-relaxed font-normal mb-5 max-w-lg">
-            Founded by Sai Gumma, Orenty was built to deliver software that solves real business problems without bureaucratic bloat or fragile templates. We design, engineer, and automate systems for ambitious companies while incubating proprietary products of our own.
+            Founded by Sai Gumma (Founder & CTO), Orenty was built to deliver software that solves real business problems without bureaucratic bloat or fragile templates. We design, engineer, and automate systems for ambitious companies while incubating proprietary products of our own.
           </p>
           <Link
             href="/about"

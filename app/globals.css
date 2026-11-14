@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  /* Next-Gen AI Futuristic Dark Obsidian Aesthetic (matching reference) */
-  --bg: #08080A;          /* Deepest obsidian black */
-  --surface-1: #0D0F14;    /* Translucent dark glass */
-  --surface-2: #12151D;    /* Sleek card surface */
-  --surface-3: #181C26;    /* Raised hover state */
+  /* Next-Gen AI Futuristic Dark Obsidian Aesthetic (Deep space navy undertone) */
+  --bg: #07080E;          /* Deep space obsidian navy */
+  --surface-1: #0C0E17;    /* Translucent dark glass */
+  --surface-2: #101420;    /* Sleek card surface */
+  --surface-3: #161B2B;    /* Raised hover state */
   --border: rgba(255, 255, 255, 0.08); /* 1px hairline precision border */
   --border-top: rgba(255, 255, 255, 0.16);
 

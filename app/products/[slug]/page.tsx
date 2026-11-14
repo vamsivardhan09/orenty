@@ -77,7 +77,7 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   const audience = audienceMap[product.slug] || {
-    forWho: 'Businesses and forward-thinking individuals [CONFIRM].',
+    forWho: 'Businesses and forward-thinking individuals.',
     problemSolved: 'Streamlines complex workflows into intuitive software.',
     keyBenefit: 'Purpose-built software that compounds productivity.',
   };
@@ -238,7 +238,7 @@ export default async function ProductDetailPage({ params }: Props) {
             What's next for {product.name}
           </h2>
           <p className="text-[15px] text-text-2 leading-relaxed max-w-2xl mb-6">
-            {product.name} is actively being engineered in-house. We are finalizing core architecture milestones and preparing private beta slots [CONFIRM timeline].
+            {product.name} is actively being engineered in-house. We are finalizing core architecture milestones and preparing private beta access.
           </p>
           <div className="inline-flex items-center gap-2 text-xs text-text-3 font-medium">
             <span className="h-2 w-2 rounded-full bg-secondary" />

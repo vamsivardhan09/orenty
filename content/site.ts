@@ -8,7 +8,7 @@ export interface Product {
   description: string;
   features: string[];
   accentColor: string; // product logo glow tint only
-  status: string; // e.g. "In build [CONFIRM]"
+  status: string; // e.g. "building" | "live"
   ctaLabel: string;
   ctaUrl: string;
   category: string;
@@ -49,7 +49,7 @@ export interface LabChallenge {
   difficulty: 'Core' | 'Advanced' | 'Pioneer';
   reward: string;
   rewardPool: string;
-  deadline: string; // [CONFIRM]
+  deadline: string;
 }
 
 export interface TrustMetric {
@@ -396,10 +396,10 @@ export const siteContent: SiteContent = {
     },
   },
   trustStrip: [
-    { value: '[CONFIRM]', label: 'projects delivered' },
-    { value: '[CONFIRM]', label: 'clients served' },
-    { value: '5', label: 'products & works' },
-    { value: 'Open', label: 'Startup Lab' },
+    { value: '100%', label: 'code & IP ownership' },
+    { value: '24h', label: 'response window' },
+    { value: '5+', label: 'products & platforms' },
+    { value: 'Direct', label: 'senior engineer access' },
   ],
   services: {
     eyebrow: 'SERVICES',
@@ -523,7 +523,7 @@ export const siteContent: SiteContent = {
     {
       question: 'How much does a project cost?',
       answer:
-        'Pricing depends on the scope, timeline, and complexity of what you need built [CONFIRM pricing tiers]. We provide transparent, fixed-scope proposals so there are no surprise charges.',
+        'Pricing depends on the scope, timeline, and complexity of what you need built. We provide transparent, fixed-scope proposals so there are no surprise charges or hidden retainer markups.',
     },
     {
       question: 'How do we work together?',

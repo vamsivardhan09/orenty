@@ -84,7 +84,7 @@ export default function ChallengeSubmissionForm({ challengeCode, challengeTitle 
           Solution submitted successfully
         </h3>
         <p className="text-sm text-text-2 max-w-md font-body leading-relaxed mb-6">
-          Thank you for your submission to {challengeCode} ({challengeTitle}). Our technical review team evaluates all incoming code within 7 to 10 business days [CONFIRM]. We will reach out via email.
+          Thank you for your submission to {challengeCode} ({challengeTitle}). Our technical review team evaluates all incoming code within 7 to 10 business days. We will reach out via email.
         </p>
         <Button onClick={() => setStatus('idle')} variant="secondary">
           <span>Submit another solution</span>

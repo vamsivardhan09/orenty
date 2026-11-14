@@ -5,28 +5,28 @@ import { ChevronDown } from 'lucide-react';
 
 const careersFaqs = [
   {
-    q: 'Do I need to be a full-time employee to participate?',
-    a: 'No. Startup Lab challenges are asynchronous and milestone-driven. You can participate on evenings, weekends, or between contracts alongside your existing work.',
+    q: 'Are you currently hiring for full-time or contract roles?',
+    a: 'No. We currently do not have any active hirings or open roles. When new engineering, design, or product positions open up, they will be published directly on this Careers page.',
   },
   {
-    q: 'How is ownership or equity formalized?',
-    a: 'Selected contributors enter into clear, written agreements with defined vesting or milestone schedules [CONFIRM terms]. We believe in fair compensation for real architectural contributions.',
+    q: 'Can I send an open application or portfolio for future openings?',
+    a: 'Yes. If you are an exceptional full-stack engineer, AI automation specialist, or UI/UX designer, you can email your portfolio, GitHub, and a brief note to contact@orenty.in. We maintain a private talent pool and reach out to trusted builders when new milestones open.',
   },
   {
-    q: 'Can teams or pairs submit a joint solution?',
-    a: 'Yes. If you collaborate with a co-builder, you can include all contributor details in the submission form and indicate your preferred allocation split.',
+    q: 'How does Orenty work with engineers and designers?',
+    a: 'We operate in lean, high-ownership pods with direct founder access and zero agency bureaucracy. Builders have real influence over product architecture, technical decisions, and execution quality.',
   },
   {
-    q: 'What languages or tech stacks can I use?',
-    a: 'Each challenge specifies recommended technologies (e.g. Next.js, TypeScript, Python, WebGL, WebRTC), but we welcome superior alternatives if you explain the technical reasoning.',
+    q: 'What is the tech stack at Orenty?',
+    a: 'Our core stack focuses on Next.js (App Router), TypeScript, Tailwind CSS, modern Node.js runtimes, WebGL/Three.js, Supabase, and modern LLM / AI toolchains.',
   },
   {
-    q: 'When will I hear back about my submission?',
-    a: 'Every submission is reviewed within 7 to 10 business days [CONFIRM]. We provide constructive qualitative feedback to all serious entries.',
+    q: 'What happens when a Startup Lab challenge or co-founder cycle opens?',
+    a: 'Startup Lab challenge problem statements are announced periodically. When an active cycle opens, builders can submit working prototypes and architectural solutions, and top contributors can earn equity or co-builder status in the launched product.',
   },
   {
-    q: 'What happens if my solution is not selected?',
-    a: 'You retain 100% of your intellectual property and code. We do not use unselected submissions, and you remain welcome to participate in subsequent challenges.',
+    q: 'How will I know when new positions open?',
+    a: 'All newly opened roles and contributor opportunities will be posted on this page and announced on our official LinkedIn and Twitter/X channels.',
   },
 ];
 
@@ -40,11 +40,11 @@ export default function CareersFaq() {
   return (
     <div className="w-full">
       <div className="mb-8">
-        <span className="text-xs uppercase tracking-wider text-warm font-semibold block mb-2">
+        <span className="eyebrow-label block mb-2">
           COMMON QUESTIONS
         </span>
         <h2 className="h2-section text-text">
-          Startup Lab FAQ
+          Careers & Hiring FAQ
         </h2>
       </div>
 
@@ -67,7 +67,7 @@ export default function CareersFaq() {
                 </span>
                 <ChevronDown
                   size={18}
-                  className={`text-warm shrink-0 transition-transform duration-200 ${
+                  className={`text-secondary shrink-0 transition-transform duration-200 ${
                     isOpen ? 'rotate-180' : ''
                   }`}
                 />

@@ -80,14 +80,14 @@ export default function StartupLabSection() {
 
         <div className="flex flex-col sm:flex-row items-center gap-4">
           <Button href="/careers" variant="primary">
-            <span>View open challenges</span>
+            <span>Explore Startup Lab</span>
             <ArrowRight size={15} className="btn-arrow" />
           </Button>
           <Link
-            href="/careers#how-it-works"
+            href="/about"
             className="btn-tertiary text-sm text-secondary hover:text-white"
           >
-            <span>How it works</span>
+            <span>Our story & philosophy</span>
             <ArrowRight size={14} className="btn-arrow" />
           </Link>
         </div>

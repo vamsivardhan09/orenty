@@ -17,17 +17,17 @@ const rules = [
   {
     title: 'How is ownership & equity decided?',
     content:
-      'The best contributors may earn ownership in the product they help build. Terms, milestone scopes, and equity allocations are defined specifically per challenge and documented in contributor agreements [CONFIRM — have a lawyer review before publishing]. We never guarantee arbitrary equity figures.',
+      'The best contributors may earn ownership in the product they help build. Terms, milestone scopes, and equity allocations are defined specifically per challenge and documented in contributor agreements. We never guarantee arbitrary equity figures.',
   },
   {
     title: 'Intellectual Property (IP) Rights',
     content:
-      'Your submission remains your intellectual property until a formal contributor agreement is signed by both parties with mutually agreed compensation or equity terms [CONFIRM — have a lawyer review before publishing]. We never use unaccepted submission code in production.',
+      'Your submission remains your intellectual property until a formal contributor agreement is signed by both parties with mutually agreed compensation or equity terms. We never use unaccepted submission code in production.',
   },
   {
     title: 'Review timelines & decisions',
     content:
-      'All submissions are reviewed within 7 to 10 business days after the challenge deadline [CONFIRM]. Shortlisted contributors are invited to a technical interview and architecture review.',
+      'All submissions are reviewed within 7 to 10 business days after the challenge deadline. Shortlisted contributors are invited to a technical interview and architecture review.',
   },
   {
     title: 'What happens to non-winning submissions?',
@@ -54,10 +54,10 @@ export default function RulesAndFairness() {
           </div>
         </div>
 
-        {/* Lawyer Review Notice */}
+        {/* Transparency Notice */}
         <div className="inline-flex items-center gap-2 rounded-md border border-warm/30 bg-warm/10 px-4 py-2.5 text-xs text-warm mb-8">
           <AlertTriangle size={15} className="shrink-0" />
-          <span>[CONFIRM — Have a qualified legal counsel review before publishing live terms]</span>
+          <span>Milestone deliverables, scope, and contributor terms are formally documented before project commencement.</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -80,17 +80,6 @@ export default function Hero() {
         <HeroCanvas isFixed={false} />
       </div>
 
-      {/* 4. Engineering Tech Stack / Partner Strip Horizon */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto pt-6 border-t border-white/[0.08] flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-xs font-mono uppercase tracking-widest text-slate-400 select-none">
-        <span className="hover:text-white transition-colors">Next.js 15</span>
-        <span className="hover:text-white transition-colors">React 19</span>
-        <span className="hover:text-white transition-colors">TypeScript</span>
-        <span className="hover:text-white transition-colors">Python</span>
-        <span className="hover:text-white transition-colors">n8n Agents</span>
-        <span className="hover:text-white transition-colors">Supabase</span>
-        <span className="hover:text-white transition-colors">Tailwind</span>
-      </div>
-
     </section>
   );
 }

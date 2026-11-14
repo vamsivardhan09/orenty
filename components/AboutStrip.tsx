@@ -25,14 +25,14 @@ export default function AboutStrip() {
 
         {/* Story + Link */}
         <div className="flex-1 text-center md:text-left">
-                    <p className="text-base text-text leading-relaxed font-normal mb-5 max-w-lg">
-            Orenty was founded to build software that solves real business problems without bureaucratic bloat or fragile templates. We design, engineer, and automate systems for ambitious companies while incubating proprietary products of our own.
+          <p className="text-base text-text leading-relaxed font-normal mb-5 max-w-lg">
+            Founded by Sai Gumma, Orenty was built to deliver software that solves real business problems without bureaucratic bloat or fragile templates. We design, engineer, and automate systems for ambitious companies while incubating proprietary products of our own.
           </p>
           <Link
             href="/about"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-text-2 hover:text-white transition-colors"
           >
-            <span>Learn about our philosophy & team</span>
+            <span>Learn about our story & leadership</span>
             <ArrowUpRight size={13} />
           </Link>
         </div>

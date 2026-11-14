@@ -74,39 +74,92 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Founder Section */}
-        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12">
-            <div className="relative h-32 w-32 md:h-40 md:w-40 rounded-full border border-border-top bg-surface-3 flex items-center justify-center shrink-0 text-text-3">
-              <div className="flex flex-col items-center justify-center text-center p-2">
-                <User size={36} className="text-secondary/70 mb-1" />
-                <span className="text-[10px] uppercase tracking-wider text-text-3 font-semibold">
-                  [CONFIRM PHOTO]
-                </span>
+        {/* Founder & Leadership Section: Sai Gumma */}
+        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
+          {/* Subtle ambient lighting */}
+          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
+
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
+            {/* Monogram Avatar & Visual Identity */}
+            <div className="relative shrink-0">
+              <div className="relative h-32 w-32 md:h-40 md:w-40 rounded-2xl border border-secondary/30 bg-surface-3 flex items-center justify-center shadow-xl group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-secondary/20 opacity-80" />
+                <div className="relative z-10 flex flex-col items-center justify-center text-center">
+                  <span className="text-3xl md:text-4xl font-extrabold tracking-wider bg-gradient-to-br from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent font-mono">
+                    SG
+                  </span>
+                  <span className="mt-1 text-[10px] font-mono tracking-widest uppercase text-secondary font-semibold">
+                    ARCHITECT
+                  </span>
+                </div>
+                {/* Subtle border highlight */}
+                <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none" />
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-surface-1 border border-border px-2.5 py-1 rounded-full text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Active</span>
               </div>
             </div>
 
+            {/* Profile & Biography */}
             <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
-              <h2 className="h2-section text-text mb-2">
-                Founder & Lead Engineer [CONFIRM]
+              <span className="eyebrow-label block mb-2">FOUNDER & LEADERSHIP</span>
+              <h2 className="h2-section text-text mb-1">
+                Sai Gumma
               </h2>
-              <p className="text-sm text-secondary font-medium mb-4">
-                Founder, Orenty [CONFIRM details]
+              <p className="text-sm font-semibold text-secondary mb-4">
+                Founder & Lead Software Architect, Orenty
               </p>
-              <p className="text-base text-text-2 leading-relaxed mb-6 max-w-2xl">
-                Background in full-stack architecture, distributed systems, and product engineering. Driven by the belief that small, focused teams using modern tooling can out-build traditional software houses [CONFIRM bio].
-              </p>
-              <div className="flex items-center justify-center md:justify-start gap-4 text-xs text-text-3">
-                <a href="https://linkedin.com/company/orenty" target="_blank" rel="noreferrer" className="text-secondary hover:underline">
-                  LinkedIn [CONFIRM]
+              
+              <div className="space-y-3 text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
+                <p>
+                  Sai Gumma founded Orenty with a clear mission: small, disciplined engineering teams with deep architecture skills and modern tooling consistently out-build legacy agencies burdened by bureaucracy and overhead.
+                </p>
+                <p>
+                  With expertise spanning distributed web architectures, high-performance Next.js systems, and pragmatic AI automations, Sai steers technical execution across all client engineering projects. In addition, Sai directs the engineering and product incubation of Orenty&apos;s proprietary platforms—including SyncedIn, Fanbase, Job Pilot, and Pujari.ai—and leads the Startup Lab ecosystem to empower top-tier builders.
+                </p>
+              </div>
+
+              {/* Technical Pillars */}
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Full-Stack Architecture
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  AI & Automation Workflows
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Product Incubation
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Startup Lab Direction
+                </span>
+              </div>
+
+              {/* Direct Links */}
+              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
+                <a
+                  href="https://linkedin.com/company/orenty"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  LinkedIn
                 </a>
                 <span>·</span>
-                <a href="https://x.com/orenty" target="_blank" rel="noreferrer" className="text-secondary hover:underline">
-                  Twitter / X [CONFIRM]
+                <a
+                  href="https://x.com/orenty"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  Twitter / X
                 </a>
                 <span>·</span>
-                <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">
+                <a
+                  href="mailto:contact@orenty.in"
+                  className="text-secondary hover:text-white transition-colors"
+                >
                   contact@orenty.in
                 </a>
               </div>

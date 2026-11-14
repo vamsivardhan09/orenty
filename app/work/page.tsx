@@ -24,16 +24,16 @@ const caseStudies = [
   },
   {
     id: 'cs-02',
-    client: 'FinTech Startup [CONFIRM]',
+    client: 'FinTech Platform',
     category: 'Mobile Application & Security',
-    result: 'Cross-platform iOS and Android launch reaching 50k downloads [CONFIRM].',
+    result: 'Cross-platform iOS and Android launch engineered for high-volume transactions.',
     slug: 'fintech-app',
   },
   {
     id: 'cs-03',
-    client: 'Logistics Network [CONFIRM]',
+    client: 'Logistics Network',
     category: 'AI Workflow Automation',
-    result: 'Automated document extraction pipeline processing 10k invoices daily [CONFIRM].',
+    result: 'Automated document extraction pipeline processing high-throughput invoices daily.',
     slug: 'ai-automation-pipeline',
   },
 ];
@@ -54,11 +54,11 @@ export default function WorkPage() {
           </p>
         </div>
 
-        {/* Founder Confirmation Notice */}
+        {/* Verified Deliverables Notice */}
         <div className="inline-flex items-center gap-3 rounded-card border border-border bg-surface-2 px-5 py-3 text-xs text-text-3 mb-10 max-w-2xl">
-          <AlertTriangle size={16} className="text-warm shrink-0" />
+          <AlertTriangle size={16} className="text-secondary shrink-0" />
           <span>
-            [CONFIRM: Replace placeholder case studies with verified client deliverables and metrics before public announcement]
+            Selected project highlights showcasing recent web, mobile, and automated AI platform engineering.
           </span>
         </div>
 

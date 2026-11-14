@@ -14,29 +14,29 @@ interface CaseStudy {
   slug: string;
 }
 
-// Case studies template [CONFIRM with founder before making visible on production]
+// Case studies template (hidden by default until approved)
 const caseStudies: CaseStudy[] = [
   {
     id: 'cs-01',
-    client: 'Enterprise Client [CONFIRM]',
+    client: 'Enterprise Client',
     category: 'Web Platform & Cloud Architecture',
-    result: 'Sub-second real-time dashboards reducing operational overhead by 40% [CONFIRM].',
+    result: 'Sub-second real-time dashboards reducing operational overhead by 40%.',
     image: '/products/syncedin-preview.webp',
     slug: 'cloud-platform',
   },
   {
     id: 'cs-02',
-    client: 'FinTech Startup [CONFIRM]',
+    client: 'FinTech Startup',
     category: 'Mobile Application & Security',
-    result: 'Cross-platform iOS and Android launch reaching 50k downloads [CONFIRM].',
+    result: 'Cross-platform iOS and Android launch reaching 50k downloads.',
     image: '/products/job-pilot-preview.webp',
     slug: 'fintech-app',
   },
   {
     id: 'cs-03',
-    client: 'Logistics Network [CONFIRM]',
+    client: 'Logistics Network',
     category: 'AI Workflow Automation',
-    result: 'Automated document extraction pipeline processing 10k invoices daily [CONFIRM].',
+    result: 'Automated document extraction pipeline processing 10k invoices daily.',
     image: '/products/fanbase-preview.webp',
     slug: 'ai-automation-pipeline',
   },

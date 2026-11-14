@@ -38,7 +38,7 @@ export default function HomePage() {
       {/* 5.7 Startup Lab teaser: short ~1 screen with 4 step icons */}
       <StartupLabSection />
 
-      {/* 5.8 About strip: founder photo [CONFIRM] + 2-sentence story */}
+      {/* 5.8 About strip: founder story & philosophy */}
       <AboutStrip />
 
       {/* 5.9 FAQ: 6 questions */}

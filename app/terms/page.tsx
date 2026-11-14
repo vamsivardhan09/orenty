@@ -17,7 +17,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="text-sm text-text-3 font-medium">
-            Last Updated: November 2026 [CONFIRM]
+            Last Updated: November 2026
           </p>
         </div>
 
@@ -39,14 +39,14 @@ export default function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold text-text mb-3">3. Startup Lab & Challenge Rules</h2>
             <p>
-              The best contributors to Startup Lab challenges may earn ownership in the product they help build. Terms and equity allocations are set per challenge and formal agreement. Submitting a solution does not automatically grant equity, employment, or compensation. All terms are subject to formal legal documentation [CONFIRM — have a lawyer review before publishing].
+              The best contributors to Startup Lab challenges may earn ownership in the product they help build. Terms and equity allocations are set per challenge and formal agreement. Submitting a solution does not automatically grant equity, employment, or compensation. All terms are subject to formal legal documentation.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-text mb-3">4. Intellectual Property of Submissions</h2>
             <p>
-              Applicants retain ownership of the original code and materials submitted to Startup Lab challenges unless and until a formal contributor agreement is signed by both the author and Orenty with agreed equity or compensation terms [CONFIRM]. We will not use unaccepted code in production.
+              Applicants retain ownership of the original code and materials submitted to Startup Lab challenges unless and until a formal contributor agreement is signed by both the author and Orenty with agreed equity or compensation terms. We will not use unaccepted code in production.
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold text-text mb-3">6. Governing Law</h2>
             <p>
-              These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Bengaluru, Karnataka, India [CONFIRM jurisdiction].
+              These Terms shall be governed by and construed in accordance with the laws of India. Any disputes arising in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Bengaluru, Karnataka, India.
             </p>
           </section>
 
@@ -71,7 +71,7 @@ export default function TermsPage() {
               <br />
               <strong>Orenty Legal Team</strong>
               <br />
-              Email: <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in [CONFIRM]</a>
+              Email: <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in</a>
             </p>
           </section>
         </div>

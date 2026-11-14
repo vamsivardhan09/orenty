@@ -17,7 +17,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="text-sm text-text-3 font-medium">
-            Last Updated: November 2026 [CONFIRM]
+            Last Updated: November 2026
           </p>
         </div>
 
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-semibold text-text mb-3">5. Your Rights</h2>
             <p>
-              You have the right to request a copy of the data we hold about you, request corrections, or ask us to delete your personal information at any time. To exercise these rights, please email us at <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in [CONFIRM]</a>.
+              You have the right to request a copy of the data we hold about you, request corrections, or ask us to delete your personal information at any time. To exercise these rights, please email us at <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in</a>.
             </p>
           </section>
 
@@ -67,9 +67,9 @@ export default function PrivacyPage() {
               <br />
               <strong>Orenty</strong>
               <br />
-              Bengaluru, Karnataka, India [CONFIRM address]
+              Bengaluru, Karnataka, India
               <br />
-              Email: <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in [CONFIRM]</a>
+              Email: <a href="mailto:contact@orenty.in" className="text-secondary hover:underline">contact@orenty.in</a>
             </p>
           </section>
         </div>

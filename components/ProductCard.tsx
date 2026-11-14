@@ -54,7 +54,7 @@ export default function ProductCard({ product, className = '' }: ProductCardProp
               backgroundColor: `${product.accentColor}12`,
             }}
           >
-            ● {product.status === 'live' ? 'Live · Client Work' : product.status.replace(' [CONFIRM]', '')}
+            ● {product.status === 'live' ? 'Live · Client Work' : product.status}
           </span>
         </div>
 

@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 import { User, ShieldCheck, Code, Users, ArrowRight, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'About | Story, Founder & Values',
+  title: 'About | Story, Leadership & Values',
   description:
     'Learn about Orenty: why we build software for ambitious businesses and launch products of our own with our Startup Lab.',
 };
@@ -75,18 +75,18 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Founder & Leadership Section: Sai Gumma */}
+        {/* Leadership Section: Co-Founder & CTO */}
         <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
-            {/* Framed Founder & CTO Portrait */}
+            {/* Framed Co-Founder & CTO Portrait */}
             <div className="relative shrink-0">
               <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-[#12131A] shadow-2xl overflow-hidden group">
                 <Image
-                  src="/team/sai-gumma.jpg"
-                  alt="Sai Gumma - Founder & CTO"
+                  src="/team/co-founder-cto.jpg"
+                  alt="Sai Gumma - Co-Founder & CTO"
                   fill
                   sizes="(max-width: 768px) 144px, 176px"
                   className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
@@ -99,23 +99,23 @@ export default function AboutPage() {
               </div>
               <div className="absolute -bottom-2.5 -right-2 bg-[#0D0F14]/95 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-xl z-20">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-semibold tracking-wider">FOUNDER & CTO</span>
+                <span className="font-semibold tracking-wider">CO-FOUNDER & CTO</span>
               </div>
             </div>
 
             {/* Profile & Biography */}
             <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">FOUNDER & LEADERSHIP</span>
+              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
               <h2 className="h2-section text-text mb-1">
-                Sai Gumma
+                Co-Founder & CTO
               </h2>
-              <p className="text-sm font-semibold text-secondary mb-4">
-                Founder & CTO, Orenty
+              <p className="text-base sm:text-lg font-semibold text-secondary mb-4">
+                Sai Gumma · Co-Founder & CTO, Orenty
               </p>
               
               <div className="space-y-3 text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
                 <p>
-                  Sai Gumma is the Founder & CTO of Orenty. Driven by the principle that small, disciplined engineering teams with deep architecture skills consistently out-build legacy agencies burdened by bureaucracy, Sai directs all technology strategy, infrastructure, and technical execution.
+                  Sai Gumma is the Co-Founder & CTO of Orenty. Driven by the principle that small, disciplined engineering teams with deep architecture skills consistently out-build legacy agencies burdened by bureaucracy, Sai directs all technology strategy, infrastructure, and technical execution.
                 </p>
                 <p>
                   With expertise spanning distributed web architectures, high-performance Next.js systems, and pragmatic AI automations, Sai leads client engineering solutions while directing the engineering and product incubation of Orenty&apos;s proprietary platforms—including SyncedIn, Fanbase, Job Pilot, and Pujari.ai—and heading the Startup Lab.
@@ -141,7 +141,7 @@ export default function AboutPage() {
               {/* Direct Links */}
               <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
                 <a
-                  href="https://linkedin.com/company/orenty"
+                  href="https://www.linkedin.com/in/vamsi-vardhan09"
                   target="_blank"
                   rel="noreferrer"
                   className="text-secondary hover:text-white transition-colors"

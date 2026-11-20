@@ -44,17 +44,18 @@ Runs a clean production build (strict TypeScript, zero lint errors, 29 static pa
 | Route | Purpose | Audience | Primary CTA |
 |---|---|---|---|
 | `/` | Agency overview, client services preview, products, Startup Lab teaser | Everyone | Start a project |
-| `/services` | Detailed breakdown of client software engineering, AI, web, and growth services | Clients | Start a project |
+| `/software` / `/services` | Detailed breakdown of client software engineering, AI, web, and growth services | Clients | Start a project |
+| `/products` | Proprietary software suite index (SyncedIn, Fanbase, Job Pilot, Pujari.ai, G1 Mart) | Users, Partners | Join waitlist / Early access |
+| `/products/[slug]` | Deep-dive product pages with features, audience fit, and waitlist email capture | Users, Partners | Join waitlist |
+| `/lab` | **Startup Lab**: Live open challenges, 4-step co-builder model, ownership terms | Builders | Explore challenges |
+| `/lab/[slug]` | Dedicated challenge brief: problem, submission criteria, submit form | Builders | Submit solution |
+| `/apply` | Dedicated intake form for builders, challenge submissions, and custom venture ideas | Builders | Submit application |
 | `/work` | Case studies and delivered client solutions | Clients | Start a project |
-| `/products` | Proprietary software suite index (SyncedIn, Fanbase, Job Pilot, Pujari.ai) | Users, Investors | Join waitlist / Early access |
-| `/products/[slug]` | Deep-dive product pages with features, audience fit, and waitlist email capture | Users, Investors | Join waitlist |
-| `/careers` | **Startup Lab**: Live open challenges, rules, incubation timeline, FAQs | Builders | View open challenges |
-| `/careers/[slug]` | Dedicated challenge brief: problem, submission criteria, submit form | Applicants | Submit your solution |
 | `/about` | Company mission, values, and founder story | Everyone | Start a project |
 | `/contact` | Project inquiry intake form with budget & timeline selection | Clients | Send enquiry |
 | `/privacy`, `/terms` | Privacy policy and terms of service | Everyone | — |
 
-*Strict CTA rule: The word "Apply" appears **only** on the `/careers` pages. The primary global CTA is "Start a project".*
+*Primary global actions: "Start a project" for clients on software services, and "Apply" for builders and engineers joining the Startup Lab.*
 
 ---
 

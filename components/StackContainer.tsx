@@ -82,7 +82,7 @@ export default function StackContainer({
         <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
           Scroll to explore capabilities
         </span>
-        <span className="bg-white/[0.06] px-2.5 py-1 rounded-full border border-white/[0.1] text-indigo-400 font-semibold font-mono text-[11px]">
+        <span className="bg-white/[0.06] px-2.5 py-1 rounded-full border border-white/[0.1] text-neutral-200 font-semibold font-mono text-[11px]">
           {currentIdx} / {totalCards}
         </span>
       </div>

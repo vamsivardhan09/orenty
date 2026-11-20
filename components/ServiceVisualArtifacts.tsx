@@ -95,11 +95,11 @@ export function WebAppsMockup() {
  */
 export function AiAutomationMockup() {
   return (
-    <div className="w-full rounded-xl border border-white/[0.08] bg-[#0A0D18]/80 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-[#08080C]/85 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
       {/* Telemetry Header */}
       <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.06] text-[10.5px]">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-indigo-400 animate-pulse" />
+          <span className="h-2 w-2 rounded-full bg-white/80 animate-pulse" />
           <span className="text-text-2 font-medium">Autonomous Agent Pipeline</span>
         </div>
         <span className="text-text-3">120ms execution</span>
@@ -109,7 +109,7 @@ export function AiAutomationMockup() {
       <div className="py-3 flex items-center justify-between gap-1.5 relative">
         {/* Node 1: Trigger */}
         <div className="flex-1 rounded-lg bg-white/[0.03] border border-white/[0.08] p-2 flex flex-col items-center text-center">
-          <div className="h-6 w-6 rounded-md bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-1">
+          <div className="h-6 w-6 rounded-md bg-white/[0.06] border border-white/[0.12] flex items-center justify-center text-white mb-1">
             <Zap size={12} />
           </div>
           <span className="text-[10px] text-text font-medium">Event Trigger</span>

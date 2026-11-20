@@ -36,11 +36,11 @@ interface ServiceTheme {
 const serviceTheme: Record<string, ServiceTheme> = {
   'web-apps': {
     index: '01',
-    color: '#818CF8',
-    iconBg: 'bg-indigo-950/60',
-    iconBorder: 'border-indigo-500/30',
-    iconColor: 'text-indigo-400',
-    hoverBorder: 'group-hover:border-indigo-500/60 group-hover:shadow-[0_0_35px_rgba(99,102,241,0.25)]',
+    color: '#E4E4E7',
+    iconBg: 'bg-white/[0.06]',
+    iconBorder: 'border-white/[0.15]',
+    iconColor: 'text-white',
+    hoverBorder: 'group-hover:border-white/30 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.06)]',
     cardBorder: 'border-white/[0.08]',
     cardShadow: 'shadow-[0_10px_30px_rgba(0,0,0,0.5)]',
   },
@@ -91,13 +91,13 @@ export default function ServicesSection() {
     <section id="services" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 w-full">
       {/* Section Eyebrow & Headline matching orenty.in Reference */}
       <div className="relative z-10 mb-10 lg:mb-12">
-        <span className="text-indigo-400 text-[11px] font-mono tracking-[0.2em] font-bold uppercase block mb-2.5">
+        <span className="text-neutral-400 text-[11px] font-mono tracking-[0.2em] font-bold uppercase block mb-2.5">
           SERVICES
         </span>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-3 sm:mb-4">
           {services.headline}
         </h2>
-        <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
+        <p className="text-neutral-400 text-sm sm:text-base max-w-2xl leading-relaxed">
           {services.subheadline}
         </p>
       </div>
@@ -109,11 +109,11 @@ export default function ServicesSection() {
           const tags = capabilityTags[service.id] || ['Core', 'Strategy', 'Scale'];
           const theme = serviceTheme[service.id] || {
             index: `0${idx + 1}`,
-            color: '#818CF8',
-            iconBg: 'bg-indigo-950/60',
-            iconBorder: 'border-indigo-500/30',
-            iconColor: 'text-indigo-400',
-            hoverBorder: 'group-hover:border-indigo-400',
+            color: '#E4E4E7',
+            iconBg: 'bg-white/[0.06]',
+            iconBorder: 'border-white/[0.15]',
+            iconColor: 'text-white',
+            hoverBorder: 'group-hover:border-white/30',
             cardBorder: 'border-white/[0.08]',
             cardShadow: 'shadow-md',
           };

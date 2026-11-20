@@ -47,31 +47,31 @@ export default function ProductsPage() {
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-3">
                     <div
-                      className="relative flex items-center justify-center p-2 rounded-lg bg-surface-3"
+                      className="relative flex items-center justify-center p-2 rounded-lg bg-white/[0.04] border border-white/10"
                       style={{
-                        boxShadow: `0 0 16px ${prod.accentColor}30`,
+                        boxShadow: `0 0 16px ${prod.accentColor}25`,
                       }}
                     >
-                      <ProductLogo slug={prod.slug} size={26} />
+                      <ProductLogo slug={prod.slug} size={24} />
                     </div>
                     <div>
                       <h2 className="h3-card text-text">
                         {prod.name}
                       </h2>
-                      <span className="text-xs text-text-3 font-medium">
+                      <span className="text-xs text-text-3 font-mono">
                         {prod.category}
                       </span>
                     </div>
                   </div>
 
                   <Badge variant={prod.status === 'live' ? 'live' : 'building'} className="text-xs">
-                    {prod.status === 'live' ? 'Live · Client Work' : prod.status}
+                    {prod.status === 'live' ? 'Live · Client Platform' : prod.status}
                   </Badge>
                 </div>
 
                 {/* Clean Device Mockup Frame */}
                 {prod.previewImage && (
-                  <div className="relative h-52 sm:h-56 w-full overflow-hidden rounded-md border border-border bg-surface-3 mb-6 shadow-sm">
+                  <div className="relative h-52 sm:h-56 w-full overflow-hidden rounded-lg border border-white/[0.08] bg-black/40 mb-6 shadow-sm">
                     <Image
                       src={prod.previewImage}
                       alt={`${prod.name} Interface`}
@@ -79,7 +79,7 @@ export default function ProductsPage() {
                       className="object-cover object-top transition-transform duration-500 hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface-2/80 via-transparent to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   </div>
                 )}
 

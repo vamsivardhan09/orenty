@@ -106,7 +106,7 @@ export default async function ProductDetailPage({ params }: Props) {
         <div className="mb-14">
           <div className="flex items-center gap-4 mb-4">
             <div
-              className="relative flex items-center justify-center p-2.5 rounded-xl bg-surface-3"
+              className="relative flex items-center justify-center p-2.5 rounded-xl bg-white/[0.04] border border-white/10"
               style={{
                 boxShadow: `0 0 20px ${product.accentColor}35`,
               }}
@@ -114,7 +114,7 @@ export default async function ProductDetailPage({ params }: Props) {
               <ProductLogo slug={product.slug} size={32} />
             </div>
             <div>
-              <span className="text-xs text-text-3 font-medium uppercase tracking-wider block">
+              <span className="text-xs text-text-3 font-mono uppercase tracking-wider block">
                 {product.category}
               </span>
               <h1 className="h1-hero text-text">
@@ -123,7 +123,7 @@ export default async function ProductDetailPage({ params }: Props) {
             </div>
             <div className="ml-auto">
               <Badge variant={product.status === 'live' ? 'live' : 'building'} className="text-xs">
-                {product.status === 'live' ? 'Live · Client Work' : product.status}
+                {product.status === 'live' ? 'Live · Client Platform' : product.status}
               </Badge>
             </div>
           </div>
@@ -145,25 +145,25 @@ export default async function ProductDetailPage({ params }: Props) {
                 className="btn-primary"
               >
                 <span>{product.ctaLabel}</span>
-                <ArrowRight size={15} className="btn-arrow" />
+                <ArrowRight size={14} className="btn-arrow" />
               </a>
             ) : (
               <Button href="#waitlist" variant="primary">
                 <span>{product.ctaLabel}</span>
-                <ArrowRight size={15} className="btn-arrow" />
+                <ArrowRight size={14} className="btn-arrow" />
               </Button>
             )}
             <Button href="/contact" variant="secondary">
               <span>Discuss similar project</span>
-              <ArrowRight size={15} className="btn-arrow" />
+              <ArrowRight size={14} className="btn-arrow" />
             </Button>
           </div>
         </div>
 
         {/* 2. Device Mockup Preview Screenshot */}
         {product.previewImage && (
-          <div className="mb-16 overflow-hidden rounded-card border border-border bg-surface-2 shadow-2xl">
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-surface-3">
+          <div className="mb-16 overflow-hidden rounded-card border border-white/[0.08] bg-black/40 shadow-2xl">
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
               <Image
                 src={product.previewImage}
                 alt={`${product.name} Preview`}
@@ -172,7 +172,7 @@ export default async function ProductDetailPage({ params }: Props) {
                 className="object-cover object-top"
                 sizes="(max-width: 1024px) 100vw, 1000px"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-surface-2/40 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
           </div>
         )}
@@ -180,7 +180,7 @@ export default async function ProductDetailPage({ params }: Props) {
         {/* 3. Key Features */}
         <div className="mb-16">
           <div className="mb-8">
-            <span className="eyebrow-label block mb-2">FEATURES</span>
+            <span className="eyebrow-label block mb-2 font-mono">CORE CAPABILITIES</span>
             <h2 className="h2-section text-text">
               What it does.
             </h2>
@@ -188,29 +188,29 @@ export default async function ProductDetailPage({ params }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {product.features.map((feat, idx) => (
-              <div
+              <GlassCard
                 key={idx}
-                className="p-6 rounded-card border border-border bg-surface-2 flex flex-col justify-between"
+                className="p-6 flex flex-col justify-between"
               >
                 <div>
-                  <div className="h-8 w-8 rounded-lg bg-surface-3 border border-border flex items-center justify-center text-secondary mb-4 text-xs font-semibold">
+                  <div className="h-7 w-7 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-secondary mb-4 text-xs font-mono font-semibold">
                     0{idx + 1}
                   </div>
                   <h3 className="text-base font-semibold text-text mb-2">
                     Key Feature 0{idx + 1}
                   </h3>
-                  <p className="text-sm text-text-2 leading-relaxed">
+                  <p className="text-xs text-text-2 leading-relaxed">
                     {feat}
                   </p>
                 </div>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
 
         {/* 4. "Who it's for" Section */}
-        <div className="mb-16 rounded-card border border-border bg-surface-2 p-8 md:p-10">
-          <span className="eyebrow-label block mb-2">AUDIENCE & PURPOSE</span>
+        <GlassCard className="mb-16 p-8 md:p-10">
+          <span className="eyebrow-label block mb-2 font-mono">AUDIENCE & PURPOSE</span>
           <h2 className="h2-section text-text mb-6">
             Who it's for.
           </h2>
@@ -229,11 +229,11 @@ export default async function ProductDetailPage({ params }: Props) {
               <p className="text-sm text-text-2 leading-relaxed">{audience.keyBenefit}</p>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         {/* 5. Honest Status & What's Next */}
-        <div className="mb-16 rounded-card border border-border bg-surface-2 p-8 md:p-10">
-          <span className="eyebrow-label block mb-2">CURRENT STATUS</span>
+        <GlassCard className="mb-16 p-8 md:p-10">
+          <span className="eyebrow-label block mb-2 font-mono">CURRENT STATUS</span>
           <h2 className="h3-card text-text mb-3">
             What's next for {product.name}
           </h2>

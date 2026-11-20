@@ -37,8 +37,8 @@ export default function Button({
     const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
     const centerX = left + width / 2;
     const centerY = top + height / 2;
-    const x = (e.clientX - centerX) * 0.25;
-    const y = (e.clientY - centerY) * 0.25;
+    const x = Math.max(-6, Math.min(6, (e.clientX - centerX) * 0.1));
+    const y = Math.max(-4, Math.min(4, (e.clientY - centerY) * 0.1));
     setOffset({ x, y });
   };
 

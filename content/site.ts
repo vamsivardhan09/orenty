@@ -392,7 +392,7 @@ export const siteContent: SiteContent = {
     },
     labLink: {
       label: 'Explore Startup Lab →',
-      href: '/careers',
+      href: '/lab',
     },
   },
   trustStrip: [

@@ -34,11 +34,12 @@ const steps = [
 
 export default function StartupLabSection() {
   return (
-    <section id="careers" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-20 lg:py-24 w-full border-t border-border">
+    <section id="lab" className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-20 lg:py-24 w-full border-t border-border">
       
 
       <div className="mx-auto max-w-xl text-center mb-14">
-                <h2 className="h2-section text-text mb-4">
+        <span className="eyebrow-label block mb-3 text-warm">STARTUP LAB</span>
+        <h2 className="h2-section text-text mb-4">
           Build with us. Earn ownership.
         </h2>
         <p className="sub-paragraph text-text-2">
@@ -79,9 +80,9 @@ export default function StartupLabSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Button href="/careers" variant="primary">
+          <Button href="/lab" variant="primary">
             <span>Explore Startup Lab</span>
-            <ArrowRight size={15} className="btn-arrow" />
+            <ArrowRight size={14} className="btn-arrow" />
           </Button>
           <Link
             href="/about"

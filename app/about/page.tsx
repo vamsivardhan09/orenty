@@ -57,12 +57,12 @@ export default function AboutPage() {
         </div>
 
         {/* Story Section */}
-        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12">
-          <span className="eyebrow-label block mb-3">OUR STORY</span>
+        <GlassCard className="mb-14 p-8 md:p-12">
+          <span className="eyebrow-label block mb-3 font-mono">OUR STORY</span>
           <h2 className="h2-section text-text mb-6">
             Why we started Orenty.
           </h2>
-          <div className="space-y-5 text-base sm:text-lg text-text-2 leading-relaxed max-w-3xl">
+          <div className="space-y-5 text-base sm:text-lg text-text-2 leading-relaxed max-w-3xl font-normal">
             <p>
               Traditional agencies are incentivized to prolong projects, bloat retainers, and use junior developers hidden behind account managers. Meanwhile, great individual builders lack the infrastructure to launch and capitalize on their own ventures.
             </p>
@@ -73,17 +73,17 @@ export default function AboutPage() {
               Simultaneously, we build our own proprietary software products — including SyncedIn, Fanbase, Job Pilot, and Pujari.ai. Through our open Startup Lab, we invite exceptional engineers and designers to solve core product challenges and earn equity in what we launch together.
             </p>
           </div>
-        </div>
+        </GlassCard>
 
         {/* Leadership Section: Co-Founder & CTO */}
-        <div className="mb-12 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
+        <GlassCard className="mb-12 p-8 md:p-12 relative overflow-hidden">
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
             {/* Framed Co-Founder & CTO Portrait */}
             <div className="relative shrink-0">
-              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-[#12131A] shadow-2xl overflow-hidden group">
+              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-black/50 shadow-2xl overflow-hidden group">
                 <Image
                   src="/team/vamsi-vardhan.jpg"
                   alt="Vamsi Vardhan - Co-Founder & CTO"
@@ -92,16 +92,14 @@ export default function AboutPage() {
                   className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                   priority
                 />
-                {/* Subtle inner glass highlight */}
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20 pointer-events-none" />
-                {/* Soft gradient edge at base */}
-                <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
               </div>
             </div>
 
             {/* Profile & Biography */}
             <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
+              <span className="eyebrow-label block mb-2 font-mono">LEADERSHIP</span>
               <h2 className="h2-section text-text mb-1">
                 Co-Founder & CTO
               </h2>
@@ -115,22 +113,22 @@ export default function AboutPage() {
 
               {/* Technical Pillars */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Full-Stack Architecture
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   AI & Automation Workflows
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Product Incubation
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Startup Lab Direction
                 </span>
               </div>
 
               {/* Direct Links */}
-              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
+              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3 font-mono">
                 <a
                   href="https://www.linkedin.com/in/vamsi-vardhan09"
                   target="_blank"
@@ -158,31 +156,30 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </div>
+        </GlassCard>
 
         {/* Leadership Section: Co-Founder & CEO */}
-        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
+        <GlassCard className="mb-20 p-8 md:p-12 relative overflow-hidden">
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
 
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
             {/* Framed Co-Founder & CEO Placeholder */}
             <div className="relative shrink-0">
-              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-dashed border-white/20 bg-[#12131A] shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
-                <div className="h-14 w-14 rounded-full bg-surface-3 border border-border flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
+              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-dashed border-white/20 bg-black/40 shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
+                <div className="h-14 w-14 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
                   <User size={26} />
                 </div>
                 <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400 font-medium">
                   Photo coming soon
                 </span>
-                {/* Subtle inner glass highlight */}
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
             </div>
 
             {/* Profile & Biography */}
             <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
+              <span className="eyebrow-label block mb-2 font-mono">LEADERSHIP</span>
               <h2 className="h2-section text-text mb-1">
                 Co-Founder & CEO
               </h2>
@@ -196,28 +193,50 @@ export default function AboutPage() {
 
               {/* Strategic Pillars */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Product Vision
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Venture Operations
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Client Partnerships
                 </span>
-                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-white/[0.03] border border-white/10 text-slate-300">
                   Startup Lab Growth
                 </span>
               </div>
 
               {/* Direct Links */}
-              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
+              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3 font-mono">
                 <a
                   href="https://linkedin.com/company/orenty"
                   target="_blank"
                   rel="noreferrer"
                   className="text-secondary hover:text-white transition-colors"
                 >
+                  LinkedIn
+                </a>
+                <span>·</span>
+                <a
+                  href="https://x.com/orenty"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  Twitter / X
+                </a>
+                <span>·</span>
+                <a
+                  href="mailto:contact@orenty.in"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  contact@orenty.in
+                </a>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
                   LinkedIn
                 </a>
                 <span>·</span>
@@ -281,9 +300,9 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button href="/contact" variant="primary">
               <span>Start a project</span>
-              <ArrowRight size={15} className="btn-arrow" />
+              <ArrowRight size={14} className="btn-arrow" />
             </Button>
-            <Button href="/careers" variant="secondary">
+            <Button href="/lab" variant="secondary">
               <span>Explore Startup Lab</span>
             </Button>
           </div>

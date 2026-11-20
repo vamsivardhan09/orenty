@@ -7,7 +7,7 @@ import { siteContent } from '@/content/site';
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.08] bg-[#08080A] text-slate-400">
+    <footer className="relative border-t border-white/[0.08] bg-[#030305] text-slate-400">
       {/* Background ambient glow */}
       <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 h-64 w-[600px] rounded-full bg-primary/10 blur-[140px]" />
 
@@ -151,7 +151,7 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3 text-[14px]">
                 <li>
-                  <Link href="/careers" className="transition-colors hover:text-white">
+                  <Link href="/lab" className="transition-colors hover:text-white">
                     Open Challenges
                   </Link>
                 </li>
@@ -161,7 +161,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/careers#ownership" className="transition-colors hover:text-white">
+                  <Link href="/lab#ownership" className="transition-colors hover:text-white">
                     Ownership Model
                   </Link>
                 </li>

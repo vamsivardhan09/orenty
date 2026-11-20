@@ -87,7 +87,7 @@ export default function CareerChallengesBrowser() {
             </div>
 
             <div className="pt-4 border-t border-border">
-              <Button href={`/careers/${chal.slug}`} variant="secondary" className="w-full justify-center text-xs py-2.5 min-h-[40px]">
+              <Button href={`/lab/${chal.slug}`} variant="secondary" className="w-full justify-center text-xs py-2.5 min-h-[40px]">
                 <span>View challenge</span>
                 <ArrowRight size={13} className="btn-arrow" />
               </Button>
@@ -135,7 +135,7 @@ export default function CareerChallengesBrowser() {
                 </div>
 
                 <div className="pt-4 border-t border-border">
-                  <Button href={`/careers/${chal.slug}`} variant="secondary" className="w-full justify-center text-xs py-2.5 min-h-[40px]">
+                  <Button href={`/lab/${chal.slug}`} variant="secondary" className="w-full justify-center text-xs py-2.5 min-h-[40px]">
                     <span>View challenge</span>
                     <ArrowRight size={13} className="btn-arrow" />
                   </Button>

@@ -3,25 +3,32 @@
 import React, { useEffect, useState } from 'react';
 
 export default function LoadingScreen() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // Check if user already saw the loader in this session
-    const hasLoaded = typeof window !== 'undefined' && sessionStorage.getItem('orenty_intro_played');
-    if (hasLoaded || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    if (typeof window === 'undefined') return;
+
+    // Only run the signature entrance animation on the root home page ('/') and only once per session
+    const isHomePage = window.location.pathname === '/';
+    const hasLoaded = sessionStorage.getItem('orenty_intro_played');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isHomePage || hasLoaded || prefersReducedMotion) {
       setLoading(false);
       return;
     }
 
+    setLoading(true);
+
     const fadeTimer = setTimeout(() => {
       setFading(true);
-    }, 800);
+    }, 700);
 
     const removeTimer = setTimeout(() => {
       setLoading(false);
       sessionStorage.setItem('orenty_intro_played', 'true');
-    }, 1200);
+    }, 1000);
 
     return () => {
       clearTimeout(fadeTimer);
@@ -33,7 +40,7 @@ export default function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#08080A] overflow-hidden transition-opacity duration-300 ${
+      className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#030305] overflow-hidden transition-opacity duration-300 ${
         fading ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >

@@ -48,8 +48,8 @@ export default function ServicesPage() {
             return (
               <GlassCard key={svc.id} id={svc.id} className="p-8 flex flex-col justify-between h-full">
                 <div>
-                  <div className="h-12 w-12 rounded-xl border border-border bg-surface-3 flex items-center justify-center text-secondary mb-6">
-                    <Icon size={24} />
+                  <div className="h-10 w-10 rounded-lg border border-white/10 bg-white/[0.03] flex items-center justify-center text-secondary mb-5">
+                    <Icon size={20} />
                   </div>
 
                   <h2 className="h3-card text-text mb-3">
@@ -96,22 +96,22 @@ export default function ServicesPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.process.map((step) => (
-            <div
+            <GlassCard
               key={step.step}
-              className="rounded-card border border-border bg-surface-2 p-6 flex flex-col justify-between"
+              className="p-6 flex flex-col justify-between"
             >
               <div>
-                <span className="text-sm font-semibold text-secondary tracking-wider block mb-3">
+                <span className="text-xs font-mono font-semibold text-secondary tracking-wider block mb-3">
                   {step.step}
                 </span>
-                <h3 className="text-lg font-semibold text-text mb-2">
+                <h3 className="text-base font-semibold text-text mb-2">
                   {step.title}
                 </h3>
-                <p className="text-sm text-text-2 leading-relaxed">
+                <p className="text-xs text-text-2 leading-relaxed">
                   {step.description}
                 </p>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </section>

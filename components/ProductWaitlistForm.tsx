@@ -57,7 +57,7 @@ export default function ProductWaitlistForm({
         placeholder="Enter your email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 rounded-pill border border-border bg-surface-3 px-5 py-3 text-sm text-text placeholder-text-3 transition-colors focus:border-secondary focus:outline-none"
+        className="flex-1 rounded-pill border border-white/[0.12] bg-white/[0.03] px-5 py-2.5 text-sm text-white placeholder:text-neutral-500 transition-all focus:border-white/30 focus:bg-white/[0.05] focus:outline-none"
       />
       <Button
         type="submit"

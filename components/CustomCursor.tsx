@@ -50,7 +50,16 @@ export default function CustomCursor() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      const interactive = target.closest('a, button, input, textarea, select, [data-cursor-expand]');
+      // Over form inputs/selects/textareas, hide custom cursor circle so native cursor works cleanly
+      const isFormInput = target.closest('input, textarea, select, option, label');
+      if (isFormInput) {
+        setIsVisible(false);
+        setIsHovered(false);
+        return;
+      }
+
+      setIsVisible(true);
+      const interactive = target.closest('a, button, [role="button"], [data-cursor-expand]');
       setIsHovered(!!interactive);
     };
 
@@ -67,7 +76,7 @@ export default function CustomCursor() {
 
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%) scale(${
-          isHovered ? 1.5 : 1
+          isHovered ? 1.15 : 1
         })`;
       }
 
@@ -102,10 +111,10 @@ export default function CustomCursor() {
       <div
         ref={ringRef}
         aria-hidden="true"
-        className={`pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-primary-glow/60 transition-opacity duration-300 ${
+        className={`pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border border-white/20 transition-all duration-200 ${
           isHovered
-            ? 'h-11 w-11 bg-primary/10 border-primary border-white/60'
-            : 'h-8 w-8 bg-transparent'
+            ? 'h-9 w-9 bg-white/[0.04] border-white/50'
+            : 'h-7 w-7 bg-transparent border-white/20'
         } ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       />
     </>

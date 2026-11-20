@@ -3,7 +3,43 @@
 import React, { useState, useEffect } from 'react';
 import GlassCard from './GlassCard';
 import Button from './Button';
-import { Send, CheckCircle2, AlertCircle, MessageSquare, Calendar, Mail, ArrowRight } from 'lucide-react';
+import {
+  Send,
+  CheckCircle2,
+  AlertCircle,
+  MessageSquare,
+  Calendar,
+  Mail,
+  ArrowRight,
+  ShieldCheck,
+  Code2,
+  Clock,
+  Sparkles,
+  Check,
+} from 'lucide-react';
+
+interface ServiceOption {
+  id: string;
+  label: string;
+  subtitle: string;
+}
+
+const serviceOptions: ServiceOption[] = [
+  { id: 'Web app', label: 'Web Applications', subtitle: 'Platforms, SaaS & APIs' },
+  { id: 'Mobile app', label: 'Mobile Apps', subtitle: 'Native iOS & Android' },
+  { id: 'AI automation', label: 'AI & Automation', subtitle: 'Autonomous LLM Agents' },
+  { id: 'Startup Lab', label: 'Startup Lab', subtitle: 'Co-builder Incubation' },
+  { id: '30-min Scoping Call', label: '30-min Scoping Call', subtitle: '1-on-1 Architecture Call' },
+  { id: 'Architecture Advisory', label: 'Technical Advisory', subtitle: 'Code Review & Audit' },
+];
+
+const budgetOptions = [
+  { id: 'Under $5,000', label: '< $5,000', tag: 'Audit / MVP' },
+  { id: '$5,000 - $15,000', label: '$5k – $15k', tag: 'Core Build' },
+  { id: '$15,000 - $30,000', label: '$15k – $30k', tag: 'Scale Platform' },
+  { id: '$30,000+', label: '$30,000+', tag: 'Enterprise' },
+  { id: 'Flexible / To be discussed', label: 'Flexible', tag: 'Discuss on call' },
+];
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -26,7 +62,7 @@ export default function ContactForm() {
         setFormData((prev) => ({
           ...prev,
           need: '30-min Scoping Call',
-          message: prev.message || "I'd like to schedule a 1-on-1 30-minute scoping call to discuss our project.",
+          message: prev.message || "I'd like to schedule a 1-on-1 30-minute scoping call to discuss our project goals.",
         }));
         const formEl = document.getElementById('contact-form');
         if (formEl) {
@@ -42,7 +78,7 @@ export default function ContactForm() {
     setFormData((prev) => ({
       ...prev,
       need: '30-min Scoping Call',
-      message: prev.message || "I'd like to schedule a 1-on-1 30-minute scoping call to discuss our project.",
+      message: prev.message || "I'd like to schedule a 1-on-1 30-minute scoping call to discuss our project goals.",
     }));
     const formEl = document.getElementById('contact-form');
     if (formEl) {
@@ -89,102 +125,188 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      {/* Left: Direct contact methods */}
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+      {/* =================================================================== */}
+      {/* Left Column: Studio Telemetry & Executive Concierge Gateways       */}
+      {/* =================================================================== */}
       <div className="lg:col-span-5 space-y-5">
-        <GlassCard className="p-6 md:p-8">
-          <span className="eyebrow-label block mb-2 text-neutral-400">DIRECT ACCESS</span>
-          <h3 className="h3-card text-text mb-2">
-            Prefer direct contact?
-          </h3>
-          <p className="text-sm text-text-2 leading-relaxed mb-6 font-normal">
-            Choose whichever communication channel is fastest for you. All messages go straight to our engineering team.
-          </p>
+        
+        {/* 1. Live Studio Telemetry (Proof of Life) */}
+        <div className="rounded-2xl border border-white/[0.08] bg-[#07070A]/90 p-5 backdrop-blur-xl relative overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+          <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.06] mb-3.5">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-300 font-semibold">
+                Studio Telemetry
+              </span>
+            </div>
+            <span className="text-[10.5px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+              Intake Active
+            </span>
+          </div>
 
-          <div className="space-y-3">
-            {/* WhatsApp */}
+          <div className="space-y-2 text-xs font-mono text-neutral-400">
+            <div className="flex items-center justify-between">
+              <span className="text-neutral-500">Primary Hub</span>
+              <span className="text-neutral-200">Bengaluru, India (IST)</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-neutral-500">Median Review Time</span>
+              <span className="text-neutral-200">&lt; 2.4 Hours</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-neutral-500">Current Capacity</span>
+              <span className="text-neutral-200">2 Senior Pods Open</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Direct Executive Concierge Channels */}
+        <GlassCard className="p-6 md:p-7 relative overflow-hidden">
+          <div className="mb-4">
+            <span className="text-[11px] font-mono tracking-widest uppercase text-neutral-400 font-semibold block mb-1">
+              DIRECT CONCIERGE
+            </span>
+            <h3 className="text-lg font-bold text-white tracking-tight">
+              Prefer instant access?
+            </h3>
+            <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
+              Skip the queue. All direct communication channels route directly to our technical founders and lead architects.
+            </p>
+          </div>
+
+          <div className="space-y-2.5">
+            {/* WhatsApp Direct */}
             <a
-              href="https://wa.me/?text=Hi%20Orenty%20team,%20I'd%20like%20to%20discuss%20a%20project"
+              href="https://wa.me/?text=Hi%20Orenty%20team,%20I'd%20like%20to%20discuss%20a%20project%20with%20your%20senior%20engineering%20pod."
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-emerald-500/40 transition-all duration-200 group"
+              className="flex items-center justify-between p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-emerald-500/40 transition-all duration-200 group cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                <div className="h-9 w-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/25 group-hover:scale-105 transition-transform">
                   <MessageSquare size={16} />
                 </div>
                 <div>
-                  <span className="block text-sm font-medium text-white group-hover:text-emerald-300 transition-colors">Chat on WhatsApp</span>
-                  <span className="block text-xs text-neutral-400">Direct instant messaging</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">
+                      Chat on WhatsApp
+                    </span>
+                    <span className="text-[9.5px] font-mono uppercase bg-emerald-500/15 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/30 font-bold">
+                      FASTEST
+                    </span>
+                  </div>
+                  <span className="block text-xs text-neutral-400 font-mono">
+                    Instant messaging · ~5m reply
+                  </span>
                 </div>
               </div>
-              <ArrowRight size={13} className="text-neutral-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
+              <ArrowRight size={14} className="text-neutral-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" />
             </a>
 
             {/* Request a 1-on-1 Scoping Call */}
             <button
               type="button"
               onClick={handleSelectScopingCall}
-              className="w-full flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25 transition-all duration-200 group text-left cursor-pointer"
+              className="w-full flex items-center justify-between p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/30 transition-all duration-200 group text-left cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-white/[0.05] text-neutral-300 flex items-center justify-center shrink-0 border border-white/10">
+                <div className="h-9 w-9 rounded-lg bg-white/[0.05] text-neutral-200 flex items-center justify-center shrink-0 border border-white/15 group-hover:scale-105 transition-transform">
                   <Calendar size={16} />
                 </div>
                 <div>
-                  <span className="block text-sm font-medium text-white group-hover:text-white transition-colors">Request a 30-min call</span>
-                  <span className="block text-xs text-neutral-400">1-on-1 technical scoping session</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-semibold text-white group-hover:text-white transition-colors">
+                      Book a 30-min call
+                    </span>
+                    <span className="text-[9.5px] font-mono uppercase bg-white/10 text-neutral-300 px-1.5 py-0.5 rounded border border-white/20 font-bold">
+                      1-ON-1
+                    </span>
+                  </div>
+                  <span className="block text-xs text-neutral-400 font-mono">
+                    Technical scoping with founders
+                  </span>
                 </div>
               </div>
-              <ArrowRight size={13} className="text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+              <ArrowRight size={14} className="text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </button>
 
             {/* Direct Email */}
             <a
               href="mailto:contact@orenty.in"
-              className="flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25 transition-all duration-200 group"
+              className="flex items-center justify-between p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/30 transition-all duration-200 group cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20">
+                <div className="h-9 w-9 rounded-lg bg-white/[0.05] text-neutral-300 flex items-center justify-center shrink-0 border border-white/15 group-hover:scale-105 transition-transform">
                   <Mail size={16} />
                 </div>
                 <div>
-                  <span className="block text-sm font-medium text-white group-hover:text-sky-300 transition-colors">Email us directly</span>
-                  <span className="block text-xs text-neutral-400">contact@orenty.in · 24h reply</span>
+                  <span className="block text-sm font-semibold text-white group-hover:text-white transition-colors">
+                    Email engineering team
+                  </span>
+                  <span className="block text-xs text-neutral-400 font-mono">
+                    contact@orenty.in · 24h reply
+                  </span>
                 </div>
               </div>
-              <ArrowRight size={13} className="text-neutral-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all" />
+              <ArrowRight size={14} className="text-neutral-500 group-hover:text-white group-hover:translate-x-1 transition-all" />
             </a>
           </div>
         </GlassCard>
 
-        <div className="rounded-card border border-white/[0.07] bg-[#08080C] p-6 text-sm text-neutral-400 leading-relaxed">
-          <p className="font-semibold text-white mb-1.5 text-xs uppercase tracking-wider font-mono">Our Commitment</p>
-          We review project details within 24 hours. You receive an architectural breakdown, timeline estimate, and clear milestone proposals—no sales fluff.
+        {/* 3. Studio Guarantees */}
+        <div className="rounded-2xl border border-white/[0.07] bg-[#07070A]/80 p-5 backdrop-blur-md">
+          <span className="text-[10.5px] font-mono uppercase tracking-wider text-neutral-400 block mb-3 font-semibold">
+            THE ORENTY ASSURANCE
+          </span>
+          <ul className="space-y-2.5 text-xs text-neutral-300">
+            <li className="flex items-start gap-2.5">
+              <ShieldCheck size={15} className="text-white shrink-0 mt-0.5" />
+              <span>Mutual NDA signed prior to proprietary technical review.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Code2 size={15} className="text-white shrink-0 mt-0.5" />
+              <span>Direct senior engineer pods only—zero junior outsourcing.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Sparkles size={15} className="text-white shrink-0 mt-0.5" />
+              <span>100% intellectual property & clean Git repository ownership.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <Clock size={15} className="text-white shrink-0 mt-0.5" />
+              <span>Milestone-based sprints with verifiable weekly staging builds.</span>
+            </li>
+          </ul>
         </div>
       </div>
 
-      {/* Right: Enquiry Form */}
+      {/* =================================================================== */}
+      {/* Right Column: Tactile Luxury Scoping Form                          */}
+      {/* =================================================================== */}
       <div id="contact-form" className="lg:col-span-7 scroll-mt-24">
         <div id="book-a-call" className="scroll-mt-24">
-          <GlassCard className="p-7 md:p-9">
+          <GlassCard className="p-7 sm:p-9 md:p-10 relative overflow-hidden border border-white/[0.1] bg-[#08080C]/90 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
+            
             {status === 'success' ? (
-              <div className="py-12 text-center flex flex-col items-center">
-                <div className="h-14 w-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5">
-                  <CheckCircle2 size={28} />
+              <div className="py-16 text-center flex flex-col items-center">
+                <div className="h-16 w-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5 shadow-[0_0_30px_rgba(16,185,129,0.25)]">
+                  <CheckCircle2 size={32} />
                 </div>
-                <h3 className="h3-card text-text mb-2">
-                  Enquiry sent successfully
+                <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+                  Project Enquiry Dispatched
                 </h3>
-                <p className="text-sm text-text-2 max-w-md font-body leading-relaxed mb-6">
-                  Thank you for reaching out. We review all incoming project scopes within 24 hours and will get back to you with next steps.
+                <p className="text-sm text-neutral-300 max-w-md font-body leading-relaxed mb-8">
+                  Thank you for reaching out. Our senior engineering pod reviews all incoming scopes within 24 hours and will follow up with initial architecture proposals.
                 </p>
                 <Button onClick={() => setStatus('idle')} variant="secondary">
-                  <span>Send another message</span>
+                  <span>Send another enquiry</span>
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-7">
                 {/* Honeypot field */}
                 <div className="hidden" aria-hidden="true">
                   <label htmlFor="website">Website</label>
@@ -198,130 +320,175 @@ export default function ContactForm() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  {/* Name */}
+                {/* 1. TACTILE CHIPS: What do you need built? */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-semibold">
+                      What are you looking to build? <span className="text-white">*</span>
+                    </label>
+                    <span className="text-[10.5px] font-mono text-neutral-500">
+                      Tap to select scope
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {serviceOptions.map((opt) => {
+                      const isSelected = formData.need === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, need: opt.id })}
+                          className={`flex items-start justify-between p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+                            isSelected
+                              ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.25)] scale-[1.01]'
+                              : 'bg-white/[0.02] text-neutral-300 border-white/[0.08] hover:border-white/25 hover:bg-white/[0.05]'
+                          }`}
+                        >
+                          <div>
+                            <span className={`block text-xs sm:text-[13px] font-semibold leading-snug ${isSelected ? 'text-black' : 'text-white'}`}>
+                              {opt.label}
+                            </span>
+                            <span className={`block text-[11px] mt-0.5 font-mono ${isSelected ? 'text-neutral-700' : 'text-neutral-500'}`}>
+                              {opt.subtitle}
+                            </span>
+                          </div>
+                          {isSelected && (
+                            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-black text-white shrink-0 mt-0.5 ml-2">
+                              <Check size={10} strokeWidth={3} />
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2. TACTILE PILLS: Estimated Budget Range */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-neutral-300 font-semibold">
+                      Estimated Budget Range <span className="text-white">*</span>
+                    </label>
+                    <span className="text-[10.5px] font-mono text-neutral-500">
+                      USD / Milestone
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                    {budgetOptions.map((b) => {
+                      const isSelected = formData.budget === b.id;
+                      return (
+                        <button
+                          key={b.id}
+                          type="button"
+                          onClick={() => setFormData({ ...formData, budget: b.id })}
+                          className={`flex flex-col items-center justify-center py-2.5 px-2 rounded-xl border text-center transition-all duration-200 cursor-pointer ${
+                            isSelected
+                              ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.25)] font-bold'
+                              : 'bg-white/[0.02] text-neutral-300 border-white/[0.08] hover:border-white/25 hover:bg-white/[0.05]'
+                          }`}
+                        >
+                          <span className={`text-xs font-semibold ${isSelected ? 'text-black' : 'text-white'}`}>
+                            {b.label}
+                          </span>
+                          <span className={`text-[9.5px] font-mono mt-0.5 ${isSelected ? 'text-neutral-700 font-medium' : 'text-neutral-500'}`}>
+                            {b.tag}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 3. Name & Email Inputs */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
                   <div>
-                    <label htmlFor="contact-name" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                      Name <span className="text-primary">*</span>
+                    <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-wider text-neutral-300 mb-2 font-semibold">
+                      Your Name <span className="text-white">*</span>
                     </label>
                     <input
                       id="contact-name"
                       type="text"
                       required
-                      placeholder="Your name"
+                      placeholder="e.g. Alex Mercer"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/30 focus:bg-white/[0.04] focus:outline-none"
+                      className="w-full rounded-xl border border-white/[0.09] bg-[#07070A] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-200 focus:border-white/40 focus:bg-[#0B0B0E] focus:shadow-[0_0_20px_rgba(255,255,255,0.06)] focus:outline-none"
                     />
                   </div>
 
-                  {/* Email */}
                   <div>
-                    <label htmlFor="contact-email" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                      Email <span className="text-primary">*</span>
+                    <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-wider text-neutral-300 mb-2 font-semibold">
+                      Work Email <span className="text-white">*</span>
                     </label>
                     <input
                       id="contact-email"
                       type="email"
                       required
-                      placeholder="you@company.com"
+                      placeholder="alex@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/30 focus:bg-white/[0.04] focus:outline-none"
+                      className="w-full rounded-xl border border-white/[0.09] bg-[#07070A] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-200 focus:border-white/40 focus:bg-[#0B0B0E] focus:shadow-[0_0_20px_rgba(255,255,255,0.06)] focus:outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  {/* Phone / WhatsApp */}
-                  <div>
-                    <label htmlFor="contact-phone" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                      Phone / WhatsApp <span className="text-neutral-500 font-normal lowercase">(optional)</span>
-                    </label>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/30 focus:bg-white/[0.04] focus:outline-none"
-                    />
-                  </div>
-
-                  {/* What do you need? */}
-                  <div>
-                    <label htmlFor="contact-need" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                      What do you need?
-                    </label>
-                    <select
-                      id="contact-need"
-                      value={formData.need}
-                      onChange={(e) => setFormData({ ...formData, need: e.target.value })}
-                      className="w-full rounded-lg border border-white/[0.08] bg-[#0A0A0E] px-4 py-2.5 text-sm text-white transition-all duration-200 focus:border-white/30 focus:outline-none"
-                    >
-                      <option value="30-min Scoping Call">1-on-1 Scoping Call (30 min)</option>
-                      <option value="Web app">Web application</option>
-                      <option value="Website">Marketing website / platform</option>
-                      <option value="Mobile app">Mobile app (iOS & Android)</option>
-                      <option value="AI automation">Custom AI automation</option>
-                      <option value="Other">Other technical build</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Budget Range */}
+                {/* 4. Phone (Optional) */}
                 <div>
-                  <label htmlFor="contact-budget" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                    Estimated budget range
+                  <label htmlFor="contact-phone" className="block text-xs font-mono uppercase tracking-wider text-neutral-300 mb-2 font-semibold">
+                    Phone / WhatsApp <span className="text-neutral-500 font-normal lowercase">(optional)</span>
                   </label>
-                  <select
-                    id="contact-budget"
-                    value={formData.budget}
-                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full rounded-lg border border-white/[0.08] bg-[#0A0A0E] px-4 py-2.5 text-sm text-white transition-all duration-200 focus:border-white/30 focus:outline-none"
-                  >
-                    <option value="Flexible / To be discussed">Flexible / To be discussed</option>
-                    <option value="Under $5,000">Under $5,000</option>
-                    <option value="$5,000 - $15,000">$5,000 - $15,000</option>
-                    <option value="$15,000 - $30,000">$15,000 - $30,000</option>
-                    <option value="$30,000+">$30,000+</option>
-                  </select>
+                  <input
+                    id="contact-phone"
+                    type="tel"
+                    placeholder="+1 (555) 000-0000 or WhatsApp number"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full rounded-xl border border-white/[0.09] bg-[#07070A] px-4 py-3 text-sm text-white placeholder:text-neutral-600 transition-all duration-200 focus:border-white/40 focus:bg-[#0B0B0E] focus:shadow-[0_0_20px_rgba(255,255,255,0.06)] focus:outline-none"
+                  />
                 </div>
 
-                {/* Message */}
+                {/* 5. Project Brief */}
                 <div>
-                  <label htmlFor="contact-message" className="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2 font-mono">
-                    Tell us about your project <span className="text-primary">*</span>
+                  <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-wider text-neutral-300 mb-2 font-semibold">
+                    Tell us about the project <span className="text-white">*</span>
                   </label>
                   <textarea
                     id="contact-message"
                     required
                     rows={4}
-                    placeholder="What are you looking to build, what is your timeline, and what goals do you have?"
+                    placeholder="Briefly describe what you're looking to build, expected timelines, key technical requirements, or problem to solve..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full rounded-lg border border-white/[0.08] bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-neutral-500 transition-all duration-200 focus:border-white/30 focus:bg-white/[0.04] focus:outline-none"
+                    className="w-full rounded-xl border border-white/[0.09] bg-[#07070A] px-4 py-3.5 text-sm text-white placeholder:text-neutral-600 transition-all duration-200 focus:border-white/40 focus:bg-[#0B0B0E] focus:shadow-[0_0_20px_rgba(255,255,255,0.06)] focus:outline-none leading-relaxed"
                   />
                 </div>
 
                 {/* Error Alert */}
                 {status === 'error' && (
-                  <div className="flex items-center gap-3 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3.5 text-xs text-rose-300">
-                    <AlertCircle size={15} className="shrink-0" />
+                  <div className="flex items-center gap-3 rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-300">
+                    <AlertCircle size={16} className="shrink-0" />
                     <span>{errorMessage}</span>
                   </div>
                 )}
 
-                {/* Primary Action Button: Send enquiry */}
-                <Button
-                  type="submit"
-                  variant="primary"
-                  loading={status === 'submitting'}
-                  className="w-full sm:w-auto"
-                >
-                  <span>Send enquiry</span>
-                  <Send size={14} className="btn-arrow" />
-                </Button>
+                {/* 6. Submit Button & Reassurance */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-white/[0.08]">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    loading={status === 'submitting'}
+                    className="w-full sm:w-auto !py-3 !px-7 !text-sm font-semibold justify-center"
+                  >
+                    <span>Submit project scope</span>
+                    <Send size={14} className="btn-arrow" />
+                  </Button>
+
+                  <span className="text-[11px] font-mono text-neutral-500 text-center sm:text-right">
+                    Direct engineer response within 24h. No spam.
+                  </span>
+                </div>
               </form>
             )}
           </GlassCard>

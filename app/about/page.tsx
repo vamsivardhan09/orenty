@@ -161,19 +161,22 @@ export default function AboutPage() {
         {/* Leadership Section: Co-Founder & CEO */}
         <GlassCard className="mb-20 p-8 md:p-12 relative overflow-hidden">
           {/* Subtle ambient lighting */}
-          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
+          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/5 blur-[100px]" />
 
           <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12 relative z-10">
-            {/* Centered Circular Co-Founder & CEO Placeholder */}
+            {/* Centered Circular Co-Founder & CEO Portrait */}
             <div className="relative shrink-0">
-              <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full border-2 border-dashed border-white/25 bg-black/60 shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
-                <div className="h-16 w-16 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
-                  <User size={30} />
-                </div>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400 font-medium">
-                  Photo coming soon
-                </span>
-                <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/15 pointer-events-none" />
+              <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full border-2 border-white/20 bg-black/60 shadow-2xl overflow-hidden group">
+                <Image
+                  src="/team/sai-ganesh.jpg"
+                  alt="Sai Ganesh - Co-Founder & CEO"
+                  fill
+                  sizes="(max-width: 768px) 160px, 192px"
+                  className="object-cover object-[center_20%] transition-transform duration-500 ease-out group-hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/25 pointer-events-none" />
+                <div className="absolute inset-0 rounded-full shadow-[inset_0_2px_8px_rgba(255,255,255,0.2)] pointer-events-none" />
               </div>
             </div>
 

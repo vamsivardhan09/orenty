@@ -30,7 +30,7 @@ const divisions = [
     title: 'Startup Lab',
     description: 'Solve real startup challenges. The best builders and engineers earn co-founding ownership.',
     linkText: 'Explore open challenges',
-    linkHref: '/careers',
+    linkHref: '/lab',
     tag: 'INCUBATION & EQUITY',
   },
 ];
@@ -39,7 +39,7 @@ export default function WhatWeDoSection() {
   return (
     <section className="relative z-10 mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 w-full">
       <div className="mb-10 lg:mb-12">
-        <h2 className="h2-section max-w-xl text-text">
+        <h2 className="h2-section max-w-xl text-white">
           Three divisions, one mission: building what matters.
         </h2>
       </div>
@@ -50,7 +50,7 @@ export default function WhatWeDoSection() {
           return (
             <GlassCard
               key={div.title}
-              className="group relative flex flex-col justify-between p-6 md:p-8 min-h-[280px] rounded-[20px] border border-white/[0.08] bg-[#0D0F14]/85 backdrop-blur-xl transition-all duration-300 hover:border-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+              className="group relative flex flex-col justify-between p-6 md:p-8 min-h-[280px] rounded-[20px] border border-white/[0.08] bg-[#08080C]/80 backdrop-blur-xl transition-all duration-300 hover:border-white/25 shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
             >
               {/* Corner HUD accent */}
               <div className="hud-corner-tl opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -59,12 +59,12 @@ export default function WhatWeDoSection() {
               <div>
                 <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08] mb-5">
                   <div className="flex items-center gap-2.5">
-                    <Icon size={16} className="text-slate-400 group-hover:text-white transition-colors" />
-                    <span className="text-xs font-mono tracking-widest text-slate-400 font-medium uppercase">
+                    <Icon size={16} className="text-neutral-400 group-hover:text-white transition-colors" />
+                    <span className="text-xs font-mono tracking-widest text-neutral-400 font-medium uppercase">
                       DIVISION // {div.index}
                     </span>
                   </div>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-mono uppercase tracking-wider text-neutral-400">
                     {div.tag}
                   </span>
                 </div>
@@ -73,7 +73,7 @@ export default function WhatWeDoSection() {
                   {div.title}
                 </h3>
 
-                <p className="text-[14.5px] text-slate-400 leading-relaxed font-normal mb-6">
+                <p className="text-[14.5px] text-neutral-400 leading-relaxed font-normal mb-6">
                   {div.description}
                 </p>
               </div>
@@ -81,7 +81,7 @@ export default function WhatWeDoSection() {
               <div className="pt-3 border-t border-white/[0.08]">
                 <Link
                   href={div.linkHref}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 group-hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-400 group-hover:text-white transition-colors"
                 >
                   <span>{div.linkText}</span>
                   <ArrowUpRight size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

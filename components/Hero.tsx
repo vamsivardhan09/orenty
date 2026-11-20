@@ -17,9 +17,9 @@ export default function Hero() {
   const { hero } = siteContent;
 
   return (
-    <section className="relative min-h-[calc(100svh-5rem)] flex flex-col justify-between items-center px-6 sm:px-8 lg:px-12 pt-6 sm:pt-10 pb-8 w-full overflow-hidden bg-[#08080A]">
+    <section className="relative min-h-[calc(100svh-5rem)] flex flex-col justify-between items-center px-6 sm:px-8 lg:px-12 pt-6 sm:pt-10 pb-8 w-full overflow-hidden bg-[#030305]">
       
-      {/* 1. Sculptural 3D Parametric Ribbon Canyon Backdrop (Exact match to reference) */}
+      {/* 1. Sculptural 3D Parametric Ribbon Canyon Backdrop */}
       <div className="absolute inset-0 w-full h-full pointer-events-none select-none overflow-hidden z-0">
         <Image
           src="/images/hero-parametric-canyon.jpg"
@@ -30,9 +30,9 @@ export default function Hero() {
           className="object-cover object-bottom opacity-85"
         />
         {/* Top Vignette Gradient to blend seamlessly with dark header */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#08080A] via-[#08080A]/60 to-transparent h-[45%]" />
-        {/* Bottom Horizon Gradient to blend with section below */}
-        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#08080A] via-[#08080A]/40 to-transparent h-32" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#030305] via-[#030305]/60 to-transparent h-[45%]" />
+        {/* Bottom Horizon Gradient to blend seamlessly with section below */}
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#030305] via-[#030305]/50 to-transparent h-40" />
       </div>
 
       {/* 2. Centered Hero Content Container */}
@@ -68,7 +68,7 @@ export default function Hero() {
         <div className="mb-2">
           <Link
             href={hero.labLink.href}
-            className="inline-flex items-center gap-1.5 text-sm text-indigo-400 hover:text-indigo-300 font-semibold transition group py-1"
+            className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white font-medium transition group py-1"
           >
             <span>{hero.labLink.label}</span>
           </Link>

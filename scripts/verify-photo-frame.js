@@ -14,13 +14,13 @@ const { chromium } = require('playwright-core');
     await page.screenshot({ path: 'screenshots/verify-about-framed-photo-full.png', fullPage: true });
     
     // Focused screenshot on the Co-Founder & CTO card (Vamsi Vardhan)
-    const ctoCard = await page.$('.rounded-card:has-text("Vamsi Vardhan")');
+    const ctoCard = await page.$('.glass-card:has-text("Vamsi Vardhan")');
     if (ctoCard) {
       await ctoCard.screenshot({ path: 'screenshots/verify-founder-cto-card.png' });
     }
     
     // Focused screenshot on the Co-Founder & CEO card (Sai Ganesh)
-    const ceoCard = await page.$('.rounded-card:has-text("Sai Ganesh")');
+    const ceoCard = await page.$('.glass-card:has-text("Sai Ganesh")');
     if (ceoCard) {
       await ceoCard.screenshot({ path: 'screenshots/verify-founder-ceo-card.png' });
     }

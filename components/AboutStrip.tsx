@@ -34,28 +34,26 @@ export default function AboutStrip() {
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
 
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
-            {/* Framed Co-Founder & CTO Portrait */}
+          <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12 relative z-10">
+            {/* Centered Circular Co-Founder & CTO Portrait */}
             <div className="relative shrink-0">
-              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-[#12131A] shadow-2xl overflow-hidden group">
+              <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full border-2 border-white/20 bg-black/60 shadow-2xl overflow-hidden group">
                 <Image
                   src="/team/vamsi-vardhan.jpg"
                   alt="Vamsi Vardhan - Co-Founder & CTO"
                   fill
-                  sizes="(max-width: 768px) 144px, 176px"
+                  sizes="(max-width: 768px) 160px, 192px"
                   className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                   priority
                 />
-                {/* Subtle inner glass highlight */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20 pointer-events-none" />
-                {/* Soft gradient edge at base */}
-                <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/25 pointer-events-none" />
+                <div className="absolute inset-0 rounded-full shadow-[inset_0_2px_8px_rgba(255,255,255,0.2)] pointer-events-none" />
               </div>
             </div>
 
             {/* Profile & Biography */}
-            <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
+            <div className="flex-1 w-full text-center md:text-left">
+              <span className="eyebrow-label block mb-2 font-mono">LEADERSHIP</span>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-text mb-1">
                 Co-Founder & CTO
               </h3>
@@ -63,7 +61,7 @@ export default function AboutStrip() {
                 Vamsi Vardhan
               </p>
               
-              <p className="text-base text-text-2 leading-relaxed mb-6 max-w-3xl font-normal">
+              <p className="text-base text-text-2 leading-relaxed mb-6 font-normal">
                 Vamsi Vardhan is the Co-Founder & CTO of Orenty, directing core technology strategy, distributed architecture, and AI engineering. With deep expertise across high-performance web systems and automated workflows, he leads technical execution across client software solutions, in-house product incubation (SyncedIn, Fanbase, Job Pilot, Pujari.ai), and the Startup Lab ecosystem.
               </p>
 
@@ -119,24 +117,23 @@ export default function AboutStrip() {
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
 
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
-            {/* Framed Co-Founder & CEO Placeholder */}
+          <div className="flex flex-col md:flex-row items-center gap-8 lg:gap-12 relative z-10">
+            {/* Centered Circular Co-Founder & CEO Placeholder */}
             <div className="relative shrink-0">
-              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-dashed border-white/20 bg-[#12131A] shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
-                <div className="h-14 w-14 rounded-full bg-surface-3 border border-border flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
-                  <User size={26} />
+              <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full border-2 border-dashed border-white/25 bg-black/60 shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
+                <div className="h-16 w-16 rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
+                  <User size={30} />
                 </div>
                 <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400 font-medium">
                   Photo coming soon
                 </span>
-                {/* Subtle inner glass highlight */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/15 pointer-events-none" />
               </div>
             </div>
 
             {/* Profile & Biography */}
-            <div className="flex-1 text-center md:text-left">
-              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
+            <div className="flex-1 w-full text-center md:text-left">
+              <span className="eyebrow-label block mb-2 font-mono">LEADERSHIP</span>
               <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-text mb-1">
                 Co-Founder & CEO
               </h3>
@@ -144,7 +141,7 @@ export default function AboutStrip() {
                 Sai Ganesh
               </p>
               
-              <p className="text-base text-text-2 leading-relaxed mb-6 max-w-3xl font-normal">
+              <p className="text-base text-text-2 leading-relaxed mb-6 font-normal">
                 Sai Ganesh is the Co-Founder & CEO of Orenty, spearheading product vision, venture operations, and company growth. Focused on building software that compounds long-term value, he directs commercial partnerships, drives product-market fit across Orenty&apos;s proprietary ventures, and leads founder alignment across the Startup Lab.
               </p>
 

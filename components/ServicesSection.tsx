@@ -126,7 +126,7 @@ export default function ServicesSection() {
               className="group block h-full w-full"
             >
               <GlassCard
-                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[380px] sm:min-h-[400px] lg:min-h-[410px] rounded-[22px] border ${theme.cardBorder} ${theme.cardShadow} bg-[#0D0F14]/90 backdrop-blur-xl transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
+                className={`relative flex flex-col justify-between p-6 sm:p-7 min-h-[380px] sm:min-h-[400px] lg:min-h-[410px] rounded-[22px] border ${theme.cardBorder} ${theme.cardShadow} bg-[#08080C]/85 backdrop-blur-xl transition-all duration-300 ${theme.hoverBorder} overflow-hidden h-full`}
               >
                 {/* 1. Full-Frame Color-Graded Visual Underlay (Exact match to user's specification) */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[22px] z-0">
@@ -151,7 +151,7 @@ export default function ServicesSection() {
                     }}
                   />
                   {/* Dark linear protection gradient to guarantee 100% text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#0D0F14]/85 via-[#0D0F14]/70 to-[#0D0F14]/95 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#08080C]/90 via-[#08080C]/75 to-[#08080C]/95 pointer-events-none" />
                 </div>
 
                 {/* 2. Foreground Content */}
@@ -224,11 +224,11 @@ export default function ServicesSection() {
           {services.process.map((step) => (
             <div
               key={step.step}
-              className="relative p-6 rounded-card border border-white/[0.08] bg-[#0D0F14]/80 backdrop-blur-md flex flex-col justify-between hover:border-white/[0.18] hover:shadow-xl transition-all duration-200 shadow-sm"
+              className="relative p-6 rounded-card border border-white/[0.08] bg-[#08080C]/80 backdrop-blur-md flex flex-col justify-between hover:border-white/[0.18] hover:shadow-xl transition-all duration-200 shadow-sm"
             >
               <div>
                 <h4 className="text-base font-semibold text-white mb-2.5">
-                  <span className="text-indigo-400 font-mono text-xs mr-2">{step.step}.</span>
+                  <span className="text-neutral-400 font-mono text-xs mr-2">{step.step}.</span>
                   {step.title}
                 </h4>
                 <p className="text-sm text-slate-400 leading-relaxed">

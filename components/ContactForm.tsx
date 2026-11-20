@@ -128,21 +128,21 @@ export default function ContactForm() {
               className="w-full flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25 transition-all duration-200 group text-left cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-lg bg-white/[0.05] text-indigo-300 flex items-center justify-center shrink-0 border border-white/10">
+                <div className="h-9 w-9 rounded-lg bg-white/[0.05] text-neutral-300 flex items-center justify-center shrink-0 border border-white/10">
                   <Calendar size={16} />
                 </div>
                 <div>
-                  <span className="block text-sm font-medium text-white group-hover:text-indigo-200 transition-colors">Request a 30-min call</span>
+                  <span className="block text-sm font-medium text-white group-hover:text-white transition-colors">Request a 30-min call</span>
                   <span className="block text-xs text-neutral-400">1-on-1 technical scoping session</span>
                 </div>
               </div>
-              <ArrowRight size={13} className="text-neutral-500 group-hover:text-indigo-300 group-hover:translate-x-0.5 transition-all" />
+              <ArrowRight size={13} className="text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
             </button>
 
             {/* Direct Email */}
             <a
               href="mailto:contact@orenty.in"
-              className="flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-sky-500/40 transition-all duration-200 group"
+              className="flex items-center justify-between p-3.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/25 transition-all duration-200 group"
             >
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20">

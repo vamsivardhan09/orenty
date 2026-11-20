@@ -65,7 +65,7 @@ export default function HeroCanvas({ isFixed = false }: HeroCanvasProps) {
       <div className="w-full h-full relative z-10 flex items-center justify-center pointer-events-none">
         <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
           {/* Focused spotlight glow */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-t from-white/30 via-indigo-500/20 to-transparent blur-2xl animate-pulse" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-t from-white/20 via-white/5 to-transparent blur-2xl animate-pulse" />
           
           {/* Floating Rounded 3D Glass/Metallic Token */}
           <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-b from-white/20 via-white/5 to-black/60 p-6 shadow-[0_0_40px_rgba(255,255,255,0.25)] border border-white/30 flex items-center justify-center backdrop-blur-xl transition-transform duration-500 hover:scale-105">

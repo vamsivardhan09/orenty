@@ -7,7 +7,6 @@ interface TickerItem {
   type: 'product' | 'service';
   name: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
-  accent: string;
   category: string;
 }
 
@@ -17,28 +16,24 @@ const showcaseItems: TickerItem[] = [
     type: 'product',
     name: 'SyncedIn',
     icon: Sparkles,
-    accent: '#818CF8',
     category: 'Product',
   },
   {
     type: 'product',
     name: 'Fanbase',
     icon: Heart,
-    accent: '#F472B6',
     category: 'Product',
   },
   {
     type: 'product',
     name: 'Job Pilot',
     icon: Compass,
-    accent: '#38BDF8',
     category: 'Product',
   },
   {
     type: 'product',
     name: 'Pujari.ai',
     icon: Flame,
-    accent: '#FBBF24',
     category: 'Product',
   },
   // Our 4 Client Services
@@ -46,39 +41,31 @@ const showcaseItems: TickerItem[] = [
     type: 'service',
     name: 'Websites & Web Apps',
     icon: Globe,
-    accent: '#818CF8',
     category: 'Service',
   },
   {
     type: 'service',
     name: 'Mobile Apps',
     icon: Smartphone,
-    accent: '#38BDF8',
     category: 'Service',
   },
   {
     type: 'service',
     name: 'AI & Automation',
     icon: Cpu,
-    accent: '#34D399',
     category: 'Service',
   },
   {
     type: 'service',
     name: 'Growth & Product Strategy',
     icon: TrendingUp,
-    accent: '#FBBF24',
     category: 'Service',
   },
 ];
 
 export default function TrustStrip() {
   return (
-    <section className="relative z-10 w-full overflow-hidden border-y border-white/[0.08] bg-[#07080E]/90 backdrop-blur-xl">
-      {/* Top and Bottom Traveling Laser Seams */}
-      <div className="laser-line-top" />
-      <div className="laser-line-bottom" />
-
+    <section className="relative z-10 w-full overflow-hidden border-y border-white/[0.08] bg-[#030305]/85 backdrop-blur-xl">
       {/* Infinite Seamless Marquee */}
       <div className="py-3.5 sm:py-4 flex items-center overflow-hidden">
         <div className="animate-marquee flex items-center gap-10 whitespace-nowrap will-change-transform">
@@ -90,39 +77,24 @@ export default function TrustStrip() {
                 key={idx}
                 className="group flex items-center gap-3 select-none transition-transform duration-200"
               >
-                {/* Brand Logo / Icon Badge */}
-                <div
-                  className="flex h-7 w-7 items-center justify-center rounded-lg border transition-all duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundColor: `${item.accent}12`,
-                    borderColor: `${item.accent}35`,
-                    color: item.accent,
-                    boxShadow: `0 0 12px ${item.accent}20`,
-                  }}
-                >
-                  <Icon size={14} />
+                {/* Titanium Icon Badge */}
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.04] text-neutral-300 transition-all duration-300 group-hover:scale-105 group-hover:border-white/30 group-hover:text-white group-hover:bg-white/[0.08]">
+                  <Icon size={13} />
                 </div>
 
                 {/* Name */}
-                <span className="text-xs sm:text-[13px] font-semibold text-white tracking-wide group-hover:text-indigo-200 transition-colors">
+                <span className="text-xs sm:text-[13px] font-medium text-neutral-200 tracking-wide group-hover:text-white transition-colors">
                   {item.name}
                 </span>
 
-                {/* Clean Type Indicator */}
-                <span
-                  className="px-2 py-0.5 text-[9.5px] font-mono uppercase tracking-wider rounded-full border"
-                  style={{
-                    color: item.accent,
-                    borderColor: `${item.accent}30`,
-                    backgroundColor: `${item.accent}10`,
-                  }}
-                >
+                {/* Clean Titanium Type Indicator */}
+                <span className="px-2 py-0.5 text-[9.5px] font-mono uppercase tracking-wider rounded-full border border-white/[0.1] bg-white/[0.03] text-neutral-400">
                   {item.category}
                 </span>
 
                 {/* Subtle Divider Bullet */}
                 <div className="flex items-center ml-6 text-white/20">
-                  <span className="text-[10px] text-white/30 font-mono">✦</span>
+                  <span className="text-[10px] text-white/25 font-mono">✦</span>
                 </div>
               </div>
             );

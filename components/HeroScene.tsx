@@ -292,9 +292,9 @@ function CosmicNebula({
     () => ({
       uTime: { value: 0 },
       uCursor: { value: new THREE.Vector2(0, 0) },
-      uColorBase: { value: new THREE.Color('#030308') },
-      uColorViolet: { value: new THREE.Color('#381268') },
-      uColorTeal: { value: new THREE.Color('#083344') },
+      uColorBase: { value: new THREE.Color('#000000') },
+      uColorViolet: { value: new THREE.Color('#141416') },
+      uColorTeal: { value: new THREE.Color('#09090B') },
     }),
     []
   );
@@ -516,25 +516,25 @@ function HeroLogoMark({
     <group ref={groupRef} position={[0, 0, 0]}>
       <mesh geometry={geometry}>
         <meshStandardMaterial
-          color="#E2E8F0"
-          metalness={0.92}
-          roughness={0.12}
-          emissive="#818CF8"
-          emissiveIntensity={0.30}
+          color="#FFFFFF"
+          metalness={0.96}
+          roughness={0.08}
+          emissive="#000000"
+          emissiveIntensity={0}
         />
       </mesh>
       {/* Studio vertical spotlight matching parametric canyon core */}
-      <ambientLight intensity={1.2} />
-      <directionalLight position={[0, 5, 2]} intensity={3.8} />
-      <pointLight color="#FFFFFF" intensity={4.0} distance={6} decay={2} position={[0, 2, 2]} />
-      <pointLight color="#818CF8" intensity={3.0} distance={6} decay={2} position={[-2, 1, 2]} />
-      <pointLight color="#38BDF8" intensity={2.5} distance={6} decay={2} position={[2, -1, 2]} />
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[0, 5, 2]} intensity={4.2} />
+      <pointLight color="#FFFFFF" intensity={5.0} distance={7} decay={2} position={[0, 2, 2.5]} />
+      <pointLight color="#E2E8F0" intensity={2.5} distance={6} decay={2} position={[-2, 1, 2]} />
+      <pointLight color="#F8FAFC" intensity={2.5} distance={6} decay={2} position={[2, -1, 2]} />
     </group>
   );
 }
 
 // ============================================================================
-// COMPONENT: Tuned Central Volumetric Violet Light Beam
+// COMPONENT: Tuned Central Volumetric Light Beam (Monochrome Titanium)
 // ============================================================================
 function TunedLightBeam({
   mouse,
@@ -549,7 +549,7 @@ function TunedLightBeam({
       uTime: { value: 0 },
       uCursor: { value: new THREE.Vector2(0, 0) },
       uColorCore: { value: new THREE.Color('#ffffff') },
-      uColorGlow: { value: new THREE.Color('#7C5CFF') },
+      uColorGlow: { value: new THREE.Color('#e2e8f0') },
       uOpacity: { value: 0.72 },
     }),
     []

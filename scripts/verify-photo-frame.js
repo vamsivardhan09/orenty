@@ -13,12 +13,18 @@ const { chromium } = require('playwright-core');
     // Full page
     await page.screenshot({ path: 'screenshots/verify-about-framed-photo-full.png', fullPage: true });
     
-    // Focused screenshot on the Founder & CTO card
-    const founderCard = await page.$('.rounded-card:has-text("Sai Gumma")');
-    if (founderCard) {
-      await founderCard.screenshot({ path: 'screenshots/verify-founder-cto-card.png' });
+    // Focused screenshot on the Co-Founder & CTO card (Vamsi Vardhan)
+    const ctoCard = await page.$('.rounded-card:has-text("Vamsi Vardhan")');
+    if (ctoCard) {
+      await ctoCard.screenshot({ path: 'screenshots/verify-founder-cto-card.png' });
     }
-    console.log('Captured /about desktop');
+    
+    // Focused screenshot on the Co-Founder & CEO card (Sai Ganesh)
+    const ceoCard = await page.$('.rounded-card:has-text("Sai Ganesh")');
+    if (ceoCard) {
+      await ceoCard.screenshot({ path: 'screenshots/verify-founder-ceo-card.png' });
+    }
+    console.log('Captured /about desktop placards');
     await page.close();
   }
 
@@ -37,7 +43,7 @@ const { chromium } = require('playwright-core');
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     await page.addInitScript(() => { sessionStorage.setItem('orenty_intro_played', 'true'); });
     await page.goto('http://localhost:3000', { waitUntil: 'networkidle' });
-    const aboutStrip = await page.$('section:has-text("Sai Gumma")');
+    const aboutStrip = await page.$('section:has-text("Vamsi Vardhan")');
     if (aboutStrip) {
       await aboutStrip.scrollIntoViewIfNeeded();
       await page.waitForTimeout(800);

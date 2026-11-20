@@ -76,7 +76,7 @@ export default function AboutPage() {
         </div>
 
         {/* Leadership Section: Co-Founder & CTO */}
-        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
+        <div className="mb-12 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
           {/* Subtle ambient lighting */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-secondary/10 blur-[100px]" />
 
@@ -85,8 +85,8 @@ export default function AboutPage() {
             <div className="relative shrink-0">
               <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-white/15 bg-[#12131A] shadow-2xl overflow-hidden group">
                 <Image
-                  src="/team/co-founder-cto.jpg"
-                  alt="Sai Gumma - Co-Founder & CTO"
+                  src="/team/vamsi-vardhan.jpg"
+                  alt="Vamsi Vardhan - Co-Founder & CTO"
                   fill
                   sizes="(max-width: 768px) 144px, 176px"
                   className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
@@ -97,10 +97,6 @@ export default function AboutPage() {
                 {/* Soft gradient edge at base */}
                 <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
               </div>
-              <div className="absolute -bottom-2.5 -right-2 bg-[#0D0F14]/95 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full text-[10px] font-mono text-emerald-400 flex items-center gap-1.5 shadow-xl z-20">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-semibold tracking-wider">CO-FOUNDER & CTO</span>
-              </div>
             </div>
 
             {/* Profile & Biography */}
@@ -109,18 +105,13 @@ export default function AboutPage() {
               <h2 className="h2-section text-text mb-1">
                 Co-Founder & CTO
               </h2>
-              <p className="text-base sm:text-lg font-semibold text-secondary mb-4">
-                Sai Gumma · Co-Founder & CTO, Orenty
+              <p className="text-base sm:text-lg font-semibold text-slate-200 mb-4">
+                Vamsi Vardhan
               </p>
               
-              <div className="space-y-3 text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
-                <p>
-                  Sai Gumma is the Co-Founder & CTO of Orenty. Driven by the principle that small, disciplined engineering teams with deep architecture skills consistently out-build legacy agencies burdened by bureaucracy, Sai directs all technology strategy, infrastructure, and technical execution.
-                </p>
-                <p>
-                  With expertise spanning distributed web architectures, high-performance Next.js systems, and pragmatic AI automations, Sai leads client engineering solutions while directing the engineering and product incubation of Orenty&apos;s proprietary platforms—including SyncedIn, Fanbase, Job Pilot, and Pujari.ai—and heading the Startup Lab.
-                </p>
-              </div>
+              <p className="text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
+                Vamsi Vardhan is the Co-Founder & CTO of Orenty, directing core technology strategy, distributed architecture, and AI engineering. With deep expertise across high-performance web systems and automated workflows, he leads technical execution across client software solutions, in-house product incubation (SyncedIn, Fanbase, Job Pilot, Pujari.ai), and the Startup Lab ecosystem.
+              </p>
 
               {/* Technical Pillars */}
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
@@ -142,6 +133,87 @@ export default function AboutPage() {
               <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
                 <a
                   href="https://www.linkedin.com/in/vamsi-vardhan09"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  LinkedIn
+                </a>
+                <span>·</span>
+                <a
+                  href="https://x.com/orenty"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  Twitter / X
+                </a>
+                <span>·</span>
+                <a
+                  href="mailto:contact@orenty.in"
+                  className="text-secondary hover:text-white transition-colors"
+                >
+                  contact@orenty.in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Leadership Section: Co-Founder & CEO */}
+        <div className="mb-20 rounded-card border border-border bg-surface-2 p-8 md:p-12 relative overflow-hidden">
+          {/* Subtle ambient lighting */}
+          <div className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
+
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-8 lg:gap-12 relative z-10">
+            {/* Framed Co-Founder & CEO Placeholder */}
+            <div className="relative shrink-0">
+              <div className="relative h-36 w-36 md:h-44 md:w-44 rounded-2xl border border-dashed border-white/20 bg-[#12131A] shadow-2xl overflow-hidden group flex flex-col items-center justify-center text-center p-4">
+                <div className="h-14 w-14 rounded-full bg-surface-3 border border-border flex items-center justify-center text-slate-400 mb-2 group-hover:text-primary transition-colors">
+                  <User size={26} />
+                </div>
+                <span className="text-[11px] font-mono tracking-wider uppercase text-slate-400 font-medium">
+                  Photo coming soon
+                </span>
+                {/* Subtle inner glass highlight */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Profile & Biography */}
+            <div className="flex-1 text-center md:text-left">
+              <span className="eyebrow-label block mb-2">LEADERSHIP</span>
+              <h2 className="h2-section text-text mb-1">
+                Co-Founder & CEO
+              </h2>
+              <p className="text-base sm:text-lg font-semibold text-slate-200 mb-4">
+                Sai Ganesh
+              </p>
+              
+              <p className="text-base text-text-2 leading-relaxed mb-6 max-w-2xl font-normal">
+                Sai Ganesh is the Co-Founder & CEO of Orenty, spearheading product vision, venture operations, and company growth. Focused on building software that compounds long-term value, he directs commercial partnerships, drives product-market fit across Orenty&apos;s proprietary ventures, and leads founder alignment across the Startup Lab.
+              </p>
+
+              {/* Strategic Pillars */}
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Product Vision
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Venture Operations
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Client Partnerships
+                </span>
+                <span className="px-3 py-1 rounded-md text-xs font-mono bg-surface-3 border border-border text-slate-300">
+                  Startup Lab Growth
+                </span>
+              </div>
+
+              {/* Direct Links */}
+              <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-medium text-text-3">
+                <a
+                  href="https://linkedin.com/company/orenty"
                   target="_blank"
                   rel="noreferrer"
                   className="text-secondary hover:text-white transition-colors"

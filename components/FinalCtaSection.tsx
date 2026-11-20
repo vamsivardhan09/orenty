@@ -85,12 +85,12 @@ export default function FinalCtaSection() {
           {/* Reassurance Micro-Row (Trust signals) */}
           <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-5 text-xs text-text-3 font-medium pt-3 border-t border-white/5 w-full">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={13} className="text-violet-400/80" />
+              <CheckCircle2 size={13} className="text-neutral-300" />
               <span>Direct engineer access</span>
             </div>
             <span className="text-white/10 hidden sm:inline">•</span>
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={13} className="text-cyan-400/80" />
+              <CheckCircle2 size={13} className="text-neutral-300" />
               <span>24h response time</span>
             </div>
             <span className="text-white/10 hidden sm:inline">•</span>

@@ -11,10 +11,10 @@
   --border: rgba(255, 255, 255, 0.08); /* 1px hairline precision border */
   --border-top: rgba(255, 255, 255, 0.16);
 
-  --primary: #6366F1;      /* Electric violet */
-  --primary-glow: #818CF8;
-  --secondary: #38BDF8;    /* Technical sky */
-  --warm: #F59E0B;         /* Refined amber */
+  --primary: #FFFFFF;      /* Pure titanium white */
+  --primary-glow: rgba(255, 255, 255, 0.35);
+  --secondary: #E4E4E7;    /* Platinum silver */
+  --warm: #F59E0B;         /* Refined status amber */
 
   --text: #FFFFFF;         /* Pure crisp white */
   --text-2: #94A3B8;       /* High-legibility neutral silver */

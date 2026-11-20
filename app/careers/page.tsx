@@ -84,7 +84,7 @@ export default function CareersPage() {
           <GlassCard className="p-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-text-3 mb-2">
-                <Sparkles size={14} className="text-indigo-400" />
+                <Sparkles size={14} className="text-neutral-300" />
                 <span>Talent Network</span>
               </div>
               <div className="text-xl font-bold text-text mb-1.5">Priority Review</div>

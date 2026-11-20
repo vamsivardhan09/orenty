@@ -24,7 +24,7 @@ import {
  */
 export function WebAppsMockup() {
   return (
-    <div className="w-full rounded-xl border border-white/[0.08] bg-[#0A0D18]/80 backdrop-blur-md overflow-hidden shadow-lg my-4">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-[#08080C]/85 backdrop-blur-md overflow-hidden shadow-lg my-4">
       {/* Browser Window Header */}
       <div className="flex items-center justify-between px-3.5 py-2 border-b border-white/[0.06] bg-white/[0.02]">
         <div className="flex items-center gap-1.5">
@@ -160,7 +160,7 @@ export function AiAutomationMockup() {
  */
 export function MobileAppsMockup() {
   return (
-    <div className="w-full rounded-xl border border-white/[0.08] bg-[#0A0D18]/80 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-[#08080C]/85 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
       {/* Device Top Status Bar */}
       <div className="flex items-center justify-between pb-2 border-b border-white/[0.06] text-[10px] text-text-3">
         <span>9:41</span>
@@ -216,7 +216,7 @@ export function MobileAppsMockup() {
  */
 export function GrowthStrategyMockup() {
   return (
-    <div className="w-full rounded-xl border border-white/[0.08] bg-[#0A0D18]/80 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-[#08080C]/85 backdrop-blur-md overflow-hidden shadow-lg my-4 p-3.5 font-mono">
       {/* KPI Stats Row */}
       <div className="flex items-center justify-between pb-2.5 border-b border-white/[0.06]">
         <div>

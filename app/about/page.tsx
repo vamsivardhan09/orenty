@@ -237,28 +237,6 @@ export default function AboutPage() {
             </div>
           </div>
         </GlassCard>
-                  LinkedIn
-                </a>
-                <span>·</span>
-                <a
-                  href="https://x.com/orenty"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-secondary hover:text-white transition-colors"
-                >
-                  Twitter / X
-                </a>
-                <span>·</span>
-                <a
-                  href="mailto:contact@orenty.in"
-                  className="text-secondary hover:text-white transition-colors"
-                >
-                  contact@orenty.in
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Values Grid */}
         <div className="mb-20">

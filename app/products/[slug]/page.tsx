@@ -244,11 +244,11 @@ export default async function ProductDetailPage({ params }: Props) {
             <span className="h-2 w-2 rounded-full bg-secondary" />
             <span>Active development sprint</span>
           </div>
-        </div>
+        </GlassCard>
 
         {/* 6. Waitlist Email Capture */}
-        <div id="waitlist" className="mb-20 rounded-card border border-border-top bg-surface-2 p-8 md:p-12 text-center flex flex-col items-center">
-          <span className="eyebrow-label block mb-2">EARLY ACCESS</span>
+        <GlassCard id="waitlist" className="mb-20 p-8 md:p-12 text-center flex flex-col items-center">
+          <span className="eyebrow-label block mb-2 font-mono">EARLY ACCESS</span>
           <h2 className="h2-section text-text mb-3">
             Join the waitlist for {product.name}
           </h2>
@@ -257,7 +257,7 @@ export default async function ProductDetailPage({ params }: Props) {
           </p>
 
           <ProductWaitlistForm productName={product.name} slug={product.slug} />
-        </div>
+        </GlassCard>
 
         {/* 7. Other Products */}
         <div className="pt-12 border-t border-border">

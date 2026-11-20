@@ -21,7 +21,7 @@ const fontBody = DM_Sans({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#08080A',
+  themeColor: '#030305',
   colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
